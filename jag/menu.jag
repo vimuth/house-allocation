@@ -1,0 +1,19 @@
+
+
+        		<td id="menu-panel" valign="top">
+            		<table id="menu-table" border="0" cellspacing="0">
+                		<tr>
+                    		<td id="region1">
+				        		<div id="menu"> 
+				        			<ul class="main">
+				        				<li id="main-page" class="menu-header" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Main</li>
+				        				<li id="history-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>History</li>
+				        				<li id="member-page" class="menu-header"  onclick="location.href='members.jag'" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Other Members</li>
+				        				<li id="elections-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Current Elections</li>
+				        				
+				        	 		</ul>
+				        		</div>
+							</td>
+   						</tr>
+   					</table>
+   				</td>

@@ -1,0 +1,320 @@
+<%
+
+	caramel = require('caramel');
+    var a=session.get('username');
+    var log = new Log();
+
+    log.info(a);
+    if(a==null){
+        response.sendRedirect("login.html")
+    }
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+
+		<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+
+		<title>Test App</title>
+		
+		<link href="css/global.css" rel="stylesheet" type="text/css" media="all"/>
+
+    	<link href="css/main.css" rel="stylesheet" type="text/css" media="all"/>
+
+    	<link href="css/jqueryui-themeroller.css" rel="stylesheet" type="text/css" media="all"/>
+    	<link href="css/dialog.css" rel="stylesheet" type="text/css" media="all"/>
+    	<link rel="stylesheet" href="../admin/css/carbonFormStyles.css">
+
+
+    	<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.form.js"></script>
+    	<script type="text/javascript" src="js/jqueryui/jquery-ui.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.validate.js"></script>    
+    	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+    	<script type="text/javascript" src="js/jquery.ui.core.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.ui.widget.min.js"></script>
+    	<script type="text/javascript" src="js/jquery.ui.tabs.min.js"></script>
+   		<script type="text/javascript" src="js/main.js"></script>
+   		<script type="text/javascript" src="js/WSRequest.js"></script>
+    	<script type="text/javascript" src="js/cookies.js"></script>
+    	<script type="text/javascript" src="js/customControls.js"></script>
+
+	</head>
+	<body>
+
+		<noscript>
+			<div class="something-wrong">
+				<div class="title">JavaScript is disabled on your browser</div>
+				<div class="content">Please enable JavaScript or upgrade to a JavaScript-capable browser to use this Products.</div>
+			</div>
+		</noscript>
+
+		<div id="dcontainer"></div>
+			<script type="text/javascript" src="js/dialog.js"></script>
+
+
+		<table id="main-table" border="0" cellspacing="0">
+    		<tr>
+        		<td id="header" colspan="3">
+        			<div id="header-div">
+        				<div class="right-logo">House Management Console</div>
+        				<div class="left-logo">
+           				<a href="index.jag" class="header-home"><img src="images/1px.gif" width="200px" height="32px"/></a>
+        			</div>
+        			<div class="middle-ad"></div>
+
+        			<div class="header-links">
+						<div class="right-links">            
+							<ul>
+		                        <li class="middle">
+		                    		<label id="logged-user">
+		                        		<strong>Signed-in as: </strong><%= session.get("username") %>
+		                    		</label>
+		                		</li>
+								<li class="middle">|</li>
+		                		<li class="right">
+		                    		<a href="logout.jag">Sign-out</a>
+		                		</li>
+		              
+								<li class="middle">|</li>
+								<li class="middle">
+		                    		<a target="_blank" href="http://docs.wso2.org/wiki/display/AS521/WSO2+Application+Server+Documentation">Docs</a>
+		                		</li>
+								<li class="middle">|</li>
+		                		<li class="left">
+		                    		<a target="_blank" href="about.html">About</a>
+		                		</li>
+		            		</ul>
+						</div>
+       				</div>
+        			</div>
+
+        		</td>
+   			</tr>
+
+   			<tr>
+
+   				<td class="vertical-menu-container" id="vertical-menu-container" style="display:none;">
+            		<div id="menu-panel-button0"></div>
+		            <div id="menu-panel-button1" class="menu-panel-buttons"></div>
+		            <div id="menu-panel-button2" class="menu-panel-buttons"></div>
+		            <div id="menu-panel-button3" class="menu-panel-buttons"></div>
+		            <div id="menu-panel-button4" class="menu-panel-buttons"></div>
+		            <div id="menu-panel-button5" class="menu-panel-buttons"></div>
+		            <div id="menu-panel-button_dummy" style="display:none"></div>
+        		</td>
+
+        		<td id="menu-panel" valign="top">
+            		<table id="menu-table" border="0" cellspacing="0">
+                		<tr>
+                    		<td id="region1">
+				        		<div id="menu"> 
+				        			<ul class="main">
+				        				
+				        				<li id="main-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Main</li>
+				        				<li id="history-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Hisoty</li>
+				        				<li id="member-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Other Members</li>
+				        				<li id="elections-page" class="menu-header"  onclick="mainMenuCollapse(this.childNodes[0])" style="cursor:pointer"><img src="images/menu-icon.gif" class="mMenuHeaders" id="main_menu"/>Current Elections</li>
+				        				
+				        	 		</ul>
+				        		</div>
+							</td>
+   						</tr>
+   					</table>
+   				</td>
+
+   				<td id="middle-content">
+            		<table id="content-table" border="0" cellspacing="0">
+                		<tr>
+                    		<td id="page-header-links">
+								<table class="page-header-links-table" cellspacing="0">
+									<tr>
+										<td class="breadcrumbs">
+											<table class="breadcrumb-table" cellspacing="0">
+												<tr>								 
+												    <td>
+													    <div id="breadcrumb-div"></div>
+								                    </td>
+												</tr>
+
+											</table>
+										</td>
+
+										<td class="page-header-help"><a href="./docs/userguide.html" target="_blank">Help</a></td>
+									</tr>
+								</table>
+							</td>
+               	 		</tr>
+                		<tr>
+                    		<td id="body">
+                      			<img src="../admin/images/1px.gif" width="735px" height="1px"/>
+
+                      			<div id="middle">
+        							<h2>All Members</h2>
+
+        							<div id="workArea">
+
+        							<table width="100%" cellspacing="0" cellpadding="0" border="0">
+            						<tr>
+               						<td width="50%">
+        							<table class="styledLeft" id="webappTable" style="margin-left: 0px">
+            						
+	            						<thead>
+	                        				<tr>
+	                            				<th colspan="2" align="left">House Members</th>
+	                        				</tr>
+	                        			</thead>
+
+
+
+	                      				<%
+	                      					//"Accept: application/json" http://10.100.4.54:9763/services/housedb_service/members
+	                      					var url  = "http://10.100.4.54:9763/services/housedb_service/members";
+	                      					var headers = {"Accept": "application/json"};
+											var membersResponse = get(url, null, headers);
+
+											//log.info(membersResponse)
+
+											var membersJson = parse(membersResponse.data);
+
+											//log.info(membersJson);
+											
+
+											for( x in membersJson.peopleCollection.people){
+												print("<tr><td width=\"80%\">"+membersJson.peopleCollection.people[x].name+"</td><td>"+membersJson.peopleCollection.people[x].house+"</td></tr>");
+												log.info(membersJson.peopleCollection.people[x].name)
+											}
+
+
+
+											
+
+	                      				%>
+
+
+                      				
+                      				</table>
+
+                      				</td>
+                      				</tr>
+                      				</table>
+
+                      				</div>
+
+							    </div>
+							</td>
+   						</tr>
+   					</table>
+   				</td>
+   			</tr>
+   			<tr>
+	   			<td id="footer" colspan="3">
+ 
+					<div id="footer-div">
+						<div class="footer-content">
+							<div class="copyright">
+			    				&copy; Vimuth Dinuka Fernando. Copied from WSO2 Inc. 
+							</div>
+						<!--div class="poweredby"></div-->
+					</div>
+				</td>
+			<tr>
+   		</table>
+
+   		<script type="text/javascript">
+			if (Function('/*@cc_on return document.documentMode===10@*/')()){
+    			document.documentElement.className+=' ie10';
+			}
+		</script>
+
+   		<!--
+		<p id="demo">
+			JavaScript can change the content of an HTML element.
+		</p>
+
+		<form name="myform">
+			First name: <input type="text" name="name"><br>
+			Age: <input type="text" name="age">
+		</form>
+
+		
+		<script>
+
+			function onClickButton(){
+
+				var formIn = document.forms["myform"];
+				var x = document.getElementById("demo");
+
+				x.innerHTML = "Name : "+formIn.elements[0].value;
+
+				print(invokeWebServices(formIn.elements[0],formIn.elements[1]));
+			}
+		
+			function invokeWebServices(nameIn,ageIn) {
+
+			var ws = require("ws");
+			var log = new Log();
+			var version = new ws.WSRequest();
+			var options = new Array();
+			options.useSOAP = 1.2;
+			options.action = "urn:insert_people_operation"
+
+			var payload = '<body><p:insert_people_operation xmlns:p="http://ws.wso2.org/dataservice"><xs:name xmlns:xs="http://ws.wso2.org/dataservice">'+nameIn+'</xs:name><xs:age xmlns:xs="http://ws.wso2.org/dataservice">'+ageIn+'</xs:age></p:insert_people_operation></body>';
+
+			try {
+
+			version.open(options,"http://10.100.4.54:9763/services/TestService/", true);
+			version.send(payload);
+
+			} catch (e) {
+
+			log.error(e.toString());
+			return e.toString();
+
+			}
+				return "Success";
+			}
+
+		</script>
+
+		
+
+		<button type="button" onclick="onClickButton()">Click Me!</button>
+
+
+		<div id="workArea">
+							        	<div id="carbonFormTable">
+								        <form name="myform" >
+								        	<table class="styledLeft">
+
+								        		<thead>
+								                    <tr>
+								                        <th>Upload a New Spring Service (.xml and .jar)</th>
+								                    </tr>
+							                    </thead>
+							                    <tr>
+										        	 <td class="formRow">
+										        	 	<table class="normal">
+										        	 		<tr>
+																First name: <input type="text" name="name">
+															</tr>
+															<tr>
+																Age: <input type="text" name="age">
+															</tr>
+														</table>
+													</td>
+												<tr>
+											</table>
+										</form>
+										</div>
+									</div>
+
+		-->
+	</body>
+
+</html>
+
+

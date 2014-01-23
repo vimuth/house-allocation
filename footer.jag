@@ -1,0 +1,10 @@
+<td id="footer" colspan="3">
+ 
+					<div id="footer-div">
+						<div class="footer-content">
+							<div class="copyright">
+			    				&copy; Vimuth Dinuka Fernando. Copied from WSO2 Inc. 
+							</div>
+						<!--div class="poweredby"></div-->
+					</div>
+				</td>

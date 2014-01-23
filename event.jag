@@ -1,0 +1,63 @@
+
+<%
+var ws = require('ws');
+
+var verb = request.getMethod();
+var data = request.getContent();
+var log = new Log();
+
+
+log.info("asdasdsd");
+
+if( verb=='POST'){
+
+	var url = 'http://localhost:9763/services/housedb_service/';
+
+// 	var body = '<p:insert_event_operation xmlns:p="http://ws.wso2.org/dataservice"><xs:name xmlns:xs="http://ws.wso2.org/dataservice">'
+// 			+data.eventName
+// 			+'</xs:name><xs:description xmlns:xs="http://ws.wso2.org/dataservice">'
+// 					+data.eventDesc
+// 					+'</xs:description></p:insert_event_operation>';
+	
+	var body = {"insert_event_operation":{"name":"sample" , "description":"sample"}};
+
+	
+	
+
+		var req = new ws.WSRequest();
+		var options = new Array();
+		options.useSOAP = 1.2;
+		options.useWSA = 1.0;
+		options.HTTPHeaders = [ { name : "Content-Type", value : "application/json"}];
+		options.action = "urn:insert_event_operation";
+		var payload = JSON.stringify(body);
+		var result;
+
+		try {
+			req.open(options,url, false);
+			req.send(payload);
+			result = req.responseE4X;
+			log.info(result);
+		} catch (e) {
+			log.error(e.toString());
+		}
+	
+}
+
+if( verb=="GET"){
+
+	var path = "/temp.json";
+	var file = new File(path);
+	file.open("r");
+	var message = "";
+
+	message = file.readAll();
+	print(message);
+	file.close();
+
+}
+
+
+
+%>
+
