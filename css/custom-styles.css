@@ -25,23 +25,18 @@ body {
 
 .navbar-fixed-top {
 	padding-right: 20px;
-}
-
-.navbar-default,.navbar-collapse {
-	color: #cdbfe3;
 	background-color: #428bca;
 }
 
-.navbar-default,.navbar-collapse .navbar-nav>li>a {
+.navbar-fixed-top .navbar-nav>li>a {
 	color: #fff;
 }
 
-.navbar-default .navbar-brand {
+.navbar-fixed-top .navbar-brand {
 	color: #fff;
 }
 
-
-
-sidebar {
+.nav .bs-sidenav{
 	background-color: #cdbfe3;
+	float: left;
 }
