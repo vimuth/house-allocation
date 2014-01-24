@@ -1,7 +1,6 @@
 <%
 var a=session.get('username');
 var log = new Log();
-var mustache = require('../js/mustache.js');
 
 if(a==null){
 	response.sendRedirect("login.html")
@@ -37,8 +36,6 @@ if(a==null){
 			
 			<div class="col-md-9" id="main" role="main">
 				Welcome </br>
-
-				<% print("Hello"+"World"); %>
 			</div>
 		</div>
 	</div>
