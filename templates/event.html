@@ -1,10 +1,7 @@
 
 <div>
-	{{#event}}
-	<div class="event-entry">
-		{{id}} </br>{{name}} </br> {{description}} </br>
-		</br>
+	<div class="list-group">
+		{{#event}} <a href="/TestApp2/events/{{id}}" class="list-group-item">
+			{{name}} : {{description}} </a> {{/event}}
 	</div>
-	{{/event}}
-</div>
 </div>

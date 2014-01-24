@@ -316,7 +316,7 @@ if(a!="admin"){
                $.ajax({
               type: "POST",
               contentType: "application/json",
-              url: "event.jag",
+              url: "http://10.100.4.54:9763/TestApp2/events",
               
               data: JSON.stringify({"event":{"name": eventName,"description":eventDescription},"activities":activityList,"awards":awardList}),
               success: function(msg) {

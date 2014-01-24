@@ -21,6 +21,7 @@ activityFormArea {
 
 body {
 	padding-top: 70px;
+	min-height:500px;
 }
 
 .navbar-fixed-top {

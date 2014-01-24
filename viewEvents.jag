@@ -1,12 +1,17 @@
 <%
 var a=session.get('username');
 var log = new Log();
-var mustache = require('../js/mustache.js');
 
+var mustache = require('js/mustache.js');
 if(a==null){
 	response.sendRedirect("login.html")
 }
-%>
+
+var data = get('http://localhost:9763/services/housedb_service/events',null,{
+	"Accept":"application/json"},"application/json");
+	var template = new File('templates/event.html');
+	template.open("r");
+	%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -34,16 +39,22 @@ if(a==null){
 	<div class="container">
 		<div class="row">
 			<% include("jag/sidenav.jag"); %>
-			
-			<div class="col-md-9" id="main" role="main">
-				Welcome </br>
 
-				<% print("Hello"+"World"); %>
+			<div class="col-md-9" id="main" role="main">
+
+				<% 
+				print(mustache.Mustache.to_html(template.readAll(),
+								parse(data.data).eventCollection));
+				%>
 			</div>
 		</div>
 	</div>
 
+
+
 </body>
+
+
 
 </html>
 

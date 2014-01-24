@@ -8,6 +8,8 @@ var verb = request.getMethod();
 var data = request.getContent();
 var log = new Log();
 
+log.info("event.jag");
+
 var events_url = 'http://localhost:9763/services/housedb_service/events';
 var activities_url = 'http://localhost:9763/services/housedb_service/activities';
 var awards_url = 'http://localhost:9763/services/housedb_service/awards';
@@ -22,7 +24,6 @@ if( verb=='POST'){
 			"Accept":"application/json" };
 
 			var result = post(events_url, data.event, optionalHeaders, "json");
-			log.info(result);
 			event_id = result.data.GeneratedKeys.Entry.ID
 
 
@@ -55,7 +56,6 @@ if( verb=='POST'){
 
 
 } if( verb=="GET"){
-		var data = get(events_url, data,{"Accept":"application/json"},"application/json");
-		response.content = data.data;
+	response.sendRedirect('../viewEvents.jag');
 } %>
 
