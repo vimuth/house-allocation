@@ -1,0 +1,12 @@
+<%
+var caramel;
+var body = "Lorem ipsum dolor sit amet";
+
+caramel = require('caramel');
+caramel.render({
+	'title': {
+	text :'Hello World'},
+	'body': {
+	text:body}
+});
+%>
