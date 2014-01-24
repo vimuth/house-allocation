@@ -60,7 +60,8 @@ if( verb=='POST'){
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	if(uriMatcher.match('/TestApp2/events/{id}')) {
 		log.info(uriMatcher.elements().id);
-
+		data = "Hello";
+		include('../jag/viewEvent.jag');
 		
 	}
 	else{
