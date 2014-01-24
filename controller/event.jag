@@ -2,19 +2,21 @@
 <%
 
 var ws = require('ws');
+var mustache = require('../js/mustache.js');
 
 var verb = request.getMethod();
 var data = request.getContent();
 var log = new Log();
 
+var events_url = 'http://localhost:9763/services/housedb_service/events';
+var activities_url = 'http://localhost:9763/services/housedb_service/activities';
+var awards_url = 'http://localhost:9763/services/housedb_service/awards';
 
 if( verb=='POST'){
 
 	try {
 
-		var events_url = 'http://localhost:9763/services/housedb_service/events';
-		var activities_url = 'http://localhost:9763/services/housedb_service/activities';
-		var awards_url = 'http://localhost:9763/services/housedb_service/awards';
+
 
 		var optionalHeaders = {
 			"Accept":"application/json" };
@@ -43,7 +45,7 @@ if( verb=='POST'){
 					log.info(result);
 			}
 
-				
+
 	} catch (e) {
 		log.info("crash");
 		log.error(e.toString());
@@ -53,6 +55,7 @@ if( verb=='POST'){
 
 
 } if( verb=="GET"){
-	
+		var data = get(events_url, data ,"json");
+		print(data);
 } %>
 

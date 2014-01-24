@@ -34,7 +34,7 @@ if(a==null){
 		<div class="row">
 			<% include("jag/sidenav.jag"); %>
 			
-			<div class="col-md-9" role="main">
+			<div class="col-md-9" id="main" role="main">
 				Overview Individual or compiled Plugins can be included individually
 				(using Bootstrap's individual *.js files), or all at once (using
 				bootstrap.js or the minified bootstrap.min.js). </br>
