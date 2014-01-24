@@ -1,4 +1,2 @@
-var engine = caramel.engine('handlebars', (function () {
-   // return {
-   // };
+var engine = caramel.engine('handlebars', (function() {
 }()));
