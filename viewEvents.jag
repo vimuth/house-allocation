@@ -9,7 +9,7 @@ if(a==null){
 
 var data = get('http://localhost:9763/services/housedb_service/events',null,{
 	"Accept":"application/json"},"application/json");
-	var template = new File('templates/event.html');
+	var template = new File('templates/event_summary.html');
 	template.open("r");
 	%>
 
