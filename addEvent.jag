@@ -21,7 +21,8 @@ if(a!="admin"){
 
 <script type="text/javascript" src="./js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.js"></script>
-
+<script src="js/mustache.js"></script>
+<script src="js/custom.js"></script>
 
 
 </head>
@@ -33,7 +34,7 @@ if(a!="admin"){
 		<div class="row">
 			<% include("jag/sidenav.jag"); %>
 			
-			<div class="col-md-9" role="main">
+			<div class="col-md-9" id="main" role="main">
 				<form id="myform" name="newEvent">
 					<table id="event" class="styledLeft">
 						<thead>

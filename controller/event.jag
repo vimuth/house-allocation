@@ -55,7 +55,7 @@ if( verb=='POST'){
 
 
 } if( verb=="GET"){
-		var data = get(events_url, data ,"json");
-		print(data);
+		var data = get(events_url, data,{"Accept":"application/json"},"application/json");
+		response.content = data.data;
 } %>
 
