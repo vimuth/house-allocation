@@ -6,21 +6,24 @@ log.info("here");
 (function () {
 	var body = "Welcome";
 
-	var a=session.get('username');
+	var username=session.get('username');
 
-	if(a!="admin"){
+	if(username!="admin"){
 		response.sendRedirect("login.html")
 		return;
 	}
-	
+
 	log.info('logged in');
 
 	caramel = require('caramel');
 	caramel.render({
-		'title': {
-		text :'Hello World'},
-		'body': {
-		text:body}
+		'header':{
+		'username': username
+	},
+	'title': {
+	text :'WSO2 House Competition'},
+	'body': {
+	text:body}
 	});
 }());
 %>

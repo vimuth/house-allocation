@@ -1,9 +1,13 @@
 var render = function(theme, data, meta, require) {
 	theme('simple', {
-		title : [ {
+		header : [ {
+			partial : 'header',
+			context : data.header
+		} ],
+		title :[{
 			partial : 'title',
 			context : data.title
-		} ],
+		}],
 		body : [ {
 			partial : 'body',
 			context : data.body
