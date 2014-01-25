@@ -1,0 +1,27 @@
+<%
+var caramel;
+var log = new Log();
+
+log.info("here");
+(function () {
+	var body = "Welcome";
+
+	var a=session.get('username');
+
+	if(a!="admin"){
+		response.sendRedirect("login.html")
+		return;
+	}
+	
+	log.info('logged in');
+
+	caramel = require('caramel');
+	caramel.render({
+		'title': {
+		text :'Hello World'},
+		'body': {
+		text:body}
+	});
+}());
+%>
+
