@@ -1,0 +1,22 @@
+<%
+
+log = new Log();
+
+function getEvent(id){
+        var eventData = parse(get('http://localhost:9763/services/housedb_service/events/'+id,null,{
+                "Accept":"application/json"},"application/json").data);
+                var activityData = parse(get('http://10.100.4.54:9763/services/housedb_service/event/activities/'+id,null,{
+                        "Accept":"application/json"},"application/json").data);
+                        var awardData = parse(get('http://10.100.4.54:9763/services/housedb_service/event/awards/'+id,null,{
+                                                "Accept":"application/json"},"application/json").data);
+                                
+        log.info(eventData);
+        log.info(activityData);
+        log.info(awardData);
+        
+//         log.info({'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection});
+        
+        return {'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection};
+}
+
+%>
