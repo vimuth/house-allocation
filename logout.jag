@@ -1,15 +1,6 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%
-        session.remove("username");
-        session.remove("password");
-        session.invalidate();
-        %>
-        <h2>Logged out successfully.</h2>
-        <% response.sendRedirect("login.html"); %>
-    </body>
-</html>
+<%
+session.remove("username");
+session.invalidate();
+
+response.sendRedirect("/TestApp2/login.jag");
+%>

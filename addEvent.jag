@@ -9,7 +9,7 @@ var verb = request.getMethod();
 	var username=session.get('username');
 
 	if(username!="admin"){
-		response.sendRedirect("login.html");
+		response.sendRedirect("/TestApp2/login.jag");
 		return;
 	}
 

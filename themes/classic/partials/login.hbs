@@ -1,0 +1,54 @@
+<form class="form-horizontal" action='LoginCheck.jag'
+	onsubmit="return doValidation();" target="_self"
+	onsubmit="checkInputs()">
+	<div class="form-group">
+		<h2 class="form-signin-heading">Please sign in</h2>
+		<div class="form-group">
+			<label for="usernameInput">Username</label> <input type="email"
+				class="form-control" id="username" placeholder="Username">
+		</div>
+		<div class="form-group">
+			<label for="passwordinput">Password</label> <input type="password"
+				class="form-control" id="username" placeholder="Password">
+		</div>
+
+		<div class="checkbox">
+			<label> <input type="checkbox"> Remember Me
+			</label>
+		</div>
+
+		<button type="submit" class="btn btn-default">Submit</button>
+	</div>
+</form>
+
+<script type="text/javascript">
+	function doValidation() {
+		var reason = "";
+
+		var userNameEmpty = isEmpty("username");
+		var passwordEmpty = isEmpty("password");
+
+		if (userNameEmpty || passwordEmpty) {
+			document.getElementById('username').focus();
+			return false;
+		}
+
+		return true;
+	}
+	function getSafeText(text) {
+		text = text.replace(/</g, '&lt;');
+		return text.replace(/>/g, '&gt');
+	}
+
+	function checkInputs() {
+
+		if (doValidation) {
+			var loginForm = document.getElementById('form-signin');
+
+			var username = document.getElementById("username");
+
+			username.value = getSafeText(username.value);
+			loginForm.submit();
+		}
+	}
+</script>

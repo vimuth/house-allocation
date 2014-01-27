@@ -1,0 +1,33 @@
+<%
+var caramel;
+var log = new Log();
+var verb = request.getMethod();
+
+(function () {
+
+	if(verb=='GET'){
+
+		caramel = require('caramel');
+		caramel.render({
+			'title': {
+			text :'Log In'}
+		});
+	}
+
+	if(verb=='POST'){
+		var username=request.getParameter("username");
+		var password=request.getParameter("password");
+
+		log.info(username);
+
+		if((username.equals("admin") && password.equals("admin")))
+		{
+			session.put("username",username);
+			response.sendRedirect("/TestApp2/index.jag");
+		}
+		else
+			response.sendRedirect("/TestApp2/error.jag");
+	}
+}());
+%>
+
