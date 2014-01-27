@@ -18,7 +18,7 @@ var dataService = require('modules/dataservice.jag');
 
 		var id = uriMatcher.elements().id;
 		var data = dataService.getEvent(id);
-		
+
 		log.info(data);
 
 		caramel = require('caramel');
@@ -31,6 +31,8 @@ var dataService = require('modules/dataservice.jag');
 		'body': data
 		});
 
+	}
+	else{
 	}
 
 }());

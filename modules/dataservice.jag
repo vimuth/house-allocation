@@ -14,9 +14,9 @@ function getEvent(id){
 			var awardData = parse(get(url+'event/awards/'+id,null,{
 				"Accept":"application/json"},"application/json").data);
 
-// 				log.info(eventData);
-// 				log.info(activityData);
-// 				log.info(awardData);
+				// 				log.info(eventData);
+				// 				log.info(activityData);
+				// 				log.info(awardData);
 
 				//         log.info({'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection});
 
@@ -49,8 +49,15 @@ function addEvent(data){
 
 				log.info(result);
 		}
-		
+
 		return event_id;
+}
+
+function getEvents(){
+	var data = get(url+'events',null,{
+		"Accept":"application/json"},"application/json");
+		log.info(parse(data.data));
+		return parse(data.data);
 }
 
 %>

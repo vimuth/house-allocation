@@ -1,0 +1,27 @@
+<%
+var a=session.get('username');
+var log = new Log();
+var dataService = require('modules/dataservice.jag');
+
+(function () {
+
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("login.html")
+		return;
+	}
+
+	var data = dataService.getEvents();
+
+	var caramel = require('caramel');
+	caramel.render({
+		'header':{
+		'username': username
+	},
+	'title': {
+	text :'Events'},
+	'events': data.eventCollection
+	});
+}());
+%>
