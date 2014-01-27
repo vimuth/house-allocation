@@ -9,8 +9,8 @@ var render = function(theme, data, meta, require) {
 			context : data.title
 		}],
 		main : [ {
-			partial : 'addEvent',
-			context : data.body
+			partial : 'event-list',
+			context : data.events
 		} ]
 	});
 };

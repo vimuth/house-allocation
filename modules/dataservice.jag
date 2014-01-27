@@ -56,7 +56,6 @@ function addEvent(data){
 function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
-		log.info(parse(data.data));
 		return parse(data.data);
 }
 
