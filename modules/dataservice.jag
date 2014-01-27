@@ -1,5 +1,5 @@
 <%
-
+var url = 'http://localhost:9763/services/housedb_service/';
 var events_url = 'http://localhost:9763/services/housedb_service/events/';
 var activities_url = 'http://localhost:9763/services/housedb_service/activities/';
 var awards_url = 'http://localhost:9763/services/housedb_service/awards/';
@@ -9,14 +9,14 @@ var log = new Log();
 function getEvent(id){
 	var eventData = parse(get(events_url+id,null,{
 		"Accept":"application/json"},"application/json").data);
-		var activityData = parse(get(activities_url+id,null,{
+		var activityData = parse(get(url+'event/activities/'+id,null,{
 			"Accept":"application/json"},"application/json").data);
-			var awardData = parse(get(awards_url+id,null,{
+			var awardData = parse(get(url+'event/awards/'+id,null,{
 				"Accept":"application/json"},"application/json").data);
 
-				log.info(eventData);
-				log.info(activityData);
-				log.info(awardData);
+// 				log.info(eventData);
+// 				log.info(activityData);
+// 				log.info(awardData);
 
 				//         log.info({'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection});
 
