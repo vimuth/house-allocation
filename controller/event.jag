@@ -10,9 +10,7 @@ var log = new Log();
 
 log.info("event.jag");
 
-var events_url = 'http://localhost:9763/services/housedb_service/events';
-var activities_url = 'http://localhost:9763/services/housedb_service/activities';
-var awards_url = 'http://localhost:9763/services/housedb_service/awards';
+
 
 if( verb=='POST'){
 

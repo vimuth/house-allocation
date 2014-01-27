@@ -59,14 +59,14 @@ Awards :
 </table>
 <div>
 	<a href="#" class="icon-link"
-		style="background-image: url(images/add.gif);"
+		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
 		onclick="showHideCommon('activityFormArea');if($('activityFormArea').
 	               css.display!='none')$('#activityName').focus();">
 		Add New Activity </a>
 </div>
 <div>
 	<a href="#" class="icon-link"
-		style="background-image: url(images/add.gif);"
+		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
 		onclick="showHideCommon('awardFormArea');if($('awardFormArea').
 	               css.display!='none')$('#awardName').focus();">
 		Add New Award </a>
@@ -276,7 +276,7 @@ Awards :
 														.ajax({
 															type : "POST",
 															contentType : "application/json",
-															url : "http://10.100.4.54:9763/TestApp2/events",
+															url : "{{url "/addEvent.jag"}}",
 
 															data : JSON
 																	.stringify({
@@ -289,6 +289,11 @@ Awards :
 																	}),
 															success : function(
 																	msg) {
+																alert(msg);
+																if(msg.redirect){
+																	alert(msg.url);
+																	window.location = msg.url;
+																};
 															}
 														});
 

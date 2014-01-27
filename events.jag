@@ -1,5 +1,4 @@
 <%
-log.info('here');
 
 var caramel;
 var log = new Log();
@@ -10,7 +9,7 @@ var dataService = require('modules/dataservice.jag');
 	var username=session.get('username');
 
 	if(username!="admin"){
-		response.sendRedirect("login.html")
+		response.sendRedirect("/TestApp2/login.html")
 		return;
 	}
 
