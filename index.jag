@@ -2,7 +2,6 @@
 var caramel;
 var log = new Log();
 
-log.info("here");
 (function () {
 	var body = "Welcome";
 
@@ -12,8 +11,6 @@ log.info("here");
 		response.sendRedirect("login.html")
 		return;
 	}
-
-	log.info('logged in');
 
 	caramel = require('caramel');
 	caramel.render({
