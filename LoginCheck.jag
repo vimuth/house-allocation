@@ -18,7 +18,7 @@
             response.sendRedirect("index.jag");
             }
         else
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("/TestApp2/error.jag");
         %>
     </body>
 </html>

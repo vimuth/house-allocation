@@ -3,107 +3,109 @@
 
 
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    
-    <title>WSO2 House Management Console</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 
-    <link href="css/bootstrap.css" rel="stylesheet"/>
+<title>WSO2 House Management Console</title>
 
-    <script type="text/javascript" src="./js/jquery-1.10.2.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet" />
 
-    <style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
+<script type="text/javascript" src="./js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.js"></script>
 
-      .form-signin {
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-      .form-signin .form-signin-heading,
-      .form-signin .checkbox {
-        margin-bottom: 10px;
-      }
-      .form-signin input[type="text"],
-      .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
+<style type="text/css">
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
 
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet"/>
+.form-signin {
+	max-width: 300px;
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.form-signin .form-signin-heading,.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+
+.form-signin input[type="text"],.form-signin input[type="password"] {
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
+}
+</style>
+<link href="css/bootstrap-responsive.css" rel="stylesheet" />
 </head>
 
 <body>
 
-<script type="text/javascript" src="js/dialog.js"></script>   
+	<script type="text/javascript" src="js/dialog.js"></script>
 
-     <script type="text/javascript">
+	<script type="text/javascript">
+		function doValidation() {
+			var reason = "";
 
-        function doValidation() {
-            var reason = "";
+			var userNameEmpty = isEmpty("username");
+			var passwordEmpty = isEmpty("password");
 
-            var userNameEmpty = isEmpty("username");
-            var passwordEmpty = isEmpty("password");
+			if (userNameEmpty || passwordEmpty) {
+				document.getElementById('username').focus();
+				return false;
+			}
 
-            if (userNameEmpty || passwordEmpty) {
-                //CARBON.showWarningDialog('Please enter a valid user name and a password.');
-                document.getElementById('username').focus();
-                return false;
-            }
+			return true;
+		}
+	</script>
 
-            return true;
-        }
 
-    </script>
+	<script type="text/javascript">
+		function getSafeText(text) {
+			text = text.replace(/</g, '&lt;');
+			return text.replace(/>/g, '&gt');
+		}
 
-    
-     <script type="text/javascript">
-    	function getSafeText(text){
-    		text = text.replace(/</g,'&lt;');
-    		return text.replace(/>/g,'&gt');
-    	}
-    
-        function checkInputs(){
-        	var loginForm = document.getElementById('form-signin');
-        	
-        	var username = document.getElementById("username");
-        	
-        	username.value = getSafeText(username.value);
-        	loginForm.submit();
-        }
-    </script>
+		function checkInputs() {
 
-    <div class="container">
+			if (doValidation) {
+				var loginForm = document.getElementById('form-signin');
 
-      <form class="form-signin" action='LoginCheck.jag' onsubmit="return doValidation();" target="_self" onsubmit="checkInputs()">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input id="username" type="text" class="input-block-level" name="username"/>
-        <input id="password" type="password" class="input-block-level" name="password"/>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"/> Remember me
-        </label>
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-      </form>
+				var username = document.getElementById("username");
 
-    </div>
+				username.value = getSafeText(username.value);
+				loginForm.submit();
+			}
+		}
+	</script>
+
+	<div class="container">
+
+		<form class="form-signin" action='LoginCheck.jag'
+			onsubmit="return doValidation();" target="_self"
+			onsubmit="checkInputs()">
+			<h2 class="form-signin-heading">Please sign in</h2>
+			<input id="username" type="text" class="input-block-level"
+				name="username" /> <input id="password" type="password"
+				class="input-block-level" name="password" /> <label class="checkbox">
+				<input type="checkbox" value="remember-me" /> Remember me
+			</label>
+			<button class="btn btn-large btn-primary" type="submit">Sign
+				in</button>
+		</form>
+
+	</div>
 
 
 </body>
