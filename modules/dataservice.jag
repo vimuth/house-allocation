@@ -1,8 +1,8 @@
 <%
-var url = 'http://localhost:9763/services/housedb_service/';
-var events_url = 'http://localhost:9763/services/housedb_service/events/';
-var activities_url = 'http://localhost:9763/services/housedb_service/activities/';
-var awards_url = 'http://localhost:9763/services/housedb_service/awards/';
+var url = 'http://localhost:9763/services/house_allocation/';
+var events_url = 'http://localhost:9763/services/house_allocation/events/';
+var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
+var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
 
 var log = new Log();
 
@@ -14,13 +14,16 @@ function getEvent(id){
 			var awardData = parse(get(url+'event/awards/'+id,null,{
 				"Accept":"application/json"},"application/json").data);
 
-				// 				log.info(eventData);
-				// 				log.info(activityData);
-				// 				log.info(awardData);
+				
 
-				//         log.info({'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection});
+				if(!(activityData.activityCollection.activity instanceof Array)){
+					activityData.activityCollection.activity = [activityData.activityCollection.activity];
+				}
 
-				return {'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection};
+				if(!(awardData.awardCollection.award instanceof Array)){
+					awardData.awardCollection.award = [awardData.awardCollection.award];
+				}
+				return {'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection.award};
 }
 
 function addEvent(data){
@@ -36,16 +39,16 @@ function addEvent(data){
 				"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
 				var result = post(activities_url, activity, optionalHeaders, "json");
 
-// 				log.info(result);
+				// 				log.info(result);
 		}
 
 		var awards = data.awards;
 		for(var i=0;i<awards.length;i++){
 			var award = {
-				"event_id":event_id,"name":awards[i].name,"description":awards[i].desc,"type":awards[i].type};
+				"event_id":event_id,"name":awards[i].name,"description":awards[i].description,"type":awards[i].type,"isVote":awards[i].isVote};
 				var result = post(awards_url, award, optionalHeaders, "json");
 
-// 				log.info(result);
+				// 				log.info(result);
 		}
 
 		return event_id;

@@ -155,6 +155,13 @@ Awards :
 											<option value="I">Individual</option>
 									</select></td>
 								</tr>
+								<tr>
+									<td>Is this open for a vote</td>
+									<td><select id="awardIsVote">
+											<option value=true>Yes</option>
+											<option value=false>No</option>
+									</select></td>
+								</tr>
 							</tbody>
 						</table>
 					</td>
@@ -213,20 +220,23 @@ Awards :
 
 			if (validateAwardForm()) {
 
-				var activityName = document.getElementById('awardName').value;
-				var activityDescription = document
+				var awardName = document.getElementById('awardName').value;
+				var awardDescription = document
 						.getElementById('awardDescription').value;
-				var activityType = document.getElementById('awardType').value;
+				var awardType = document.getElementById('awardType').value;
+				var awardIsVote = document.getElementById('awardIsVote').value;
 
 				$('#awardTable > tbody:last').append(
-						'<tr><td>' + activityName + '</td><td>'
-								+ activityDescription + '</td><td>'
-								+ activityType + '</td></tr>');
+						'<tr><td>' + awardName + '</td><td>'
+								+ awardDescription + '</td><td>'
+								+ awardIsVote + '</td><td>'
+								+ awardType + '</td></tr>');
 
 				var award = new Object();
-				award.name = activityName;
-				award.desc = activityDescription;
-				award.type = activityType;
+				award.name = awardName;
+				award.description = awardDescription;
+				award.type = awardType;
+				award.isVote = awardIsVote
 
 				awardList.push(award);
 
@@ -289,9 +299,7 @@ Awards :
 																	}),
 															success : function(
 																	msg) {
-																alert(msg);
 																if(msg.redirect){
-																	alert(msg.url);
 																	window.location = msg.url;
 																};
 															}
