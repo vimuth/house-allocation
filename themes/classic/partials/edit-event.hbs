@@ -1,65 +1,76 @@
-<form id="myform" name="newEvent">
-	<div class="form-group">
-		<label for="eventName">Event Name</label> <input type="email"
-			class="form-control" id="eventName" placeholder="Enter email">
-	</div>
-	<div class="form-group">
-		<label for="eventDescription">Description</label>
-		<textarea class="form-control" id="eventDescription" rows="3"></textarea>
-	</div>
+<ul class="list-group">
+	<li class="list-group-item">
+		<form id="myform" name="newEvent">
+			<div class="form-group">
+				<label for="eventName">Event Name</label> <input type="email"
+					class="form-control" id="eventName" placeholder="Enter email">
+			</div>
+			<div class="form-group">
+				<label for="eventDescription">Description</label>
+				<textarea class="form-control" id="eventDescription" rows="3"></textarea>
+			</div>
 
-	<button id="submitButton" type="submit" class="btn btn-default">Submit</button>
-</form>
+			<button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</li>
+	<li class="list-group-item">
 
+		<div style="padding-top: 10px">
+			Activities :
+			<table class="table table-bordered" id="activityTable">
 
-<div style="padding-top: 10px">
-	Activities :
-	<table class="table table-bordered" id="activityTable">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody>
 
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Type</th>
-			</tr>
-		</thead>
-		<tbody>
+				</tbody>
 
-		</tbody>
+			</table>
+		</div>
+	</li>
+	<li class="list-group-item">
+		<div style="padding-top: 10px">
+			Awards :
+			<table class="table table-bordered" id="awardTable">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Type</th>
+						<th>Vote</th>
+					</tr>
+				</thead>
+				<tbody>
 
-	</table>
-</div>
+				</tbody>
 
-<div style="padding-top: 10px">
-	Awards :
-	<table class="table table-bordered" id="awardTable">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Type</th>
-				<th>Vote</th>
-			</tr>
-		</thead>
-		<tbody>
-
-		</tbody>
-
-	</table>
-</div>
-
-<div>
-	<a href="#" class="icon-link"
-		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
+			</table>
+		</div>
+	</li>
+	<li class="list-group-item">
+		<div>
+			<a href="#" class="icon-link" style="background-image: url({{ url"
+				/themes/classic/images/add.gif"}});"
 		onclick="showHideCommon('activityFormArea');if($('activityFormArea').
 	               css.display!='none')$('#activityName').focus();">
-		Add New Activity </a>
-</div>
-<div>
-	<a href="#" class="icon-link"
-		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
+				Add New Activity </a>
+		</div>
+		<div>
+			<a href="#" class="icon-link" style="background-image: url({{ url"
+				/themes/classic/images/add.gif"}});"
 		onclick="showHideCommon('awardFormArea');if($('awardFormArea').
 	               css.display!='none')$('#awardName').focus();">
-		Add New Award </a>
-</div>
-
+				Add New Award </a>
+		</div>
+	</li>
+	<li class="list-group-item">
+		<div class="panel panel-default">
+			<div class="panel-body"></div>
+		</div>
+	</li>
+</ul>
