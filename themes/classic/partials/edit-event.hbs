@@ -1,0 +1,311 @@
+<form id="myform" name="newEvent">
+	<table id="event" class="styledLeft">
+		<thead>
+			<tr>
+				<th colspan="2">New Event</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label>Event Name</label></td>
+				<td><input class="toolsClass" type="text" id="eventName"
+					name="eventName" size="40" /></td>
+			</tr>
+			<tr>
+				<td><label>Event Description</label></td>
+				<td><textarea class="toolsClass" id="eventDescription"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="buttonRow"><input name="submit"
+					id="submitButton" type="button" class="button" value=" submit " />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		alternateTableRows('event', 'tableEvenRow', 'tableOddRow');
+	</script>
+</form>
+
+Activities :
+<table class="table" id="activityTable" border="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+
+</table>
+
+Awards :
+<table class="table" id="awardTable" border="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+
+</table>
+<div>
+	<a href="#" class="icon-link"
+		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
+		onclick="showHideCommon('activityFormArea');if($('activityFormArea').
+	               css.display!='none')$('#activityName').focus();">
+		Add New Activity </a>
+</div>
+<div>
+	<a href="#" class="icon-link"
+		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
+		onclick="showHideCommon('awardFormArea');if($('awardFormArea').
+	               css.display!='none')$('#awardName').focus();">
+		Add New Award </a>
+</div>
+
+</br>
+
+<div id="activityFormArea" style="display: none">
+	<form onsubmit="return addServerRole();" id="activityForm">
+		<table cellpadding="0" cellspacing="0" border="0"
+			class="styledLeft noBorders">
+			<thead>
+				<tr>
+					<th colspan="2">Add New Activity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="formRaw">
+						<table class="normal">
+							<tbody>
+								<tr>
+									<td id="propertySizer">Name</td>
+									<td><input type="text" id="activityName" /></td>
+									<td><label id="activityNameWarning" style="display: none">Please
+											enter a name for the activity</label></td>
+								</tr>
+								<tr>
+									<td id="propertySizer">Description</td>
+									<td><textarea class="toolsClass" id="activityDescription"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>Type</td>
+									<td><select id="activityType">
+											<option value="G">Group</option>
+											<option value="I">Individual</option>
+									</select></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="buttonRow"><input type="button"
+						class="button" value="Add" onclick="addActivity();" /> <input
+						style="margin-left: 5px;" type="button" class="button"
+						value="Cancel" onclick="showHideCommon('activityFormArea');" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+
+</br>
+
+<div id="awardFormArea" style="display: none">
+	<form onsubmit="return addServerRole();" id="awardForm">
+		<table cellpadding="0" cellspacing="0" border="0"
+			class="styledLeft noBorders">
+			<thead>
+				<tr>
+					<th colspan="2">Add New Award</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="formRaw">
+						<table class="normal">
+							<tbody>
+								<tr>
+									<td>Name</td>
+									<td><input type="text" id="awardName" /></td>
+									<td><label id="awardNameWarning" style="display: none">Please
+											enter a name for the award</label></td>
+								</tr>
+								<tr>
+									<td>Description</td>
+									<td><textarea class="toolsClass" id="awardDescription"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>Type</td>
+									<td><select id="awardType">
+											<option value="G">Group</option>
+											<option value="I">Individual</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td>Is this open for a vote</td>
+									<td><select id="awardIsVote">
+											<option value=true>Yes</option>
+											<option value=false>No</option>
+									</select></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="buttonRow"><input type="button"
+						class="button" value="Add" onclick="addAward();" /> <input
+						style="margin-left: 5px;" type="button" class="button"
+						value="Cancel" onclick="showHideCommon('awardFormArea');" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+
+	<script type="text/javascript">
+		var activityList = [];
+		var awardList = [];
+
+		function showHideCommon(divId) {
+			var theDiv = document.getElementById(divId);
+			if (theDiv.style.display == "none") {
+				theDiv.style.display = "";
+			} else {
+				theDiv.style.display = "none";
+			}
+		}
+
+		function validateActivityForm() {
+			var x = document.getElementById('activityName').value;
+			if (x == null || x == "") {
+
+				var warningLabel = document
+						.getElementById("activityNameWarning");
+				warningLabel.style.display = "inline";
+				return false;
+
+			}
+
+			return true;
+		}
+
+		function validateAwardForm() {
+			var x = document.getElementById('awardName').value;
+			if (x == null || x == "") {
+
+				var warningLabel = document.getElementById("awardNameWarning");
+				warningLabel.style.display = "inline";
+				return false;
+
+			}
+
+			return true;
+		}
+
+		function addAward() {
+
+			if (validateAwardForm()) {
+
+				var awardName = document.getElementById('awardName').value;
+				var awardDescription = document
+						.getElementById('awardDescription').value;
+				var awardType = document.getElementById('awardType').value;
+				var awardIsVote = document.getElementById('awardIsVote').value;
+
+				$('#awardTable > tbody:last').append(
+						'<tr><td>' + awardName + '</td><td>'
+								+ awardDescription + '</td><td>'
+								+ awardIsVote + '</td><td>'
+								+ awardType + '</td></tr>');
+
+				var award = new Object();
+				award.name = awardName;
+				award.description = awardDescription;
+				award.type = awardType;
+				award.isVote = awardIsVote
+
+				awardList.push(award);
+
+				showHideCommon("awardFormArea");
+			}
+		}
+
+		function addActivity() {
+
+			if (validateActivityForm()) {
+
+				var activityName = document.getElementById('activityName').value;
+				var activityDescription = document
+						.getElementById('activityDescription').value;
+				var activityType = document.getElementById('activityType').value;
+
+				$('#activityTable > tbody:last').append(
+						'<tr><td>' + activityName + '</td><td>'
+								+ activityDescription + '</td><td>'
+								+ activityType + '</td></tr>');
+
+				var activity = new Object();
+				activity.name = activityName;
+				activity.desc = activityDescription;
+				activity.type = activityType;
+
+				activityList.push(activity);
+
+				showHideCommon("activityFormArea");
+			}
+		}
+
+		$(document)
+				.ready(
+						function() {
+
+							$('#submitButton')
+									.click(
+											function() {
+
+												var eventName = document
+														.getElementById('eventName').value;
+												var eventDescription = document
+														.getElementById('eventDescription').value;
+
+												$
+														.ajax({
+															type : "POST",
+															contentType : "application/json",
+															url : "{{url "/addEvent.jag"}}",
+
+															data : JSON
+																	.stringify({
+																		"event" : {
+																			"name" : eventName,
+																			"description" : eventDescription
+																		},
+																		"activities" : activityList,
+																		"awards" : awardList
+																	}),
+															success : function(
+																	msg) {
+																if(msg.redirect){
+																	window.location = msg.url;
+																};
+															}
+														});
+
+											});
+
+						});
+	</script>
