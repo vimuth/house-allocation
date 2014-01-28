@@ -42,18 +42,15 @@ body {
 	float: left;
 }
 
-//
-Classes
 .pull-left {
 	float: left !important;
 }
 
 .pull-right {
 	float: right !important;
+	margin-left : 10px;
 }
 
-//
-Usage as mixins
 .element { .pull-left ();
 	
 }

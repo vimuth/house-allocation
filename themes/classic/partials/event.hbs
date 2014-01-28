@@ -23,6 +23,8 @@
 				{{name}} : {{description}}<span
 				class="label label-default pull-right">{{#if_eq type
 					"G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
+					<span
+				class="label label-primary pull-right" id="voteLabel">{{#if_eq isVote "true"}}Vote{{/if_eq}}</span>
 			</a> {{/each}}
 		</div>
 	</div>
