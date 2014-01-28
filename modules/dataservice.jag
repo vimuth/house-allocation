@@ -30,15 +30,13 @@ function addEvent(data){
 		var result = post(events_url, data.event, optionalHeaders, "json");
 		event_id = result.data.GeneratedKeys.Entry.ID
 
-
-
 		var activities = data.activities;
 		for(var i=0;i<activities.length;i++){
 			var activity = {
 				"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
 				var result = post(activities_url, activity, optionalHeaders, "json");
 
-				log.info(result);
+// 				log.info(result);
 		}
 
 		var awards = data.awards;
@@ -47,7 +45,7 @@ function addEvent(data){
 				"event_id":event_id,"name":awards[i].name,"description":awards[i].desc,"type":awards[i].type};
 				var result = post(awards_url, award, optionalHeaders, "json");
 
-				log.info(result);
+// 				log.info(result);
 		}
 
 		return event_id;

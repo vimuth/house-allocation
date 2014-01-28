@@ -15,21 +15,26 @@ var dataService = require('modules/dataservice.jag');
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	if(uriMatcher.match('/TestApp2/events/{id}')) {
+		try{
 
-		var id = uriMatcher.elements().id;
-		var data = dataService.getEvent(id);
+			var id = uriMatcher.elements().id;
+			var data = dataService.getEvent(id);
 
-		log.info(data);
+			log.info(data);
 
-		caramel = require('caramel');
-		caramel.render({
-			'header':{
-			'username': username
-		},
-		'title': {
-		text :data.event.name},
-		'body': data
-		});
+			caramel = require('caramel');
+			caramel.render({
+				'header':{
+				'username': username
+			},
+			'title': {
+			text :data.event.name},
+			'body': data
+			});
+		}
+		catch(e){
+			response.sendRedirect("/TestApp2/error.jag");
+		}
 
 	}
 	else{

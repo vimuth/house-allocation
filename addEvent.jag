@@ -19,13 +19,15 @@ var verb = request.getMethod();
 
 			var data = request.getContent();
 			var id = dataService.addEvent(data);
-			
-			response.contentType = 'application/json'; 
+				
+			response.contentType = 'application/json';
 
-			response.content = {'redirect':true, 'url':'/TestApp2/events/'+id} ;
+			response.content = {
+				'redirect':true, 'url':'/TestApp2/events/'+id} ;
 
 		} catch (e) {
 			log.error(e.toString());
+			response.sendRedirect("/TestApp2/error.jag");
 		}
 
 	}

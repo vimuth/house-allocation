@@ -10,21 +10,25 @@ var log = new Log();
 		return;
 	}
 
+	try{
+		var dataService = require('modules/dataservice.jag');
+		var data = dataService.getEvents();
 
-	var dataService = require('modules/dataservice.jag');
-	var data = dataService.getEvents();
+		caramel = require('caramel');
 
-	caramel = require('caramel');
+		// 	log.info(data.eventCollection);
 
-	log.info(data.eventCollection);
-
-	caramel.render({
-		'header':{
-		'username': username
-	},
-	'title': {
-	text :'Events'},
-	'events': data.eventCollection
-	});
+		caramel.render({
+			'header':{
+			'username': username
+		},
+		'title': {
+		text :'Events'},
+		'events': data.eventCollection
+		});
+	}
+	catch(e){
+		response.sendRedirect("/TestApp2/error.jag");
+	}
 }());
 %>
