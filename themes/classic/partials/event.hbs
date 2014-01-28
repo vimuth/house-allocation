@@ -5,16 +5,18 @@
 	<div class="panel-body">Description : {{event.description}}</div>
 
 	<div class="panel-body">
-		
+
 		<div class="panel">Activities :</div>
-		
+
 		<div class="list-group">
 			{{#each activities.activity}} <a href="#" class="list-group-item">
-				{{name}} : {{description}} <span class="label label-default pull-right">{{type}}</span></a> {{/each}}
+				{{name}} : {{description}} {{type}} <span
+				class="label label-default pull-right">{{#if_eq type "G"}}Group{{/if_eq}}</span>
+			</a> {{/each}}
 		</div>
-		
+
 		<div class="panel">Awards :</div>
-		
+
 		<div class="list-group">
 			{{#each awards.award}} <a href="#" class="list-group-item">
 				{{name}} : {{description}} </a> {{/each}}
