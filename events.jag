@@ -49,6 +49,7 @@ var dataService = require('modules/dataservice.jag');
 
 	}
 	else{
+		log.info('here');
 		response.sendRedirect("/TestApp2/event-list.jag");
 		return;
 	}
