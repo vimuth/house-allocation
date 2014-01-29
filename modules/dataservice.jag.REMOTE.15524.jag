@@ -1,15 +1,8 @@
 <%
-<<<<<<< HEAD
-var url = 'http://10.100.4.54:9763/services/housedb_service/';
-var events_url = 'http://10.100.4.54:9763/services/housedb_service/events/';
-var activities_url = 'http://10.100.4.54:9763/services/housedb_service/activities/';
-var awards_url = 'http://10.100.4.54:9763/services/housedb_service/awards/';
-=======
 var url = 'http://localhost:9763/services/house_allocation/';
 var events_url = 'http://localhost:9763/services/house_allocation/events/';
 var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
 var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
->>>>>>> 9f6aaafbf335a49491c379bb08ce24c151d95ffe
 
 var log = new Log();
 
@@ -66,14 +59,5 @@ function getEvents(){
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
 }
-
-function getAwards(){
-	var data = get(url+'awards',null,{
-		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-}
-
-
-
 
 %>

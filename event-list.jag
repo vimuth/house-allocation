@@ -6,7 +6,7 @@ var log = new Log();
 	var username=session.get('username');
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag")
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
 

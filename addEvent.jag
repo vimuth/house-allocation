@@ -9,15 +9,16 @@ var verb = request.getMethod();
 	var username=session.get('username');
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
 
 	if( verb=='POST'){
 		var dataService = require('modules/dataservice.jag');
 		try {
-
+			
 			var data = request.getContent();
+// 			log.info(data);
 			var id = dataService.addEvent(data);
 				
 			response.contentType = 'application/json';

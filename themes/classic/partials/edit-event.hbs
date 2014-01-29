@@ -2,11 +2,11 @@
 	<div class="form-group">
 		<label for="eventName">Event Name</label> <input type="text"
 			class="form-control" id="eventName" placeholder="Enter Event Name"
-			required>
+			value="{{event.name}}" required>
 	</div>
 	<div class="form-group">
 		<label for="eventDescription">Description</label>
-		<textarea class="form-control" id="eventDescription" rows="3"></textarea>
+		<textarea class="form-control" id="eventDescription" rows="3">{{event.description}}</textarea>
 	</div>
 </form>
 <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
@@ -19,11 +19,22 @@
 			<tr>
 				<th>Name</th>
 				<th>Description</th>
-				<th>Type</th>
+				<th style="text-align:center">Type</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
+			{{#each activities.activity}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{description}}</td>
+				<td align="center">{{type}}</td>
+				<td align="center"><button type="button" style="padding-left:15px;padding-right:15px" class="btn btn-warning btn-xs">edit</button></td>
+				<td align="center"><button type="button" class="btn btn-danger btn-xs">delete</button></td>
+			</tr>
 
+			{{/each}}
 		</tbody>
 
 	</table>
@@ -35,12 +46,24 @@
 			<tr>
 				<th>Name</th>
 				<th>Description</th>
-				<th>Vote</th>
-				<th>Type</th>
+				<th style="text-align:center">Vote</th>
+				<th style="text-align:center">Type</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
+			{{#each awards}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{description}}</td>
+				<td align="center">{{isVote}}</td>
+				<td align="center">{{type}}</td>
+				<td align="center"><button type="button" style="padding-left:15px;padding-right:15px" class="btn btn-warning btn-xs">edit</button></td>
+				<td align="center"><button type="button" class="btn btn-danger btn-xs">delete</button></td>
+			</tr>
 
+			{{/each}}
 		</tbody>
 
 	</table>
@@ -55,16 +78,11 @@
 	style="display: none; margin-top: 10px">
 	<div class="panel-heading">Add New Activity</div>
 	<div class="panel-body">
-		<form id="activityForm" name="newActivity"
-			onsubmit="addActivity(); return false;">
+		<form id="myform" name="newActivity">
 			<div class="form-group">
 				<label for="activityName">Activity Name</label> <input type="text"
 					class="form-control" id="activityName"
 					placeholder="Enter Activity Name" required>
-			</div>
-			<div class="form-group">
-				<div class="label label-danger" id="activityNameWarning"
-					style="display: none">A Name is required for the activity</div>
 			</div>
 			<div class="form-group">
 				<label for="activityDescription">Description</label>
@@ -76,10 +94,9 @@
 					<option value="I">Individual Activity</option>
 				</select>
 			</div>
-			<button id="submitActivityButton" class="btn btn-default">Add</button>
 		</form>
-
-
+		<button id="submitActivityButton" class="btn btn-default"
+			onclick="addActivity();">Add</button>
 	</div>
 </div>
 
@@ -87,13 +104,11 @@
 	style="display: none; margin-top: 10px">
 	<div class="panel-heading">Add New Award</div>
 	<div class="panel-body">
-		<form id="myform" name="newAward" onsubmit="addAward(); return false;">
+		<form id="myform" name="newAward">
 			<div class="form-group">
 				<label for="awardName">Activity Name</label> <input type="text"
 					class="form-control" id="awardName" placeholder="Enter award Name"
-					required> <span class="label label-danger"
-					id="awardNameWarning" style="display: none">A Name is
-					required for the award</span>
+					required>
 			</div>
 			<div class="form-group">
 				<label for="awardDescription">Description</label>
@@ -110,9 +125,9 @@
 					</label>
 				</div>
 			</div>
-			<button id="submitAwardButton" class="btn btn-default">Add</button>
 		</form>
-
+		<button id="submitAwardButton" class="btn btn-default"
+			onclick="addAward();">Add</button>
 	</div>
 </div>
 
@@ -203,11 +218,9 @@
 				activity.type = activityType;
 
 				activityList.push(activity);
-				
+
 				showHideCommon("newActivityPanel");
 			}
-			
-			return false;
 		}
 
 		$(document)
