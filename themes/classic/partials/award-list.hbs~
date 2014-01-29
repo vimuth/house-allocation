@@ -1,0 +1,5 @@
+<ul>
+{{#each event_award}}
+{{name}}
+{{/each}}
+</ul>
