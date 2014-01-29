@@ -1,183 +1,122 @@
 <form id="myform" name="newEvent">
-	<table id="event" class="styledLeft">
+	<div class="form-group">
+		<label for="eventName">Event Name</label> <input type="text"
+			class="form-control" id="eventName" placeholder="Enter Event Name"
+			required>
+	</div>
+	<div class="form-group">
+		<label for="eventDescription">Description</label>
+		<textarea class="form-control" id="eventDescription" rows="3"></textarea>
+	</div>
+</form>
+<button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+
+<div style="padding-top: 10px">
+	Activities :
+	<table class="table table-bordered" id="activityTable">
+
 		<thead>
 			<tr>
-				<th colspan="2">New Event</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><label>Event Name</label></td>
-				<td><input class="toolsClass" type="text" id="eventName"
-					name="eventName" size="40" /></td>
-			</tr>
-			<tr>
-				<td><label>Event Description</label></td>
-				<td><textarea class="toolsClass" id="eventDescription"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="buttonRow"><input name="submit"
-					id="submitButton" type="button" class="button" value=" submit " />
-				</td>
-			</tr>
+
 		</tbody>
+
 	</table>
-	<script type="text/javascript">
-		alternateTableRows('event', 'tableEvenRow', 'tableOddRow');
-	</script>
-</form>
-
-Activities :
-<table id="activityTable" border="1">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Type</th>
-		</tr>
-	</thead>
-	<tbody>
-
-	</tbody>
-
-</table>
-
-Awards :
-<table id="awardTable" border="1">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Type</th>
-		</tr>
-	</thead>
-	<tbody>
-
-	</tbody>
-
-</table>
-
-<div>
-	<a href="#" class="icon-link"
-		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
-		onclick="showHideCommon('activityFormArea');if($('activityFormArea').
-	               css.display!='none')$('#activityName').focus();">
-		Add New Activity </a>
 </div>
-<div>
-	<a href="#" class="icon-link"
-		style="background-image: url({{url "/themes/classic/images/add.gif"}});"
-		onclick="showHideCommon('awardFormArea');if($('awardFormArea').
-	               css.display!='none')$('#awardName').focus();">
-		Add New Award </a>
+<div style="padding-top: 10px">
+	Awards :
+	<table class="table table-bordered" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Vote</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
 </div>
 
-</br>
+<button id="submitButton" type="submit" class="btn btn-default"
+	onclick="showHideCommon('newActivityPanel')">Add Activity</button>
+<button id="submitButton" type="submit" class="btn btn-default"
+	onclick="showHideCommon('newAwardPanel')">Add Award</button>
 
-<div id="activityFormArea" style="display: none">
-	<form onsubmit="return addServerRole();" id="activityForm">
-		<table cellpadding="0" cellspacing="0" border="0"
-			class="styledLeft noBorders">
-			<thead>
-				<tr>
-					<th colspan="2">Add New Activity</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="formRaw">
-						<table class="normal">
-							<tbody>
-								<tr>
-									<td id="propertySizer">Name</td>
-									<td><input type="text" id="activityName" /></td>
-									<td><label id="activityNameWarning" style="display: none">Please
-											enter a name for the activity</label></td>
-								</tr>
-								<tr>
-									<td id="propertySizer">Description</td>
-									<td><textarea class="toolsClass" id="activityDescription"></textarea>
-									</td>
-								</tr>
-								<tr>
-									<td>Type</td>
-									<td><select id="activityType">
-											<option value="G">Group</option>
-											<option value="I">Individual</option>
-									</select></td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="buttonRow"><input type="button"
-						class="button" value="Add" onclick="addActivity();" /> <input
-						style="margin-left: 5px;" type="button" class="button"
-						value="Cancel" onclick="showHideCommon('activityFormArea');" /></td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
+<div id="newActivityPanel" class="panel panel-default"
+	style="display: none; margin-top: 10px">
+	<div class="panel-heading">Add New Activity</div>
+	<div class="panel-body">
+		<form id="activityForm" name="newActivity"
+			onsubmit="addActivity(); return false;">
+			<div class="form-group">
+				<label for="activityName">Activity Name</label> <input type="text"
+					class="form-control" id="activityName"
+					placeholder="Enter Activity Name" required>
+			</div>
+			<div class="form-group">
+				<div class="label label-danger" id="activityNameWarning"
+					style="display: none">A Name is required for the activity</div>
+			</div>
+			<div class="form-group">
+				<label for="activityDescription">Description</label>
+				<textarea class="form-control" id="activityDescription" rows="3"></textarea>
+			</div>
+			<div class="form-group">
+				<select id="activityType" class="form-control">
+					<option value="G">Group Activity</option>
+					<option value="I">Individual Activity</option>
+				</select>
+			</div>
+			<button id="submitActivityButton" class="btn btn-default">Add</button>
+		</form>
+
+
+	</div>
 </div>
 
-</br>
+<div id="newAwardPanel" class="panel panel-default"
+	style="display: none; margin-top: 10px">
+	<div class="panel-heading">Add New Award</div>
+	<div class="panel-body">
+		<form id="myform" name="newAward" onsubmit="addAward(); return false;">
+			<div class="form-group">
+				<label for="awardName">Activity Name</label> <input type="text"
+					class="form-control" id="awardName" placeholder="Enter award Name"
+					required> <span class="label label-danger"
+					id="awardNameWarning" style="display: none">A Name is
+					required for the award</span>
+			</div>
+			<div class="form-group">
+				<label for="awardDescription">Description</label>
+				<textarea class="form-control" id="awardDescription" rows="3"></textarea>
+			</div>
+			<div class="form-group">
+				<select id="awardType" class="form-control">
+					<option value="G">Group Award</option>
+					<option value="I">Individual Award</option>
+				</select>
+				<div class="checkbox">
+					<label> <input id="awardIsVote" type="checkbox" value=true>Add
+						Vote
+					</label>
+				</div>
+			</div>
+			<button id="submitAwardButton" class="btn btn-default">Add</button>
+		</form>
 
-<div id="awardFormArea" style="display: none">
-	<form onsubmit="return addServerRole();" id="awardForm">
-		<table cellpadding="0" cellspacing="0" border="0"
-			class="styledLeft noBorders">
-			<thead>
-				<tr>
-					<th colspan="2">Add New Award</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="formRaw">
-						<table class="normal">
-							<tbody>
-								<tr>
-									<td>Name</td>
-									<td><input type="text" id="awardName" /></td>
-									<td><label id="awardNameWarning" style="display: none">Please
-											enter a name for the award</label></td>
-								</tr>
-								<tr>
-									<td>Description</td>
-									<td><textarea class="toolsClass" id="awardDescription"></textarea>
-									</td>
-								</tr>
-								<tr>
-									<td>Type</td>
-									<td><select id="awardType">
-											<option value="G">Group</option>
-											<option value="I">Individual</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>Is this open for a vote</td>
-									<td><select id="awardIsVote">
-											<option value=true>Yes</option>
-											<option value=false>No</option>
-									</select></td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="buttonRow"><input type="button"
-						class="button" value="Add" onclick="addAward();" /> <input
-						style="margin-left: 5px;" type="button" class="button"
-						value="Cancel" onclick="showHideCommon('awardFormArea');" /></td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
+	</div>
+</div>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		var activityList = [];
 		var awardList = [];
 
@@ -193,7 +132,6 @@ Awards :
 		function validateActivityForm() {
 			var x = document.getElementById('activityName').value;
 			if (x == null || x == "") {
-
 				var warningLabel = document
 						.getElementById("activityNameWarning");
 				warningLabel.style.display = "inline";
@@ -225,7 +163,7 @@ Awards :
 				var awardDescription = document
 						.getElementById('awardDescription').value;
 				var awardType = document.getElementById('awardType').value;
-				var awardIsVote = document.getElementById('awardIsVote').value;
+				var awardIsVote = document.getElementById('awardIsVote').checked;
 
 				$('#awardTable > tbody:last').append(
 						'<tr><td>' + awardName + '</td><td>'
@@ -241,7 +179,7 @@ Awards :
 
 				awardList.push(award);
 
-				showHideCommon("awardFormArea");
+				showHideCommon("newAwardPanel");
 			}
 		}
 
@@ -265,9 +203,11 @@ Awards :
 				activity.type = activityType;
 
 				activityList.push(activity);
-
-				showHideCommon("activityFormArea");
+				
+				showHideCommon("newActivityPanel");
 			}
+			
+			return false;
 		}
 
 		$(document)
@@ -309,4 +249,4 @@ Awards :
 											});
 
 						});
-	</script>
+</script>
