@@ -2,6 +2,8 @@
 var caramel
 var log = new Log();
 
+log.info(request.getRequestURI());
+
 (function () {
 	var username=session.get('username');
 
