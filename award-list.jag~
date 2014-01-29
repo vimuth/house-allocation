@@ -1,0 +1,34 @@
+<%
+var caramel
+var log = new Log();
+
+(function () {
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag")
+		return;
+	}
+
+	try{
+		var dataService = require('modules/dataservice.jag');
+		var data = dataService.getAwards();
+
+		caramel = require('caramel');
+
+		// 	log.info(data.awardCollection);
+
+		caramel.render({
+			'header':{
+			'username': username
+		},
+		'title': {
+		text :'Awards'},
+		'awards': data.event_awardCollection
+		});
+	}
+	catch(e){
+		response.sendRedirect("/TestApp2/error.jag");
+	}
+}());
+%>

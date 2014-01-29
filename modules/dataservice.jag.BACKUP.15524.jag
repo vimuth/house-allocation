@@ -21,6 +21,7 @@ function getEvent(id){
 			var awardData = parse(get(url+'event/awards/'+id,null,{
 				"Accept":"application/json"},"application/json").data);
 
+				
 
 				if(!(activityData.activityCollection.activity instanceof Array)){
 					activityData.activityCollection.activity = [activityData.activityCollection.activity];
@@ -45,6 +46,7 @@ function addEvent(data){
 				"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
 				var result = post(activities_url, activity, optionalHeaders, "json");
 
+				// 				log.info(result);
 		}
 
 		var awards = data.awards;
@@ -57,14 +59,6 @@ function addEvent(data){
 		}
 
 		return event_id;
-}
-
-function updateEvent(event){
-	var optionalHeaders = {
-		"Accept":"application/json" };
-		put(url, event, "application/json", optionalHeaders, function (data, xhr) {
-			log("Response received");
-		});
 }
 
 function getEvents(){
