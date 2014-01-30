@@ -68,7 +68,7 @@ function getEvents(){
 }
 
 function getAwards(){
-	var data = get(url+'awards_instance',null,{
+	var data = get(url+'awards',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
 }

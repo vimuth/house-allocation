@@ -1,0 +1,13 @@
+<div>
+	<div class="list-group">
+
+<ul>
+{{#each event_award_instance}}  
+	<a href="{{url "/awards_instance/"}}{{id}}" class="list-group-item">
+ 		{{event_award_id}} : {{event_instance_id}} 
+ 	</a>
+{{/each}}
+</ul>
+
+</div>
+</div>
