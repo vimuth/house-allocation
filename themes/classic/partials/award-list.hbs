@@ -1,37 +1,31 @@
 <div>
-	<div class="list-group">
+	<div class="">
+	
 	
 <div style="padding-top: 10px">
-	Awards :
+	<h3>Awards </h3>
 	<table class="table" id="activityTable">
-
-		<thead>
+	<thead>
 			<tr>
-				<th>event_award_id</th>
-				<th>event_instance_id</th>
-				
+				<th>Award name</th>
+				<th>Event instance name</th>				
 			</tr>
-			
-			<ul>
+	</thead>			
+		<tbody>	
 				{{#each event_award_instance}}
- 				<li>
- 				<tr>
- 				<th>{{event_award_id}}</th>
- 				<th>{{event_instance_id}}</th>
- 				</tr>
- 				</li>
-				{{/each}}
-			</ul>
-			
-		</thead>
-		<tbody>
-
-		</tbody>
-
-	</table>
-</div>
-
+ 				
+ 					<tr>
+ 						<a href="{{url "/awards.jag/"}}{{event_award_id}}" class="list-group-item">
+ 						<th>{{event_award_id}}</th>
+ 						<th>{{event_instance_id}}</th>
+ 						</a> 					
+ 					</tr>
+ 					
+				{{/each}}				
 	
+		</tbody>
+	</table>
+	</div>
 
 	</div>
 </div>
