@@ -18,7 +18,7 @@ var verb = request.getMethod();
 		try {
 			
 			var data = request.getContent();
-// 			log.info(data);
+			log.info(data);
 			var id = dataService.addEvent(data);
 				
 			response.contentType = 'application/json';

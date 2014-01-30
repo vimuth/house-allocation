@@ -17,17 +17,16 @@ var verb = request.getMethod();
 	}
 
 	if( verb=='PUT'){
-		log.info("PUT");
 		try {
 
 			var data = request.getContent();
-			log.info(data);
-			var id = dataService.updateEvent(data.event);
-
+			dataService.updateEvent(data.event);
+			
+			
 			response.contentType = 'application/json';
-
 			response.content = {
-				'redirect':true, 'url':'/TestApp2/events/'+id} ;
+				'redirect':true, 'url':'/TestApp2/events/'+data.event.id} ;
+				
 
 		} catch (e) {
 			log.error(e.toString());
@@ -36,7 +35,6 @@ var verb = request.getMethod();
 		
 	}
 	else{
-		log.info("GET");
 		if (verb=='GET'){
 
 			var uriMatcher = new URIMatcher(request.getRequestURI());
@@ -76,7 +74,6 @@ var verb = request.getMethod();
 
 			}
 			else{
-				log.info('here');
 				response.sendRedirect("/TestApp2/event-list.jag");
 				return;
 			}

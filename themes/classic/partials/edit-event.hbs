@@ -30,11 +30,12 @@
 				<td>{{name}}</td>
 				<td>{{description}}</td>
 				<td align="center">{{type}}</td>
-				<td align="center"><button type="button"
+				<td align="center"><button type="button" id="edit-button"
 						style="padding-left: 15px; padding-right: 15px"
 						class="btn btn-warning btn-xs">edit</button></td>
-				<td align="center"><button type="button"
-						class="btn btn-danger btn-xs">delete</button></td>
+				<td align="center"><button type="button" id="del-button"
+						class="btn btn-danger btn-xs"
+						onclick="deleteActivity({{id}},$(this));">delete</button></td>
 			</tr>
 
 			{{/each}}
@@ -63,9 +64,9 @@
 				<td align="center">{{isVote}}</td>
 				<td align="center">{{type}}</td>
 				<td align="center"><button type="button"
-						style="padding-left: 15px; padding-right: 15px"
+						style="padding-left: 15px; padding-right: 15px" id="edit-button"
 						class="btn btn-warning btn-xs">edit</button></td>
-				<td align="center"><button type="button"
+				<td align="center"><button type="button" onclick="deleteActivity({{id}},$(this));"
 						class="btn btn-danger btn-xs">delete</button></td>
 			</tr>
 
@@ -140,7 +141,38 @@
 <script type="text/javascript">
 		var activityList = [];
 		var awardList = [];
+		var activityDeleteList = [];
+		var awardDeleteList = [];
+		
 
+		
+		function deleteActivity(id, button){
+			if (confirm("Are you sure you want delete this activity?")) {
+			activityDeleteList.push(id);
+			
+			button.attr("disabled", true);
+			var row = button.parent().parent();
+			row.find('#edit-button').attr("disabled", true);
+			row.css('background-color', 'gray');
+			
+			return false;
+			}
+		}
+		function deleteAward(id, button){
+			if (confirm("Are you sure you want delete this award?")) {
+			awardDeleteList.push(id);
+			
+			button.attr("disabled", true);
+			var row = button.parent().parent();
+			row.find('#edit-button').attr("disabled", true);
+			row.css('background-color', 'gray');
+			
+			return false;
+			}
+		}
+		
+		
+		
 		function showHideCommon(divId) {
 			var theDiv = document.getElementById(divId);
 			if (theDiv.style.display == "none") {
@@ -246,14 +278,14 @@
 														.ajax({
 															type : "PUT",
 															contentType : "application/json",
-															url : "{{url "/edit-event.jag"}}",
+															url : "{{url "/edit-event/"}}",
 
 															data : JSON
 																	.stringify({
 																		"event" : {
-																			"id":"{{event.id}}"
 																			"name" : eventName,
-																			"description" : eventDescription
+																			"description" : eventDescription,
+																			"id":"{{event.id}}",
 																		}
 																	}),
 															success : function(
