@@ -15,7 +15,7 @@ var dataService = require('modules/dataservice.jag');
 	}
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/awards/{id}')) {
+	if(uriMatcher.match('/TestApp2/awards_instance/{id}')) {
 		try{
 
 			var id = uriMatcher.elements().id;

@@ -65,12 +65,14 @@ function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
+		log.info(data.eventCollection);
 }
 
 function getAwards(){
 	var data = get(url+'awards_instance',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
+			
 }
 
 

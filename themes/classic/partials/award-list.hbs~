@@ -2,9 +2,26 @@
 	<div class="list-group">
 
 <ul>
-{{#each event_award_instance}}  
-	<a href="{{url "/awards_instance/"}}{{id}}" class="list-group-item">
- 		{{event_award_id}} : {{event_instance_id}} 
+{{#each event_award}}  
+	<a href="{{url "/awards.jag"}}{{id}}" class="list-group-item">
+	<table class="table" id="activityTable">
+
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
+			</tr>
+			<tr>
+				{{event_award_id}} : {{event_instance_id}} 
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+ 		
  	</a>
 {{/each}}
 </ul>
