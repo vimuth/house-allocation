@@ -246,14 +246,14 @@
 														.ajax({
 															type : "PUT",
 															contentType : "application/json",
-															url : "{{url "/edit-event.jag"}}",
+															url : "{{url "/edit-event/"}}",
 
 															data : JSON
 																	.stringify({
 																		"event" : {
-																			"id":"{{event.id}}"
 																			"name" : eventName,
-																			"description" : eventDescription
+																			"description" : eventDescription,
+																			"id":"{{event.id}}",
 																		}
 																	}),
 															success : function(
