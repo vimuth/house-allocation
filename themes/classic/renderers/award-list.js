@@ -10,7 +10,7 @@ var render = function(theme, data, meta, require) {
 		}],
 		main : [ {
 			partial : 'award-list',
-			context : data.awards
+			context : data.awards_instance
 		} ]
 	});
 };
