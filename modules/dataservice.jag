@@ -80,7 +80,8 @@ function getAwards(){
 			
 }
 
-
-
+function deleteEvent(id){
+	del(url+'events/'+id);
+}
 
 %>

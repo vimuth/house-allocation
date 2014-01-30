@@ -1,6 +1,44 @@
 <div>
-        <div class="list-group">
-                {{#each event}} <a href="{{url "/events/"}}{{id}}" class="list-group-item">
-                        {{name}} : {{description}} </a> {{/each}}
-        </div>
+	<div class="list-group">
+		{{#each events.event}} <a href='{{url "/events/"}}{{id}}'
+			class="list-group-item"> {{name}} : {{description}} 
+			{{#if ../role}}
+			<button onclick="deleteEvent({{id}},$(this).parent());return false;"
+				type="button" class="btn btn-danger btn-xs pull-right">delete</button>
+			<button onclick="editEvent({{id}});return false;" type="button"
+				style="" class="btn btn-warning btn-xs pull-right">edit</button>
+			{{/if}}
+		</a> {{/each}}
+	</div>
 </div>
+
+
+{{#if role}}
+<script>
+	function editEvent(id) {
+		document.location.href = '{{url "/edit-event/"}}' + id;
+	}
+
+	function deleteEvent(id, row) {
+		if (confirm("Are you sure you want delete this event?")) {
+
+			$.ajax({
+				type : "DELETE",
+				contentType : "application/json",
+				url : "{{url " / events / "}}" + id,
+
+				data : {},
+				success : function(msg) {
+
+					if (msg.success) {
+						row.remove();
+					} else {
+						alert('Error - unable to delete event.');
+					}
+				}
+			});
+
+		}
+	}
+</script>
+{{/if}}

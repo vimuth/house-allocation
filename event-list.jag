@@ -1,34 +1,45 @@
 <%
-var caramel
+var caramel;
 var log = new Log();
 
 (function () {
 	var username=session.get('username');
+	var admin= session.get('role')=='admin';
 
-	if(username!="admin"){
+	log.info(admin);
+
+	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
 
-	try{
-		var dataService = require('modules/dataservice.jag');
-		var data = dataService.getEvents();
+	// 	try{
+	var dataService = require('modules/dataservice.jag');
+	var data = dataService.getEvents();
 
-		caramel = require('caramel');
+	caramel = require('caramel');
+	Handlebars = require('handlebars');
 
-		 	log.info(data.eventCollection);
+	Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+		if (a == b)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	});
+
+		// 		log.info(data.eventCollection);
 
 		caramel.render({
 			'header':{
-			'username': username
-		},
-		'title': {
-		text :'Events'},
-		'events': data.eventCollection
+			'username': username},
+			'title': {
+			text :'Events'},
+			'main' : {
+			'role': admin, 'events': data.eventCollection}
 		});
-	}
-	catch(e){
-		response.sendRedirect("/TestApp2/error.jag");
-	}
-}());
-%>
+		// 	}
+		// 	catch(e){
+		// 		response.sendRedirect("/TestApp2/error.jag");
+		// 	}
+		}());
+		%>
