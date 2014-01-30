@@ -1,11 +1,37 @@
 <div>
 	<div class="list-group">
+	
+<div style="padding-top: 10px">
+	Awards :
+	<table class="table" id="activityTable">
 
-	<ul>
-		{{#each event_award_instance}}
- 		<li>{{name}}</li>
-		{{/each}}
-	</ul>
+		<thead>
+			<tr>
+				<th>event_award_id</th>
+				<th>event_instance_id</th>
+				
+			</tr>
+			
+			<ul>
+				{{#each event_award_instance}}
+ 				<li>
+ 				<tr>
+ 				<th>{{event_award_id}}</th>
+ 				<th>{{event_instance_id}}</th>
+ 				</tr>
+ 				</li>
+				{{/each}}
+			</ul>
+			
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+
+	
 
 	</div>
 </div>

@@ -38,7 +38,7 @@ var dataService = require('modules/dataservice.jag');
 					'username': username
 				},
 				'title': {
-				text :data.awards.name},
+				text :data.awards_instance.:event_award_id},
 				'body': data
 				});
 		}
