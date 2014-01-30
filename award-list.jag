@@ -16,7 +16,7 @@ var log = new Log();
 
 		caramel = require('caramel');
 
-		// 	log.info(data.awardCollection);
+			log.info(data.event_award_instanceCollection);
 
 		caramel.render({
 			'header':{
@@ -24,7 +24,7 @@ var log = new Log();
 		},
 		'title': {
 		text :'Awards'},
-		'awards': data.event_awardCollection
+		'awards_instance': data.event_award_instanceCollection
 		});
 	}
 	catch(e){

@@ -1,5 +1,31 @@
-<ul>
-{{#each event_award}}
- <li>{{name}}</li>
-{{/each}}
-</ul>
+<div>
+	<div class="">
+	
+	
+<div style="padding-top: 10px">
+	<h3>Awards </h3>
+	<table class="table" id="activityTable">
+	<thead>
+			<tr>
+				<th>Award name</th>
+				<th>Event instance name</th>				
+			</tr>
+	</thead>			
+		<tbody>	
+				{{#each event_award_instance}}
+ 				
+ 					<tr>
+ 						<a href="{{url "/awards.jag/"}}{{event_award_id}}" class="list-group-item">
+ 						<th>{{event_award_id}}</th>
+ 						<th>{{event_instance_id}}</th>
+ 						</a> 					
+ 					</tr>
+ 					
+				{{/each}}				
+	
+		</tbody>
+	</table>
+	</div>
+
+	</div>
+</div>

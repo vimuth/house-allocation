@@ -15,11 +15,11 @@ var dataService = require('modules/dataservice.jag');
 	}
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/awards/{id}')) {
+	if(uriMatcher.match('/TestApp2/awards_instance/{id}')) {
 		try{
 
 			var id = uriMatcher.elements().id;
-			var data = dataService.getEvent(id);
+			var data = dataService.getAwards(id);
 
 			log.info(data);
 
@@ -38,7 +38,7 @@ var dataService = require('modules/dataservice.jag');
 					'username': username
 				},
 				'title': {
-				text :data.awards.name},
+				text :data.awards_instance.:event_award_id},
 				'body': data
 				});
 		}

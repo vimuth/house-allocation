@@ -31,9 +31,6 @@ function addEvent(data){
 		"Accept":"application/json" };
 
 		var result = post(events_url, data.event, optionalHeaders, "json");
-
-		// 		log.info(result);
-
 		event_id = result.data.GeneratedKeys.Entry.ID
 
 		var activities = data.activities;
@@ -57,27 +54,23 @@ function addEvent(data){
 }
 
 function updateEvent(event){
-	var headers = {
-		"Accept": "application/json"};
-
-		var result = post(url+'edit-event',event,headers,'json', function(data,xhr){
-			log.info("successfully updated the event");
+	var optionalHeaders = {
+		"Accept":"application/json" };
+		put(url, event, "application/json", optionalHeaders, function (data, xhr) {
+			log("Response received");
 		});
-
 }
 
 function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-		log.info(data.eventCollection);
 }
 
 function getAwards(){
-	var data = get(url+'awards_instance',null,{
+	var data = get(url+'awards',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-			
 }
 
 

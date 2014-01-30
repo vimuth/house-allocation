@@ -16,7 +16,7 @@ var log = new Log();
 
 		caramel = require('caramel');
 
-		// 	log.info(data.eventCollection);
+		 	log.info(data.eventCollection);
 
 		caramel.render({
 			'header':{
