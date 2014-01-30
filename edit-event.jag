@@ -16,12 +16,13 @@ var verb = request.getMethod();
 		return;
 	}
 
-	if( verb=='POST'){
+	if( verb=='PUT'){
+		log.info("PUT");
 		try {
-				
+
 			var data = request.getContent();
-			// 			log.info(data);
-			var id = dataService.addEvent(data);
+			log.info(data);
+			var id = dataService.updateEvent(data.event);
 
 			response.contentType = 'application/json';
 
@@ -32,20 +33,21 @@ var verb = request.getMethod();
 			log.error(e.toString());
 			response.sendRedirect("/TestApp2/error.jag");
 		}
-
+		
 	}
 	else{
+		log.info("GET");
 		if (verb=='GET'){
 
 			var uriMatcher = new URIMatcher(request.getRequestURI());
 			if(uriMatcher.match('/TestApp2/edit-event/{id}')) {
 				try{
-						
+
 
 					var id = uriMatcher.elements().id;
 					var data = dataService.getEvent(id);
 
-					log.info(data);
+// 					log.info(data);
 
 					caramel = require('caramel');
 					Handlebars = require('handlebars');
@@ -67,7 +69,7 @@ var verb = request.getMethod();
 						});
 				}
 				catch(e){
-						
+
 					log.error(e);
 					// 					response.sendRedirect("/TestApp2/error.jag");
 				}
