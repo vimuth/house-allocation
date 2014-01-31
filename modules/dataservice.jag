@@ -61,29 +61,25 @@ function addEventInstance(data){
 	var optionalHeaders = {
 		"Accept":"application/json" };
 
-		var eventID = get(url+'event_id_from_name',data.eventInstance.eventName,{
+		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
 		"Accept":"application/json"},"application/json");
 
-		var eventInstName = document.getElementById('eventInstanceName');
-			var eventName = document.getElementById('events').value;
-			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-			var eventInstStartDate = document.getElementById('startDate').value;
-			var eventInstEndDate = document.getElementById('endDate').value;
+		var eventIdObj = parse(result.data);
+		var eventID = eventIdObj.event_id.event_id.id;
+		var eventInstName = data.eventInstance.name;
+			var eventInstDescription = data.eventInstance.description;
+			var eventInstStartDate = data.eventInstance.startDate;
+			var eventInstEndDate = data.eventInstance.endDate;
 
-               $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: "eventInstance2.jag",
-              
-              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
-              success: function(msg) {
-              }
-           });
 
-		var result = post(url+"add_event_instance", data.eventInstance, optionalHeaders, "json");
-		event_instance_id = result.data.GeneratedKeys.Entry.ID;
+            var eventInst={"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
 
-		return event_instance_id;
+
+		var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
+		log.info(result);
+		//event_instance_id = result.data.GeneratedKeys.Entry.ID;
+
+		//return event_instance_id;
 }
 
 function updateEvent(event){
@@ -117,7 +113,9 @@ function deleteEvent(id){
 function getEventNames(){
 	var data = get(url+'event_names',null,{
 		"Accept":"application/json"},"application/json");
+			//	log.info(data.data);
 		return parse(data.data);
+
 }
 
 %>
