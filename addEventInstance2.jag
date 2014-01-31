@@ -2,7 +2,7 @@
 var caramel;
 var log = new Log();
 var dataService = require('modules/dataservice.jag');
-var eventList = dataService.getEvents();
+var eventList = dataService.getEventNames();
 var verb = request.getMethod();
 
 (function () {
@@ -47,7 +47,7 @@ var verb = request.getMethod();
 			'title': {
 			text :'Add Event Instance'
 			},
-			'events':eventList 
+			'events':eventList.event_nameCollection
 			});
 		}
 	}

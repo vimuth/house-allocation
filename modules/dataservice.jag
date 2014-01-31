@@ -4,6 +4,9 @@ var url = 'http://localhost:9763/services/house_allocation/';
 var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
+var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
+var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
+
 
 var log = new Log();
 
@@ -56,6 +59,32 @@ function addEvent(data){
 		return event_id;
 }
 
+
+function addEventInstance(data){
+	var optionalHeaders = {
+		"Accept":"application/json" };
+
+		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
+		"Accept":"application/json"},"application/json");
+
+		var eventIdObj = parse(result.data);
+		var eventID = eventIdObj.event_id.event_id.id;
+		var eventInstName = data.eventInstance.name;
+			var eventInstDescription = data.eventInstance.description;
+			var eventInstStartDate = data.eventInstance.startDate;
+			var eventInstEndDate = data.eventInstance.endDate;
+
+
+            var eventInst={"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
+
+
+		var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
+		log.info(result);
+		//event_instance_id = result.data.GeneratedKeys.Entry.ID;
+
+		//return event_instance_id;
+}
+
 function updateEvent(event){
 	var headers = {
 		"Accept": "application/json"};
@@ -80,16 +109,20 @@ function getAwards(){
 			
 }
 
+function deleteEvent(id){
+	del(url+'events/'+id);
+}
+
 function getEventNames(){
 	var data = get(url+'event_names',null,{
 		"Accept":"application/json"},"application/json");
+			//	log.info(data.data);
 		return parse(data.data);
+
+<<<<<<< HEAD
 }
 
-function addEventInstance(data){
-	var optionalHeaders = {
-		"Accept":"application/json" };
-
+=======
 		var eventID = get(url+'event_id_from_name',data.eventInstance.eventName,{
 			"Accept":"application/json"},"application/json");
 
@@ -124,6 +157,21 @@ function deleteEvent(id){
 	del(url+'events/'+id);
 }
 
+<<<<<<< HEAD
+function getAwardDetails(event_award_id,event_instance_id){
+	var event_awardData=parse(get(awards_url+event_award_id,null,{"Accept":"application/json"},"Application/json).data);
+	var event_instanceData = parse(get(event_instance_url+'event_instance_id'+id,null,{"Accept":"application/json"},"application/json").data);
+
+				if(!(event_instanceData.event_instanceCollection.activity instanceof Array)){
+					event_instanceData.event_instanceCollection.activity = [event_instanceData.event_instanceCollection.activity];
+				}
+
+				if(!(event_awardData.event_awardCollection.award instanceof Array)){
+					event_awardData.event_awardCollection.award = [event_awardData.event_awardCollection.award];
+				}
+				return {'event_instance':event_instanceData.event_instanceCollection.event_instance,'event_award':event_awardData.event_awardCollection};
+}
+=======
 function getEventInstanceFromEvent(eventID){
 	var data = get(url+'event/instants/'+eventID,null,{
 		"Accept":"application/json"},"application/json");
@@ -142,5 +190,7 @@ function getNominees(){
 }
 
 
+>>>>>>> 7175727fe137e121023e41fb27c6f4fafcc83806
 
+>>>>>>> ba3f05a1a2f2c599ca2b90903ec5fac8d9f1f89d
 %>

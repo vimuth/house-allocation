@@ -11,16 +11,15 @@
 							<td><select name="events" id="events">
 						<script type="text/javascript">
 
-					/*	 var sel = document.getElementById('events');  
-						 	{{#each event_name}} 
-						 	count=count+1;
+						 var sel = document.getElementById('events');  
+						 	{{#each event_name}}
 						 		var opt = document.createElement('option');
-						 	    opt.innerHTML = "jkjk";
-						 	    opt.value = "hjkh";
+						 	    opt.innerHTML = "{{name}}";
+						 	    opt.value = "{{name}}";
 						 	    sel.appendChild(opt);
 						 	{{/each}}
 
-
+/*
 
 							var cuisines = [];
 							cuisines = ["Xccb","sdgdfh"];     
@@ -35,8 +34,10 @@
 
 */
 							</script>
-								<option value="volvo">e1</option>
-								<option value="saab">e2</option>
+<!-- 								<option value="volvo">e1</option>
+								<option value="saab">e2</option> 
+								
+								<option value="dgcgbgc">dgcgbgc</option>  -->
 							</select>
 							<a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New Event?</a>
 
@@ -57,12 +58,12 @@
 							
 							<tr>
 							<td>Start Date 
-							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyy hh-mm-ss"></td>
+							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyy hh:mm:ss"></td>
 							<td>End Date  
-							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyy hh-mm-ss"></td></tr>
+							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyy hh:mm:ss"></td></tr>
 							
 							<tr>
-								<td><input type="button"
+								<td><input type="button" id="addButton"
 										class="button" value="Add" onclick="addEventInstance();" /> 
 									<input
 										style="margin-left: 5px;" type="button" class="button"
@@ -71,14 +72,9 @@
 							</tr>
 						</tbody>
 					</table>
-					<script type="text/javascript">
-                            alternateTableRows('event',
-                                'tableEvenRow',
-                                'tableOddRow');
-                          </script>
 				</form>
 
-				<script type="text/javascript"> 
+<script type="text/javascript"> 
 	
 	var eventInstList = [];
 	// var awardList = [];
@@ -92,11 +88,8 @@
         }
     }
 
-    function 
-
-
     function addEventInstance(){
-    		var eventInstName = document.getElementById('eventInstanceName');
+    /*		var eventInstName = document.getElementById('eventInstanceName');
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
 			var eventInstStartDate = document.getElementById('startDate').value;
@@ -113,15 +106,15 @@
 			eventInstance.endDate=eventInstEndDate;
 
 			eventInstList.push(eventInstance);
-
+*/
     }
 
 
     $(document).ready(function() {
 
-        $('#Add').click(function() {
+        $('#addButton').click(function() {
 
-        var eventInstName = document.getElementById('eventInstanceName');
+        var eventInstName = document.getElementById('eventInstanceName').value;
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
 			var eventInstStartDate = document.getElementById('startDate').value;
@@ -130,7 +123,7 @@
                $.ajax({
               type: "POST",
               contentType: "application/json",
-              url: "eventInstance2.jag",
+              url: "{{url "/addEventInstance2.jag"}}",
               
               data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
               success: function(msg) {
