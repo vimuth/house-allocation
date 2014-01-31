@@ -128,4 +128,17 @@ function getEventInstanceFromEvent(eventID){
 		log.info(data);
 		return parse(data.data);
 }
+function getNominees(){
+	var data = get(url+'votes',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
+		//log.info(data.votesCollection);
+		
+		
+
+			
+}
+
+
+
 %>

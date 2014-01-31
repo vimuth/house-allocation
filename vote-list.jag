@@ -1,0 +1,37 @@
+<%
+var caramel
+var log = new Log();
+
+(function () {
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		return;
+	}
+
+	try{
+		var dataService = require('modules/dataservice.jag');
+		var data = dataService.getNominees();
+        
+
+		caramel = require('caramel');
+
+		//log.info(data.votesCollection);
+
+		caramel.render({
+			'header':{
+				'username': username
+			},
+			'title': {
+				text :'Votes'
+			},
+			//log.info(data.votesCollection);
+			'vote': data.votesCollection
+		});
+	}
+	catch(e){
+		response.sendRedirect("/TestApp2/error.jag");
+	}
+}());
+%>
