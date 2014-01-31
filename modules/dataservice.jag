@@ -91,28 +91,31 @@ function addEventInstance(data){
 		"Accept":"application/json" };
 
 		var eventID = get(url+'event_id_from_name',data.eventInstance.eventName,{
-		"Accept":"application/json"},"application/json");
+			"Accept":"application/json"},"application/json");
 
-		var eventInstName = document.getElementById('eventInstanceName');
+			var eventInstName = document.getElementById('eventInstanceName');
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
 			var eventInstStartDate = document.getElementById('startDate').value;
 			var eventInstEndDate = document.getElementById('endDate').value;
 
-               $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: "eventInstance2.jag",
-              
-              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
-              success: function(msg) {
-              }
-           });
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "eventInstance2.jag",
 
-		var result = post(url+"add_event_instance", data.eventInstance, optionalHeaders, "json");
-		event_instance_id = result.data.GeneratedKeys.Entry.ID;
+				data: JSON.stringify({
+					"eventInstance":{
+						"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}
+				}),
+				success: function(msg) {
+				}
+			});
 
-		return event_instance_id;
+				var result = post(url+"add_event_instance", data.eventInstance, optionalHeaders, "json");
+				event_instance_id = result.data.GeneratedKeys.Entry.ID;
+
+				return event_instance_id;
 }
 
 function deleteEvent(id){
@@ -121,7 +124,8 @@ function deleteEvent(id){
 
 function getEventInstanceFromEvent(eventID){
 	var data = get(url+'event/event-instants/'+eventID,null,{
-			"Accept":"application/json"},"application/json");
-	return data;
+		"Accept":"application/json"},"application/json");
+		log.info(data);
+		return parse(data.data);
 }
 %>
