@@ -1,0 +1,81 @@
+<%
+
+var caramel;
+var Handlebars;
+var log = new Log();
+var dataService = require('modules/dataservice.jag');
+var verb = request.getMethod();
+
+log.info("delete");
+
+(function () {
+
+	var username=session.get('username');
+
+	if(username==null){
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		return;
+	}
+
+	var uriMatcher = new URIMatcher(request.getRequestURI());
+	if(uriMatcher.match('/TestApp2/delete-event/{id}')) {
+		if(verb=='GET'){
+			// 			try{
+
+			var id = uriMatcher.elements().id;
+			var data = dataService.getEventInstanceFromEvent(id);
+
+			log.info(data.Entries);
+				
+			caramel = require('caramel');
+			Handlebars = require('handlebars');
+
+			Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+				if (a == b)
+					return options.fn(this);
+				else
+					return options.inverse(this);
+			});
+
+				caramel.render({
+					'header':{
+					'username': username
+				},
+				'title': {
+				text :"Confirm Delete"},
+				'body': data.Entries
+				});
+				// 			}
+				// 			catch(e){
+				// 				log.error(e);
+				// 				response.sendRedirect("/TestApp2/error.jag");
+				// 			}
+				}
+				else{
+					if(verb='DELETE'){
+						try{
+							dataService.deleteEvent(uriMatcher.elements().id);
+							response.contentType = 'application/json';
+
+							response.content = {
+								'success':true} ;
+						}
+						catch(e){
+							log.error(e);
+							response.contentType = 'application/json';
+
+							response.content = {
+								'success':false} ;
+						}
+					}
+				}
+
+		}
+		else{
+			response.sendRedirect("/TestApp2/event-list.jag");
+			return;
+		}
+
+	}());
+	%>
+

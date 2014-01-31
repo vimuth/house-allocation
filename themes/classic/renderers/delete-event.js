@@ -9,7 +9,7 @@ var render = function(theme, data, meta, require) {
 			context : data.title
 		}],
 		main : [ {
-			partial : 'event-list',
+			partial : 'delete-event',
 			context : data.body
 		} ]
 	});

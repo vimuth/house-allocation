@@ -1,0 +1,7 @@
+<div>
+	<div class="list-group">
+		{{#each Entry}} <a href='{{url "/events/"}}{{id}}'
+			class="list-group-item"> {{name}} : {{description}} :
+			{{startDate}} : {{endDate}} </a> {{/each}}
+	</div>
+</div>
