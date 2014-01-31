@@ -119,4 +119,9 @@ function deleteEvent(id){
 	del(url+'events/'+id);
 }
 
+function getEventInstanceFromEvent(eventID){
+	var data = get(url+'event/event-instants/'+eventID,null,{
+			"Accept":"application/json"},"application/json");
+	return data;
+}
 %>
