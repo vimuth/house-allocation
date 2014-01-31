@@ -6,7 +6,8 @@ var log = new Log();
 var dataService = require('modules/dataservice.jag');
 var verb = request.getMethod();
 
-log.info("delete");
+log.info("got here : "+verb);
+
 
 (function () {
 
@@ -23,10 +24,10 @@ log.info("delete");
 			// 			try{
 
 			var id = uriMatcher.elements().id;
-			var data = dataService.getEventInstanceFromEvent(id);
+// 			var data = dataService.getEventInstanceFromEvent(id);
 
-			log.info(data.Entries);
-				
+// 			log.info(data.Entries);
+
 			caramel = require('caramel');
 			Handlebars = require('handlebars');
 
@@ -43,39 +44,43 @@ log.info("delete");
 				},
 				'title': {
 				text :"Confirm Delete"},
-				'body': data.Entries
+				'body': {'id':id,
+					"Entry" : [{
+						"name" : "Event instance 1", "description" : "Testing", "startDate" : "2014-01-01T00:00:00.000+05:30", "endDate" : "2014-01-30T00:00:00.000+05:30"}, {
+							"name" : "Event instance 2", "description" : "Testing", "startDate" : "2014-01-02T00:00:00.000+05:30", "endDate" : "2014-01-23T00:00:00.000+05:30"}]}
 				});
 				// 			}
 				// 			catch(e){
 				// 				log.error(e);
 				// 				response.sendRedirect("/TestApp2/error.jag");
 				// 			}
-				}
-				else{
-					if(verb='DELETE'){
-						try{
-							dataService.deleteEvent(uriMatcher.elements().id);
-							response.contentType = 'application/json';
-
-							response.content = {
-								'success':true} ;
-						}
-						catch(e){
-							log.error(e);
-							response.contentType = 'application/json';
-
-							response.content = {
-								'success':false} ;
-						}
-					}
-				}
-
 		}
 		else{
-			response.sendRedirect("/TestApp2/event-list.jag");
-			return;
+			if(verb='DELETE'){
+				log.info("got here");
+				try{
+					dataService.deleteEvent(uriMatcher.elements().id);
+					response.contentType = 'application/json';
+
+					response.content = {
+						'success':true} ;
+				}
+				catch(e){
+					log.error(e);
+					response.contentType = 'application/json';
+
+					response.content = {
+						'success':false} ;
+				}
+			}
 		}
 
-	}());
-	%>
+	}
+	else{
+		response.sendRedirect("/TestApp2/event-list.jag");
+		return;
+	}
+
+}());
+%>
 
