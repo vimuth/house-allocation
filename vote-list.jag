@@ -6,27 +6,28 @@ var log = new Log();
 	var username=session.get('username');
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag")
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
 
 	try{
 		var dataService = require('modules/dataservice.jag');
-		var data = dataService.getAwards();
+		var data = dataService.getNominees();
+        
 
 		caramel = require('caramel');
 
-			log.info(data.event_award_instanceCollection);
+		//log.info(data.votesCollection);
 
 		caramel.render({
 			'header':{
-			'username': username
-		},
-		'title': {
-		text :'Awards'},
-		
-		'awards_instance': data.event_award_instanceCollection
-		
+				'username': username
+			},
+			'title': {
+				text :'Votes'
+			},
+			//log.info(data.votesCollection);
+			'vote': data.votesCollection
 		});
 	}
 	catch(e){

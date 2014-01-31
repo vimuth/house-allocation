@@ -9,8 +9,8 @@ var render = function(theme, data, meta, require) {
 			context : data.title
 		}],
 		main : [ {
-			partial : 'delete-event',
-			context : data.body
+			partial : 'vote-list',
+			context : data.vote
 		} ]
 	});
 };

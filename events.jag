@@ -22,6 +22,8 @@ var verb = request.getMethod();
 
 				var id = uriMatcher.elements().id;
 				var data = dataService.getEvent(id);
+				
+				
 					
 				caramel = require('caramel');
 				Handlebars = require('handlebars');
