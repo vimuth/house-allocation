@@ -10,7 +10,7 @@ var render = function(theme, data, meta, require) {
 		}],
 		main : [ {
 			partial : 'event-list',
-			context : data.body
+			context : data.main
 		} ]
 	});
 };
