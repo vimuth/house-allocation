@@ -80,6 +80,41 @@ function getAwards(){
 			
 }
 
+function getEventNames(){
+	var data = get(url+'event_names',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
+}
+
+function addEventInstance(data){
+	var optionalHeaders = {
+		"Accept":"application/json" };
+
+		var eventID = get(url+'event_id_from_name',data.eventInstance.eventName,{
+		"Accept":"application/json"},"application/json");
+
+		var eventInstName = document.getElementById('eventInstanceName');
+			var eventName = document.getElementById('events').value;
+			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+			var eventInstStartDate = document.getElementById('startDate').value;
+			var eventInstEndDate = document.getElementById('endDate').value;
+
+               $.ajax({
+              type: "POST",
+              contentType: "application/json",
+              url: "eventInstance2.jag",
+              
+              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
+              success: function(msg) {
+              }
+           });
+
+		var result = post(url+"add_event_instance", data.eventInstance, optionalHeaders, "json");
+		event_instance_id = result.data.GeneratedKeys.Entry.ID;
+
+		return event_instance_id;
+}
+
 function deleteEvent(id){
 	del(url+'events/'+id);
 }
