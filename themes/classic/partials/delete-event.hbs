@@ -16,10 +16,8 @@
 	</div>
 
 	<div class="btn-group">
-		<button type="button" onclick="document.location.href='{{url "
-			/events/"}}'" class="btn btn-info">Cancel</button>
-		<button type="button" onclick="document.location.href='{{url "
-			/edit-event/"}}{{id}}'" class="btn btn-warning">Edit Event</button>
+		<button type="button" onclick="document.location.href='{{url "/events/"}}'" class="btn btn-info">Cancel</button>
+		<button type="button" onclick="document.location.href='{{url "/edit-event/"}}{{id}}'" class="btn btn-warning">Edit Event</button>
 		<button type="button"
 			onclick="deleteEvent({{id}});" class="btn btn-danger">Delete Event</button>
 	</div>
