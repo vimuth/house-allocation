@@ -8,13 +8,13 @@ var verb = request.getMethod();
 	if(verb=='GET'){
 
 		caramel = require('caramel');
-	
-// 		log.info(request.getQueryString());
-		
+
+		// 		log.info(request.getQueryString());
+
 		caramel.render({
 			'location': {
 			'redirectlink':request.getQueryString()
-			}
+		}
 		});
 	}
 
@@ -22,17 +22,27 @@ var verb = request.getMethod();
 		var username=request.getParameter("username");
 		var password=request.getParameter("password");
 
-// 		log.info("redirectlink"+request.getParameter("location"));
+		// 		log.info("redirectlink"+request.getParameter("location"));
 
 		if((username.equals("admin") && password.equals("admin")))
 		{
 			session.put("username",username);
+			session.put("role",'admin');
 			response.sendRedirect(request.getParameter("location"));
 			return;
 		}
-		else
-			response.sendRedirect("/TestApp2/error.jag");
-		return;
+		else{
+			if (username.equals("user") && password.equals("user")){
+				session.put("username","user");
+				session.put("role","user");
+				response.sendRedirect(request.getParameter("location"));
+				return;
+			}
+			else{
+				response.sendRedirect("/TestApp2/error.jag");
+				return;
+			}
+		}
 	}
 }());
 %>
