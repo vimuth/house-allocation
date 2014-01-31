@@ -5,6 +5,7 @@ var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
+var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
 
 
 var log = new Log();
@@ -86,30 +87,18 @@ function deleteEvent(id){
 	del(url+'events/'+id);
 }
 
-function getAwardDetails(id){
-	var awardData=parse(get(awards_url+id,null,{"Accept":"application/json"},"Application/json).data);
-	var activityData = parse(get(url+'event/activities/'+id,null,{"Accept":"application/json"},"application/json").data);
+function getAwardDetails(event_award_id,event_instance_id){
+	var event_awardData=parse(get(awards_url+event_award_id,null,{"Accept":"application/json"},"Application/json).data);
+	var event_instanceData = parse(get(event_instance_url+'event_instance_id'+id,null,{"Accept":"application/json"},"application/json").data);
 
-
-
-	var eventData = parse(get(events_url+id,null,{
-		"Accept":"application/json"},"application/json").data);
-	var activityData = parse(get(url+'event/activities/'+id,null,{
-		"Accept":"application/json"},"application/json").data);
-	var awardData = parse(get(url+'event/awards/'+id,null,{
-		"Accept":"application/json"},"application/json").data);
-
-
-				if(!(activityData.activityCollection.activity instanceof Array)){
-					activityData.activityCollection.activity = [activityData.activityCollection.activity];
+				if(!(event_instanceData.event_instanceCollection.activity instanceof Array)){
+					event_instanceData.event_instanceCollection.activity = [event_instanceData.event_instanceCollection.activity];
 				}
 
-				if(!(awardData.awardCollection.award instanceof Array)){
-					awardData.awardCollection.award = [awardData.awardCollection.award];
+				if(!(event_awardData.event_awardCollection.award instanceof Array)){
+					event_awardData.event_awardCollection.award = [event_awardData.event_awardCollection.award];
 				}
-				return {'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection.award};
-	
-
+				return {'event_instance':event_instanceData.event_instanceCollection.event_instance,'event_award':event_awardData.event_awardCollection};
 }
 
 %>
