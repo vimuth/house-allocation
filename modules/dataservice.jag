@@ -1,6 +1,6 @@
 <%
 
-var url = 'http://10.100.4.54:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/house_allocation/';
 var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
@@ -56,35 +56,6 @@ function addEvent(data){
 		return event_id;
 }
 
-function updateEvent(event){
-	var headers = {
-		"Accept": "application/json"};
-
-		var result = post(url+'edit-event',event,headers,'json', function(data,xhr){
-			log.info("successfully updated the event");
-		});
-
-}
-
-function getEvents(){
-	var data = get(url+'events',null,{
-		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-		log.info(data.eventCollection);
-}
-
-function getAwards(){
-	var data = get(url+'awards_instance',null,{
-		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-			
-}
-
-function getEventNames(){
-	var data = get(url+'event_names',null,{
-		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-}
 
 function addEventInstance(data){
 	var optionalHeaders = {
@@ -115,13 +86,38 @@ function addEventInstance(data){
 		return event_instance_id;
 }
 
+function updateEvent(event){
+	var headers = {
+		"Accept": "application/json"};
+
+		var result = post(url+'edit-event',event,headers,'json', function(data,xhr){
+			log.info("successfully updated the event");
+		});
+
+}
+
+function getEvents(){
+	var data = get(url+'events',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
+		log.info(data.eventCollection);
+}
+
+function getAwards(){
+	var data = get(url+'awards_instance',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
+			
+}
+
 function deleteEvent(id){
 	del(url+'events/'+id);
 }
 
-function getEventInstanceFromEvent(eventID){
-	var data = get(url+'event/event-instants/'+eventID,null,{
-			"Accept":"application/json"},"application/json");
-	return data;
+function getEventNames(){
+	var data = get(url+'event_names',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
 }
+
 %>
