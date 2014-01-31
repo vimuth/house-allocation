@@ -66,7 +66,8 @@
 				<td align="center"><button type="button"
 						style="padding-left: 15px; padding-right: 15px" id="edit-button"
 						class="btn btn-warning btn-xs">edit</button></td>
-				<td align="center"><button type="button" onclick="deleteActivity({{id}},$(this));"
+				<td align="center"><button type="button"
+						onclick="deleteActivity({{id}},$(this));"
 						class="btn btn-danger btn-xs">delete</button></td>
 			</tr>
 
@@ -281,13 +282,16 @@
 															url : "{{url "/edit-event/"}}",
 
 															data : JSON
-																	.stringify({
-																		"event" : {
-																			"name" : eventName,
-																			"description" : eventDescription,
-																			"id":"{{event.id}}",
-																		}
-																	}),
+															.stringify({
+																"event" : {
+																	"name" : eventName,
+																	"description" : eventDescription
+																},
+																"activities" : activityList,
+																"awards" : awardList,
+																"deletedActivities" : activityDeleteList,
+																"deletedAwards" : activityDeleteList
+															}),
 															success : function(
 																	msg) {
 																if(msg.redirect){
