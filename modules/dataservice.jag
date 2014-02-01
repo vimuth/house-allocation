@@ -6,6 +6,9 @@ var activities_url = 'http://localhost:9763/services/house_allocation/activities
 var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
+var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
+var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
+var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
 
 var HOUSES = ['Cloud Bots', 'Titans', 'Legion', 'WildBoars'];
 
@@ -156,5 +159,41 @@ function getHouseMembers(house_id){
 // 		log.info(data.);
 			return parse(data.data);
 } 
+function getNominees(id){
+	var data = get(votesNominee_url+ id,null,{
+		"Accept":"application/json"},"application/json");
+	var voteData= parse(data.data);
 
+
+
+	
+ return voteData;
+
+
+
+	
+		//log.info(data.votesCollection);
+		
+		
+
+			
+}
+function getNames(id){
+	var data = get(peopleNames_url+ id,null,{
+		"Accept":"application/json"},"application/json");
+	var peopleData= parse(data.data);
+	var names= peopleData.peopleCollection.people;
+
+	
+ return names;
+
+
+
+	
+		//log.info(data.votesCollection);
+		
+		
+
+			
+}
 %>

@@ -10,15 +10,30 @@ var log = new Log();
 		return;
 	}
 
-	try{
+	try{ 
 		var dataService = require('modules/dataservice.jag');
-		var data = dataService.getNominees();
+
+		var data = dataService.getNominees(77);
+       var nominees = [nominees];
+       var peopleNames = [peopleNames];
         
+
+		for (var i=0 ;i< data.votesCollection.votes.length;i++)
+			{
+          		nominees[i] = data.votesCollection.votes[i].nominee_id;
+          		peopleNames[i] = dataService.getNames(nominees[i]);
+
+
+       		}
+        
+ //print (nominees);
+
+ var people = { "names" : peopleNames };
 
 		caramel = require('caramel');
 
-		//log.info(data.votesCollection);
-
+		
+log.info(people);
 		caramel.render({
 			'header':{
 				'username': username
@@ -26,12 +41,16 @@ var log = new Log();
 			'title': {
 				text :'Votes'
 			},
-			//log.info(data.votesCollection);
-			'vote': data.votesCollection
-		});
+			
+			'vote': people
+		})
+
+
+
+		;
 	}
 	catch(e){
-		response.sendRedirect("/TestApp2/error.jag");
+		//response.sendRedirect("/TestApp2/error.jag");
 	}
 }());
 %>

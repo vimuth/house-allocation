@@ -5,31 +5,29 @@
 	
 	
 <div style="padding-top: 10px">
-	<h3>Nominees </h3>
-	<table class="table" id="activityTable">
-	<thead>
-			<tr>
-				<th>voter ID</th>
-				<th>Nominee ID</th>				
-			</tr>
-	</thead>	
+	<h2>Nominees </h2>
 
-	
-		<tbody>	
+
+	<form>
+<table class="table" id="activityTable">
+	<tbody>	
 		
-				{{#each votes}}
+				{{#each names}}
  				
- 					<tr>
- 						
- 						<th>{{voter_id}}  </th>
- 						<th>{{nominee_id}}</th>
- 											
- 					</tr>
  					
+ 					<tr><input type="radio" name="Nominee_name" value="{{name}}">{{name}}<br><br> </tr>
 				{{/each}}				
 	
 		</tbody>
 	</table>
+
+
+
+
+</form>	
+
+	
+		
 	</div>
 
 	</div>
