@@ -1,0 +1,10 @@
+<%
+var log = new Log();
+
+(function () {
+
+	log.info(Math.random());
+	
+}());
+%>
+

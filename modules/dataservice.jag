@@ -7,6 +7,7 @@ var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
 
+var HOUSES = ['Cloud Bots', 'Titans', 'Legion', 'WildBoars'];
 
 var log = new Log();
 
@@ -146,9 +147,14 @@ function getNominees(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-		//log.info(data.votesCollection);
-		
-			
+		//log.info(data.votesCollection);			
 }
+
+function getHouseMembers(house_id){
+	var data = get(url+'people/house/'+house_id,null,{
+			"Accept":"application/json"},"application/json");
+// 		log.info(data.);
+			return parse(data.data);
+} 
 
 %>
