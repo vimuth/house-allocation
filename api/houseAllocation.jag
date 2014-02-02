@@ -1,10 +1,155 @@
 <%
 var log = new Log();
+var dataService = require('../modules/dataservice.jag');
 
-(function () {
+function assignHouse_Rank(){
 
-	log.info(Math.random());
+	houses = dataService.getHouseCount().Houses.House;
+
+	var houses = houses.sort( function(a,b){
+		if(a.count>b.count) return 1;
+		if(a.count<b.count) return -1;
+		return 0;
+	});
+
+		var rank_sum = 0;
+		for(i=0;i<4;i++){
+			rank = 1;
+			for(j=i+1;j<4;j++){
+				if (houses[j].count>houses[i].count)
+					rank = rank+1;
+			}
+			houses[i].rank = rank;
+			rank_sum += rank
+		}
+
+		for(i=0;i<4;i++){
+			houses[i].probability = houses[i].rank/rank_sum;
+		}
+
+		var random_number = Math.random();
+
+		var sum = 0;
+
+		for(i=0;i<4;i++){
+			if( random_number < sum+houses[i].probability){
+				return (houses[i]);
+			}
+			sum = sum+houses[i].probability;
+		}
+}
+
+function assignHouse_Difference(){
+
+	houses = dataService.getHouseCount().Houses.House;
+
+	var houses = houses.sort( function(a,b){
+		if(a.count>b.count) return 1;
+		if(a.count<b.count) return -1;
+		return 0;
+	});
+
+		var sum_difference = 0;
+
+		for(i=0;i<4;i++){
+			houses[i].difference =  Math.max(1,houses[3].count-houses[i].count);
+			sum_difference += houses[i].difference;
+		}
+
+		var lowest_rank = houses[0].rank;
+
+
+
+		for(i=0;i<4;i++){
+			houses[i].probability = houses[i].difference/sum_difference;
+		}
+
+		var random_number = Math.random();
+
+		var sum = 0;
+
+		for(i=0;i<4;i++){
+			if( random_number < sum+houses[i].probability){
+				log.info(houses);
+				return (houses[i]);
+			}
+			sum = sum+houses[i].probability;
+		}
+}
+
+var operation = request.getParameter('operation');
+
+log.info(operation);
+
+if(operation=='assign'){
+	response.contentType = 'application/json';
+
+	var name = request.getParameter('name');
+
+	//checking if user is already in the database
+	var current_house = dataService.getHouse(name);
 	
-}());
-%>
+	if(current_house.Entries!=""){
+		
+		//if the user is in the DB and is active return current house
+		if(current_house.Entries.Entry.isActive==1){
+			response.content = {
+				'success':true, "house":dataService.HOUSES[current_house.Entries.Entry.house_id-1]} ;
+		}
+		//if the user is not active activate and return current hous
+		else{
+			log.info("here");
+			dataService.activatePerson(name);
+			response.content = {
+							'success':true, "house":dataService.HOUSES[current_house.Entries.Entry.house_id-1]} ;
+		}
+	}
+	//if not in the DB assign a new house
+	else{
+		var result = dataService.addPerson(name,house.house_id);
+		var house = assignHouse_Difference();
 
+		if(result){
+			response.content = {
+				'success':true, "house":dataService.HOUSES[house.house_id]} ;
+		}
+		else{
+			response.content = {
+				'success':false
+			};
+		}
+	}
+
+}
+
+//activate an inactive user
+if(operation=="activate"){
+	var name = request.getParameter('name');
+	var result = dataService.activatePerson(name);
+
+	if(result){
+		response.content = {
+					'success':true}
+	}
+	else{
+		response.content = {
+			'success':false}
+	}
+}
+
+//deactivate a user
+if(operation=="deactivate"){
+	var name = request.getParameter('name');
+	var result = dataService.deactivatePerson(name);
+
+	if(result){
+		response.content = {
+					'success':true}
+	}
+	else{
+		response.content = {
+			'success':false}
+	}
+}
+
+%>
