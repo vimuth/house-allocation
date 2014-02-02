@@ -88,9 +88,9 @@ if(operation=='assign'){
 
 	//checking if user is already in the database
 	var current_house = dataService.getHouse(name);
-	
+
 	if(current_house.Entries!=""){
-		
+
 		//if the user is in the DB and is active return current house
 		if(current_house.Entries.Entry.isActive==1){
 			response.content = {
@@ -98,20 +98,21 @@ if(operation=='assign'){
 		}
 		//if the user is not active activate and return current hous
 		else{
-			log.info("here");
 			dataService.activatePerson(name);
 			response.content = {
-							'success':true, "house":dataService.HOUSES[current_house.Entries.Entry.house_id-1]} ;
+				'success':true, "house":dataService.HOUSES[current_house.Entries.Entry.house_id-1]} ;
 		}
 	}
 	//if not in the DB assign a new house
 	else{
-		var result = dataService.addPerson(name,house.house_id);
+
 		var house = assignHouse_Difference();
+		var result = dataService.addPerson(name,house.house_id);
+
 
 		if(result){
 			response.content = {
-				'success':true, "house":dataService.HOUSES[house.house_id]} ;
+				'success':true, "house":dataService.HOUSES[house.house_id-1]} ;
 		}
 		else{
 			response.content = {
@@ -129,7 +130,7 @@ if(operation=="activate"){
 
 	if(result){
 		response.content = {
-					'success':true}
+			'success':true}
 	}
 	else{
 		response.content = {
@@ -144,7 +145,7 @@ if(operation=="deactivate"){
 
 	if(result){
 		response.content = {
-					'success':true}
+			'success':true}
 	}
 	else{
 		response.content = {
