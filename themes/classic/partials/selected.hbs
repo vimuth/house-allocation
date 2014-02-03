@@ -1,0 +1,222 @@
+Redirected!!!! :)
+				<form id="myform" name="newEventInstance">
+					<table id="eventInstance" class="styledLeft">
+						<thead>
+							<tr>
+								<th colspan="2">New Event Instance</th>
+							</tr>
+						</thead>
+						<tbody>						
+							<td>Redirected</td> 
+							<td><select name="events" id="events" onchange="showHideCommon()">
+						<script type="text/javascript">
+
+						 var sel = document.getElementById('events');  
+						 	{{#each event_name}}
+						 		var opt = document.createElement('option');
+						 	    opt.innerHTML = "{{name}}";
+						 	    opt.value = "{{name}}";
+						 	    sel.appendChild(opt);
+						 	{{/each}}
+
+/*
+
+							var cuisines = [];
+							cuisines = ["Xccb","sdgdfh"];     
+							var sel = document.getElementById('events');
+							for(var i = 0; i < cuisines.length; i++) {
+							    var opt = document.createElement('option');
+							    opt.innerHTML = cuisines[i];
+							    opt.value = cuisines[i];
+							    sel.appendChild(opt);
+							}
+
+
+*/
+							</script>
+<!-- 								<option value="volvo">e1</option>
+								<option value="saab">e2</option> 
+								
+								<option value="dgcgbgc">dgcgbgc</option>  -->
+							</select>
+							<a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New Event?</a>
+
+							</td>
+							</tr>
+
+							<tr>							
+							<td>Event Instance Name</td> 
+							<td><input type="text" name="eventInstanceName" id="eventInstanceName"></td>
+							</tr>
+
+							<tr>
+
+
+							<tr>
+							<td>Description</td>  
+							<td>	<textarea name="eventInstanceDescription" id="eventInstanceDescription" rows="4" cols="40"></textarea></td></tr>
+							
+							<tr>
+							<td>Start Date 
+							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyyThh:mm:ss"></td>
+							<td>End Date  
+							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyyThh:mm:ss"></td></tr>
+							
+							<tr>
+								<td><input type="button" id="addButton"
+										class="button" value="Add" onclick="addEventInstance();" /> 
+									<input
+										style="margin-left: 5px;" type="button" class="button"
+										value="Cancel" onclick="showHideCommon();" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+<div style="padding-top: 10px; " id="activitySection">
+	Activities :
+	<table class="table" id="activityTable">
+
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+<div style="padding-top: 10px; " id="awardSection">
+	Awards :
+	<table class="table" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Vote</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+
+<script type="text/javascript"> 
+	
+	var eventInstList = [];
+	// var awardList = [];
+	
+	function showHideCommon() {
+        var theDiv = document.getElementById('activitySection');
+        theDiv.style.display = "";
+        theDiv = document.getElementById('awardSection');
+        theDiv.style.display = "";
+    }
+
+    function addEventInstance(){
+    /*		var eventInstName = document.getElementById('eventInstanceName');
+			var eventName = document.getElementById('events').value;
+			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+			var eventInstStartDate = document.getElementById('startDate').value;
+			var eventInstEndDate = document.getElementById('endDate').value;
+
+			$('#eventInstanceTable > tbody:last').append('<tr><td>'+
+					eventName+'</td><td>'+eventInstDescription+'</td></tr>');
+			
+			var eventInstance = new Object();
+			eventInstance.name = eventInstName;
+			eventInstance.eventId = 1;
+			eventInstance.description = eventInstDescription;
+			eventInstance.startDate=eventInstStartDate;
+			eventInstance.endDate=eventInstEndDate;
+
+			eventInstList.push(eventInstance);
+*/
+    }
+
+   /* $(document).ready(function() {
+
+        $('#addButton').click(function() {
+
+        var eventInstName = document.getElementById('eventInstanceName').value;
+			var eventName = document.getElementById('events').value;
+			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+			var eventInstStartDate = document.getElementById('startDate').value;
+			var eventInstEndDate = document.getElementById('endDate').value;
+
+               $.ajax({
+              type: "POST",
+              contentType: "application/json",
+              url: "{{url "/addEventInstance2.jag"}}",
+              
+              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
+              success: function(msg) {
+              }
+           });
+
+        });
+
+     });
+*/
+
+
+    $(document).ready(function() {
+
+        $('#addButton').click(function() {
+
+        var eventInstName = document.getElementById('eventInstanceName').value;
+			var eventName = document.getElementById('events').value;
+			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+			var eventInstStartDate = document.getElementById('startDate').value;
+			var eventInstEndDate = document.getElementById('endDate').value;
+
+               $.ajax({
+              type: "POST",
+              contentType: "application/json",
+              url: "{{url "/addEventInstance2.jag"}}",
+              
+              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
+              success: function(msg) {
+              }
+           });
+
+        });
+
+        $('select[name="events"]').change(function() {
+        	var eventName = document.getElementById('events').value;
+			$.ajax({
+				type : "GET",
+				contentType : "application/json",
+				url : "{{url "/addEventInstanceSelected.jag"}}",
+
+				data : JSON.stringify({"eventName" : eventName}),
+				success : function(msg) {
+				if(msg.redirect){
+					window.location = msg.url;
+				};
+				}
+			});
+
+        });
+
+
+     });
+
+
+
+    
+    </script>
+
+
+
+
+
+
+

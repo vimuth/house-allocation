@@ -66,69 +66,75 @@ function addEvent(data){
 function getEventIDFromName(data){
 
 	var optionalHeaders = {
-	"Accept":"application/json" };
-	log.info(data.eventInstance.eventName);
-	var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
-	"Accept":"application/json"},"application/json");
-	var eventIdObj = parse(result.data);
-	log.info(eventIdObj);
-	var eventID = eventIdObj.event_id.event_id.id;
+		"Accept":"application/json" };
+		log.info(data.eventInstance.eventName);
+		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
+			"Accept":"application/json"},"application/json");
+			var eventIdObj = parse(result.data);
+			log.info(eventIdObj);
+			var eventID = eventIdObj.event_id.event_id.id;
 
-	return eventID;
+			return eventID;
 }
 
 function addEventInstance(data){
-	
-		var eventID = this.getEventIDFromName(data);
+
+	var eventID = this.getEventIDFromName(data);
+	var eventInstName = data.eventInstance.name;
+	var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
+		"Accept":"application/json"},"application/json");
+
+		var eventIdObj = parse(result.data);
+		var eventID = eventIdObj.event_id.event_id.id;
 		var eventInstName = data.eventInstance.name;
-
-		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
-			"Accept":"application/json"},"application/json");
-
-			var eventIdObj = parse(result.data);
-			var eventID = eventIdObj.event_id.event_id.id;
-			var eventInstName = data.eventInstance.name;
-			var eventInstDescription = data.eventInstance.description;
-			var eventInstStartDate = data.eventInstance.startDate;
-			var eventInstEndDate = data.eventInstance.endDate;
+		var eventInstDescription = data.eventInstance.description;
+		var eventInstStartDate = data.eventInstance.startDate;
+		var eventInstEndDate = data.eventInstance.endDate;
 
 
-			var eventInst={
-				"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
+		var eventInst={
+			"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
 
+			var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
+			log.info(result);
+			event_instance_id = result.data.GeneratedKeys.Entry.ID;
 
-
-		var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
-		log.info(result);
-		event_instance_id = result.data.GeneratedKeys.Entry.ID;
-
-		return event_instance_id;
+			return event_instance_id;
 }
 
 function getActivitiesAndAwardsForEvent(data){
 
-	var dataDup = {"eventInstance":{"eventName":"dgcgbgc"}};
+	var dataDup = {
+		"eventInstance":{
+			"eventName":"dgcgbgc"}
+	};
 	var eventID = this.getEventIDFromName(dataDup);
 	//log.info(eventID);
 	var activities = this.getActivitiesForEventID(eventID);
 	var awards = this.getAwardsForEventID(eventID);
 
-	var eventActivitiesAndAwards = {"activities":activities.activities,"awards":awards.awards};
+	var eventActivitiesAndAwards = {
+		"activities":activities.activities,"awards":awards.awards};
 
-	return eventActivitiesAndAwards;
+		return eventActivitiesAndAwards;
 }
 
 function getActivitiesForEventID(id){
-	var activities = {"activities":[{"name":"a1","description":"d1"},{"name":"a2","description":"d2"}]};
-	//log.info(activities);
-	return activities;
+	var activities = {
+		"activities":[{
+			"name":"a1","description":"d1"},{
+				"name":"a2","description":"d2"}]};
+		//log.info(activities);
+		return activities;
 }
 
 function getAwardsForEventID(id){
-	var awards = {"awards":[{"name":"a1","description":"d1"},{"name":"a2","description":"d2"}]};
-	//log.info(awards);
-	return awards;
-
+	var awards = {
+		"awards":[{
+			"name":"a1","description":"d1"},{
+				"name":"a2","description":"d2"}]};
+		//log.info(awards);
+		return awards;
 }
 
 function updateEvent(event){
