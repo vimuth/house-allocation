@@ -82,16 +82,12 @@ function addEventInstance(data){
 	
 		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
-=======
-		"Accept":"application/json" };
-
 		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
 			"Accept":"application/json"},"application/json");
 
 			var eventIdObj = parse(result.data);
 			var eventID = eventIdObj.event_id.event_id.id;
 			var eventInstName = data.eventInstance.name;
->>>>>>> 44030429be8e9a4940d18765ea74923b6d0428b7
 			var eventInstDescription = data.eventInstance.description;
 			var eventInstStartDate = data.eventInstance.startDate;
 			var eventInstEndDate = data.eventInstance.endDate;
@@ -100,8 +96,6 @@ function addEventInstance(data){
 			var eventInst={
 				"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
 
-
-<<<<<<< HEAD
 		var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
 		log.info(result);
 		event_instance_id = result.data.GeneratedKeys.Entry.ID;
@@ -131,14 +125,6 @@ function getActivitiesForEventID(id){
 function getAwardsForEventID(id){
 	var awards = {"awards":[{"name":"a1","description":"d1"},{"name":"a2","description":"d2"}]};
 	//log.info(awards);
-	return awards;
-=======
-				var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
-				log.info(result);
-				//event_instance_id = result.data.GeneratedKeys.Entry.ID;
-
-				//return event_instance_id;
->>>>>>> 44030429be8e9a4940d18765ea74923b6d0428b7
 }
 
 function updateEvent(event){
@@ -205,22 +191,11 @@ function getEventInstanceFromEvent(eventID){
 		log.info(data);
 		return parse(data.data);
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 44030429be8e9a4940d18765ea74923b6d0428b7
 function getNominees(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-<<<<<<< HEAD
-		//log.info(data.votesCollection);
-		
-		
-
-			
-=======
->>>>>>> 44030429be8e9a4940d18765ea74923b6d0428b7
 }
 
 function getHouseMembers(house_id){
