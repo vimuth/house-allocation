@@ -1,14 +1,15 @@
 <%
 
-var url = 'http://localhost:9763/services/house_allocation/';
-var events_url = 'http://localhost:9763/services/house_allocation/events/';
-var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
-var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
-var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
-var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
-var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
-var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
+var url = 'http://10.100.4.54:9763/services/house_allocation/';
+var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
+var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
+var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
+var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
+var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
+var votes_url = 'http://10.100.4.54:9763/services/house_allocation/votes/';
+var votesNominee_url = 'http://10.100.4.54:9763/services/house_allocation/votes_nominee/';
+var peopleNames_url = 'http://10.100.4.54:9763/services/house_allocation/people_names/';
+var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
 
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
 
@@ -106,7 +107,7 @@ function getActivitiesAndAwardsForEvent(data){
 
 	var dataDup = {
 		"eventInstance":{
-			"eventName":"dgcgbgc"}
+		"eventName":"dgcgbgc"}
 	};
 	var eventID = this.getEventIDFromName(dataDup);
 	//log.info(eventID);
@@ -122,8 +123,8 @@ function getActivitiesAndAwardsForEvent(data){
 function getActivitiesForEventID(id){
 	var activities = {
 		"activities":[{
-			"name":"a1","description":"d1"},{
-				"name":"a2","description":"d2"}]};
+		"name":"a1","description":"d1"},{
+		"name":"a2","description":"d2"}]};
 		//log.info(activities);
 		return activities;
 }
@@ -131,8 +132,8 @@ function getActivitiesForEventID(id){
 function getAwardsForEventID(id){
 	var awards = {
 		"awards":[{
-			"name":"a1","description":"d1"},{
-				"name":"a2","description":"d2"}]};
+		"name":"a1","description":"d1"},{
+		"name":"a2","description":"d2"}]};
 		//log.info(awards);
 		return awards;
 }
@@ -281,5 +282,14 @@ function getNames(id){
 
 		return names;
 			
+}
+function getAwards(){
+	var data = parse(get(url+'current-elections',null,{
+		"Accept":"application/json"},"application/json").data);
+		 		log.info(data.Entries);
+		if(!(data.Entries.Entry instanceof Array)){
+			data.Entries.Entry = [data.Entries.Entry];
+		}
+		return data;
 }
 %>
