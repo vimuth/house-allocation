@@ -21,12 +21,12 @@ log.info("got here : "+verb);
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	if(uriMatcher.match('/TestApp2/delete-event/{id}')) {
 		if(verb=='GET'){
-			try{
+// 			try{
 
 				var id = uriMatcher.elements().id;
 				var data = dataService.getEventInstanceFromEvent(id);
 
-				log.info(data.Entries);
+				log.info(data);
 
 				caramel = require('caramel');
 				Handlebars = require('handlebars');
@@ -48,11 +48,11 @@ log.info("got here : "+verb);
 						'id':id,
 						"Entry" : data.Entries.Entry}
 					});
-			}
-			catch(e){
-				log.error(e);
-				response.sendRedirect("/TestApp2/error.jag");
-			}
+// 			}
+// 			catch(e){
+// 				log.error(e);
+// 				response.sendRedirect("/TestApp2/error.jag");
+// 			}
 		}
 		else{
 			if(verb='DELETE'){

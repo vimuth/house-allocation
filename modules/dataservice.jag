@@ -195,7 +195,7 @@ function getAwardDetails(event_award_id,event_instance_id){
 }
 
 function getEventInstanceFromEvent(eventID){
-	var data = get(url+'event/event-instants/'+eventID,null,{
+	var data = get(url+'event/instants/'+eventID,null,{
 		"Accept":"application/json"},"application/json");
 		log.info(data);
 		return parse(data.data);
