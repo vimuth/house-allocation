@@ -1,0 +1,10 @@
+<div>
+	<h3 style="margin-top :0px">{{title}} :</h3>
+	<div class="list-group">
+		{{#each events.Entry}} <a href='{{url "/events/"}}{{id}}'
+			class="list-group-item">
+			<h4 class="list-group-item-heading">{{name}}</h4>
+			<p class="list-group-item-text">{{description}}</p>
+		</a> {{/each}}
+	</div>
+</div>
