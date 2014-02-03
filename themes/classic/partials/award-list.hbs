@@ -1,12 +1,15 @@
 <div style="padding-top: 10px">
-	<h3>Awards</h3>
-	<table class="table" id="activityTable" border="">
+	<h3><b>Current Elections</b></h3>
+	<!-- <table class="table" id="activityTable" border="2">-->
+	
+	<table class="table">
 		<thead>
 			<tr>
-				<th>Award name</th>
-				<th>Event instance name</th>
+				
+				<th><h4 style="color:blue">Award name</h4></th>
+				<th><h4 style="color:blue">Event instance name</h4></th>
 				<th></th>
-
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -18,14 +21,14 @@
 			<!--
 			<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">  -->
 			<tr>
-				<td rowspan="2">{{eventName}}<br />{{eventDescription}}
+				<td rowspan="2"><b>{{eventName}}</b><br />Description:{{eventDescription}}
 				</td>
-				<td rowspan="2">{{awardName}}<br />{{awardDescription}}
+				<td rowspan="2"><b>{{awardName}}</b><br />Description:{{awardDescription}}
 				</td>
 				<td><button
-						onclick="vote({{event_award_instance_id}});return false;"
-						type="button" class="btn btn-danger btn-xs pull-right">
-						Vote</button></td>
+						onclick="vote('{{event_award_instance_id}}');return false;"
+						type="button" class="btn btn-warning btn-xs pull-right">
+						Vote for this election</button></td>
 
 			</tr>
 
@@ -34,12 +37,15 @@
 		</tbody>
 	</table>
 </div>
-{{#if role}}
+
 <script>
-	function vote(id) {
-		document.location.href = '{{url "/votes/"}}' + id;
+	function vote(event_award_instance_id) {
+		//document.location.href = '{{url "/votes/"}}' + id;
+		document.location.href = '{{url "/edit-event/"}}' + event_award_instance_id;
+		//alert("rgeyyyyy");
+		
 	}
 	
 </script>
-{{/if}}
+
 
