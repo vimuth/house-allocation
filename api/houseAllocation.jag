@@ -85,6 +85,8 @@ if(operation=='assign'){
 	response.contentType = 'application/json';
 
 	var name = request.getParameter('name');
+	
+	log.info(name);
 
 	//checking if user is already in the database
 	var current_house = dataService.getHouse(name);

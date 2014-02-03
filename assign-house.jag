@@ -1,0 +1,25 @@
+<%
+var caramel;
+var log = new Log();
+
+(function () {
+
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		return;
+	}
+
+	caramel = require('caramel');
+	caramel.render({
+		'header':{
+		'username': username
+	},
+	'title': {
+	text :'Assign House'},
+	'body': {}
+	});
+}());
+%>
+

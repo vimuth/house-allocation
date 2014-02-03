@@ -1,0 +1,56 @@
+<form class="form-horizontal" id="myform" name="newEvent">
+	<div class="form-group">
+		<label for="name" class="col-sm-3 control-label">Member Name</label>
+		<div class="col-sm-5">
+			<input type="text" style="display: inline" class="form-control"
+				id="name" placeholder="Enter Name" required>
+		</div>
+		<div class="col-sm-2">
+			<button type="assign" onclick="assignHouse(); return false;"
+				class="btn btn-default">Assign House</button>
+		</div>
+	</div>
+</form>
+
+<div id="assigned" style="display: none">
+	<table id="assignedtable" class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>House</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr></tr>
+		</tbody>
+	</table>
+</div>
+
+<script>
+
+function assignHouse(){
+	
+	$('#assigned').css("display" , "");
+	
+	var name = $('#name').val();
+	
+	$.ajax({
+		type : "GET",
+		contentType : "application/json",
+		url : "{{url "/api/houseAllocation.jag"}}"+"?operation=assign&&name="+name,
+
+		data : {},
+		success : function(msg) {
+			if(msg.success){
+				$('#assignedtable tr:last').after('<tr><td>'+name+'</td><td>'+msg.house+'</td></tr>');
+				$('#name').removeAttr('value');
+			};
+		}
+	});
+
+
+
+	
+}
+
+</script>
