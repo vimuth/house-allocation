@@ -59,16 +59,23 @@ function addEvent(data){
 		return event_id;
 }
 
+function getEventIDFromName(data){
+
+	var optionalHeaders = {
+	"Accept":"application/json" };
+	log.info(data.eventInstance.eventName);
+	var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
+	"Accept":"application/json"},"application/json");
+	var eventIdObj = parse(result.data);
+	log.info(eventIdObj);
+	var eventID = eventIdObj.event_id.event_id.id;
+
+	return eventID;
+}
 
 function addEventInstance(data){
-	var optionalHeaders = {
-		"Accept":"application/json" };
-
-		var result = get(url+'event_id_from_name/'+data.eventInstance.eventName,null,{
-		"Accept":"application/json"},"application/json");
-
-		var eventIdObj = parse(result.data);
-		var eventID = eventIdObj.event_id.event_id.id;
+	
+		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 			var eventInstDescription = data.eventInstance.description;
 			var eventInstStartDate = data.eventInstance.startDate;
@@ -80,9 +87,34 @@ function addEventInstance(data){
 
 		var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
 		log.info(result);
-		//event_instance_id = result.data.GeneratedKeys.Entry.ID;
+		event_instance_id = result.data.GeneratedKeys.Entry.ID;
 
-		//return event_instance_id;
+		return event_instance_id;
+}
+
+function getActivitiesAndAwardsForEvent(data){
+
+	var dataDup = {"eventInstance":{"eventName":"dgcgbgc"}};
+	var eventID = this.getEventIDFromName(dataDup);
+	//log.info(eventID);
+	var activities = this.getActivitiesForEventID(eventID);
+	var awards = this.getAwardsForEventID(eventID);
+
+	var eventActivitiesAndAwards = {"activities":activities.activities,"awards":awards.awards};
+
+	return eventActivitiesAndAwards;
+}
+
+function getActivitiesForEventID(id){
+	var activities = {"activities":[{"name":"a1","description":"d1"},{"name":"a2","description":"d2"}]};
+	//log.info(activities);
+	return activities;
+}
+
+function getAwardsForEventID(id){
+	var awards = {"awards":[{"name":"a1","description":"d1"},{"name":"a2","description":"d2"}]};
+	//log.info(awards);
+	return awards;
 }
 
 function updateEvent(event){
@@ -119,7 +151,13 @@ function getEventNames(){
 			//	log.info(data.data);
 		return parse(data.data);
 
+
 }
+
+function deleteEvent(id){
+	del(url+'events/'+id);
+}
+
 
 function getAwardDetails(event_award_id,event_instance_id){
 	var event_awardData=parse(get(awards_url+event_award_id,null,{"Accept":"application/json"},"Application/json").data);
@@ -136,18 +174,19 @@ function getAwardDetails(event_award_id,event_instance_id){
 }
 
 function getEventInstanceFromEvent(eventID){
-	var data = get(url+'event/instants/'+eventID,null,{
+	var data = get(url+'event/event-instants/'+eventID,null,{
 		"Accept":"application/json"},"application/json");
 		log.info(data);
 		return parse(data.data);
 }
-				
 function getNominees(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
 		//log.info(data.votesCollection);
 		
+		
+
 			
 }
 

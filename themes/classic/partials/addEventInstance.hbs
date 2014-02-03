@@ -8,7 +8,7 @@
 						</thead>
 						<tbody>						
 							<td>Event Name</td> 
-							<td><select name="events" id="events">
+							<td><select name="events" id="events" onchange="getActivitiesAndAwards()">
 						<script type="text/javascript">
 
 						 var sel = document.getElementById('events');  
@@ -58,34 +58,67 @@
 							
 							<tr>
 							<td>Start Date 
-							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyy hh:mm:ss"></td>
+							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyyThh:mm:ss"></td>
 							<td>End Date  
-							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyy hh:mm:ss"></td></tr>
+							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyyThh:mm:ss"></td></tr>
 							
 							<tr>
 								<td><input type="button" id="addButton"
 										class="button" value="Add" onclick="addEventInstance();" /> 
 									<input
 										style="margin-left: 5px;" type="button" class="button"
-										value="Cancel" onclick="showHideCommon('activityFormArea');" />
+										value="Cancel" onclick="showHideCommon();" />
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
 
+<div style="padding-top: 10px; display:none;" id="activitySection">
+	Activities :
+	<table class="table" id="activityTable">
+
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+<div style="padding-top: 10px; display:none;" id="awardSection">
+	Awards :
+	<table class="table" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Vote</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+
 <script type="text/javascript"> 
 	
 	var eventInstList = [];
 	// var awardList = [];
 	
-	function showHideCommon(divId) {
-        var theDiv = document.getElementById(divId);
-        if (theDiv.style.display == "none") {
-            theDiv.style.display = "";
-        } else {
-            theDiv.style.display = "none";
-        }
+	function showHideCommon() {
+        var theDiv = document.getElementById('activitySection');
+        theDiv.style.display = "";
+        theDiv = document.getElementById('awardSection');
+        theDiv.style.display = "";
     }
 
     function addEventInstance(){
@@ -108,6 +141,34 @@
 			eventInstList.push(eventInstance);
 */
     }
+
+	function getActivitiesAndAwards() {
+		document.location.href = '{{url "/addEventInstanceSelected/"}}' + document.getElementById('events').value;
+	}
+   /* $(document).ready(function() {
+
+        $('#addButton').click(function() {
+
+        var eventInstName = document.getElementById('eventInstanceName').value;
+			var eventName = document.getElementById('events').value;
+			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+			var eventInstStartDate = document.getElementById('startDate').value;
+			var eventInstEndDate = document.getElementById('endDate').value;
+
+               $.ajax({
+              type: "POST",
+              contentType: "application/json",
+              url: "{{url "/addEventInstance2.jag"}}",
+              
+              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
+              success: function(msg) {
+              }
+           });
+
+        });
+
+     });
+*/
 
 
     $(document).ready(function() {
@@ -132,7 +193,25 @@
 
         });
 
+        /*$('select[name="events"]').change(function() {
+
+			var eventName = document.getElementById('events').value;
+              $.ajax({
+				type : "GET",
+				contentType : "application/json",
+				url : "{{url "/addEventInstanceSelected.jag"}}",
+
+				data : JSON.stringify({"eventName" : eventName}),
+				success : function(msg) {
+				}
+			});
+
+        });*/
+
+
      });
+
+
 
     
     </script>

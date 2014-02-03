@@ -27,7 +27,7 @@ var verb = request.getMethod();
 			response.contentType = 'application/json';
 
 			response.content = {
-				'redirect':true, 'url':'/TestApp2/events/'+id} ;
+				'redirect':true, 'url':'/TestApp2/eventInstances/'+id} ;
 
 		} catch (e) {
 			log.error(e.toString());
