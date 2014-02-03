@@ -1,24 +1,45 @@
 <div style="padding-top: 10px">
-	<h3>Awards </h3>
-	<table class="table table-hover" id="activityTable" border>
+	<h3>Awards</h3>
+	<table class="table" id="activityTable" border="">
 		<thead>
 			<tr>
 				<th>Award name</th>
-				<th>Event instance name</th>		
+				<th>Event instance name</th>
+				<th></th>
+
 			</tr>
-		</thead>			
-		<tbody>	
-				{{#each event_award_instance}}
- 				
- 					<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">
- 						<td>{{event_award_id}}</td>
- 						<td>{{event_instance_id}}</td>
- 									
- 					</tr>
- 					
-				{{/each}}				
-	
+		</thead>
+		<tbody>
+
+
+
+			{{#each Entry}}
+
+			<!--
+			<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">  -->
+			<tr>
+				<td rowspan="2">{{eventName}}<br />{{eventDescription}}
+				</td>
+				<td rowspan="2">{{awardName}}<br />{{awardDescription}}
+				</td>
+				<td><button
+						onclick="vote({{event_award_instance_id}});return false;"
+						type="button" class="btn btn-danger btn-xs pull-right">
+						Vote</button></td>
+
+			</tr>
+
+			{{/each}}
+
 		</tbody>
 	</table>
-	</div>
+</div>
+{{#if role}}
+<script>
+	function vote(id) {
+		document.location.href = '{{url "/votes/"}}' + id;
+	}
+	
+</script>
+{{/if}}
 
