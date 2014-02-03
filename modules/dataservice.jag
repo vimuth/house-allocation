@@ -11,6 +11,8 @@ var votesNominee_url = 'http://10.100.4.54:9763/services/house_allocation/votes_
 var peopleNames_url = 'http://10.100.4.54:9763/services/house_allocation/people_names/';
 var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
 
+
+
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
 
 var log = new Log();
@@ -374,5 +376,32 @@ function getEventInstance(eventID){
 		var activities = getActivityInstanceForEvent(eventID);
 
 		return {"eventInstance":eventInstance.event_instanceCollection.event_instance, "awards":awards,"activities":activities };
+}
+
+
+
+function getId(){
+	var data = get(url+ 'people',null,{
+		"Accept":"application/json"},"application/json");
+		var peopleData= parse(data.data);
+		var people= peopleData.peopleCollection;
+
+		return people;
+			
+}
+function addNominee(vote){
+	var optionalHeaders = {
+		"Accept":"application/json" };
+
+		var result = post(votes_url, vote, optionalHeaders, "json");
+
+		// 		log.info(result);
+
+		//event_id = result.data.GeneratedKeys.Entry.ID
+
+		
+
+		
+		//return event_id;
 }
 %>
