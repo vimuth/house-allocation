@@ -1,3 +1,71 @@
 <%
+var caramel;
+var log = new Log();
 
+(function () {
+	var username=session.get('username');
+	var admin= session.get('role')=='admin';
+
+	log.info(admin);
+
+	if(username==null){
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		return;
+	}
+	var dataService = require('modules/dataservice.jag');
+
+	var uriMatcher = new URIMatcher(request.getRequestURI());
+	
+	//if the URL is for the history
+	if(uriMatcher.match('/TestApp2/history')){
+		var data = dataService.getPastEvents();
+
+		log.info(data);
+
+		caramel = require('caramel');
+		Handlebars = require('handlebars');
+
+		Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+			if (a == b)
+				return options.fn(this);
+			else
+				return options.inverse(this);
+		});
+
+			caramel.render({
+				'header':{
+				'username': username},
+				'title': {
+				text :'History'},
+				'main' : {'title':'History',
+				'role': admin, 'events': data}
+			});
+	}
+	//if the URL is for current events
+	if(uriMatcher.match('/TestApp2/current-events')){
+		var data = dataService.getCurrentEvents();
+
+		log.info(data);
+
+		caramel = require('caramel');
+		Handlebars = require('handlebars');
+
+		Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+			if (a == b)
+				return options.fn(this);
+			else
+				return options.inverse(this);
+		});
+
+			caramel.render({
+				'header':{
+				'username': username},
+				'title': {
+				text :'Current Events'},
+				'main' : {'title':'Current Events',
+				'role': admin, 'events': data}
+			});
+	}
+}());
 %>
+
