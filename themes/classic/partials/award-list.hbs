@@ -1,19 +1,20 @@
 <div style="padding-top: 10px">
-	<h3><b>Current Elections</b></h3>
+	<h3>
+		<b>Current Elections</b>
+	</h3>
 	<!-- <table class="table" id="activityTable" border="2">-->
-	
+
 	<table class="table">
 		<thead>
 			<tr>
-				
-				<th><h4 style="color:blue">Award name</h4></th>
-				<th><h4 style="color:blue">Event instance name</h4></th>
-				<th></th>
-				
+
+				<th><h4 style="color: blue">Award name</h4></th>
+				<th><h4 style="color: blue">Event instance name</h4></th>
+				<th><h4 style="color: blue"></h4></th>
+
 			</tr>
 		</thead>
 		<tbody>
-
 
 
 			{{#each Entry}}
@@ -25,12 +26,14 @@
 				</td>
 				<td rowspan="2"><b>{{awardName}}</b><br />Description:{{awardDescription}}
 				</td>
-				<td><button
+				<td rowspan="2"><button
 						onclick="vote('{{event_award_instance_id}}');return false;"
-						type="button" class="btn btn-warning btn-xs pull-right">
-						Vote for this election</button></td>
+						type="button" class="btn btn-warning btn-xs pull-left">Vote
+						for this election</button>
+					<br /></td>
 
 			</tr>
+			<tr></tr>
 
 			{{/each}}
 
@@ -40,12 +43,10 @@
 
 <script>
 	function vote(event_award_instance_id) {
-		//document.location.href = '{{url "/votes/"}}' + id;
-		document.location.href = '{{url "/edit-event/"}}' + event_award_instance_id;
-		//alert("rgeyyyyy");
-		
+		document.location.href = '{{url "/edit-event/"}}'
+				+ event_award_instance_id;
+
 	}
-	
 </script>
 
 
