@@ -76,7 +76,7 @@
 		<tbody>
 		{{#each activities}}
 			<tr>
-				<td><input type="checkbox" onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
+				<td><input type="checkbox" id="{{name}}act" onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
 				<td>{{description}}</td>
 				<td>{{type}}</td>
 				<td><input type="datetime" id="{{name}}datetime" style="visibility:hidden" value="yyyy-mm-ddThh:mm:ss"></td>
@@ -100,9 +100,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each activities}}
+			{{#each awards}}
 				<tr>
-					<td><input type="checkbox" onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
+					<td><input type="checkbox" id="{{name}}award" onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
 					<td>{{description}}</td>
 					<td>{{vote}}</td>
 					<td>{{type}}</td>
@@ -119,6 +119,7 @@
 	<input type="button" id="addButton" class="button" value="Add" onclick="addEventInstance();" /> 
 	<input style="margin-left: 5px;" type="button" class="button" value="Cancel" onclick="showHideCommon();" />
 </div>
+
 <script type="text/javascript"> 
 	
 	var eventInstList = [];
@@ -152,16 +153,39 @@
 
     var actInst = [];
     function addActivities(){
+    	{{#each activities}}
 
+    	var activityName = "{{name}}act";
+    		if ((document.getElementById(activityName)).checked == 'true'){
+				var activityInstance = new Object();
+    			activityInstance.activityName = activityName;
+    			activityInstance.activityInstDate = document.getElementById(activityName+"datetime");
+    			activityInstance.activityInstVenue = document.getElementById(activityName+"venue");
+    			actInst().push(activityInstance);	
+			}
+    	{{/each}}
     }
 
     var awardInst = [];
 
     function addAwards(){
+    	{{#each awards}}
 
+    		var awardName = "{{name}}award";
+    		if (document.getElementById(awardName).checked == 'true'){
+				var activityInstance = new Object();
+    			activityInstance.activityName = awardName;
+    			activityInstance.activityInstDate = document.getElementById(awardName+"datetime");
+    			activityInstance.activityInstVenue = document.getElementById(awardName+"venue");
+    			awardInst().push(activityInstance);	
+			}
+    	{{/each}}
     }
 
     function addEventInstance(){
+
+    	this.addActivities();
+    	this.addAwards();
     /*		var eventInstName = document.getElementById('eventInstanceName');
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
@@ -212,7 +236,8 @@
 
         $('#addButton').click(function() {
 
-        var eventInstName = document.getElementById('eventInstanceName').value;
+        	addEventInstance();
+       		var eventInstName = document.getElementById('eventInstanceName').value;
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
 			var eventInstStartDate = document.getElementById('startDate').value;
@@ -223,7 +248,7 @@
               contentType: "application/json",
               url: "{{url "/addEventInstance2.jag"}}",
               
-              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
+              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
               success: function(msg) {
               }
            });

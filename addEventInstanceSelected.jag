@@ -21,9 +21,8 @@ var verb = request.getMethod();
 		try {
 			
 			var data = request.getContent();
-// 			log.info(data);
+ 			log.info(data);
 			var id = dataService.addEventInstance(data);
-				
 			response.contentType = 'application/json';
 
 			response.content = {
