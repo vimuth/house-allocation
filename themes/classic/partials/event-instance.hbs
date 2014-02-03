@@ -1,0 +1,45 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{eventInstance.name}}</h3>
+	</div>
+	<div class="panel-body">Description :
+		{{eventInstance.description}}</div>
+
+	<div class="panel-body">
+
+		<div class="panel">Activities :</div>
+
+		<div class="list-group">
+			{{#each activities}} <a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">{{name}}</h4>
+
+
+
+
+				<p>
+					{{description}} <span class="label label-default pull-right">{{#if_eq
+						type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
+				</p>
+			</a> {{/each}}
+		</div>
+
+		<div class="panel">Awards :</div>
+
+		<div class="list-group">
+			{{#each awards}} <a href="#" class="list-group-item">
+
+				<h4 class="list-group-item-heading">{{name}}</h4>
+
+
+
+
+				<p>
+					{{description}} <span class="label label-default pull-right">{{#if_eq
+						type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span> <span
+						class="label label-primary pull-right" id="voteLabel">{{#if_eq
+						isVote "true"}}Vote{{/if_eq}}</span>
+				</p>
+			</a> {{/each}}
+		</div>
+	</div>
+</div>

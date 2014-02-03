@@ -1,10 +1,43 @@
 <div>
-	<h3 style="margin-top :0px">{{title}} :</h3>
+	<h3 style="margin-top: 0px">{{title}} :</h3>
 	<div class="list-group">
-		{{#each events.Entry}} <a href='{{url "/events/"}}{{id}}'
-			class="list-group-item">
-			<h4 class="list-group-item-heading">{{name}}</h4>
-			<p class="list-group-item-text">{{description}}</p>
-		</a> {{/each}}
+
+		{{#each events.Entry}} <a style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item"> <!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+			style="clear: both;" />
+			-->
+
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
+				</div>
+
+				<div style="width: 50%; float: left">
+					<p class="list-group-item-text">
+						<br />{{description}}
+					</p>
+				</div>
+
+				<div style="width: 50%; float: right">
+					<div style="width: 40%; float: left">
+						<p class="list-group-item-text">
+							<br /> <br /> <br /> <b>First Place Winner</b>
+						</p>
+					</div>
+					<div style="width: 60%; float: right">
+						<img src="themes/classic/images/image{{house_id}}.jpeg"
+							alt="Smiley face">
+					</div>
+
+				</div>
+				<br style="clear: both;" />
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{/each}}
+
 	</div>
 </div>

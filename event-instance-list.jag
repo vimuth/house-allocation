@@ -41,6 +41,7 @@ var log = new Log();
 				'role': admin, 'events': data}
 			});
 	}
+	
 	//if the URL is for current events
 	if(uriMatcher.match('/TestApp2/current-events')){
 		var data = dataService.getCurrentEvents();
