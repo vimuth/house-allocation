@@ -1,15 +1,15 @@
 <%
 
-var url = 'http://10.100.4.54:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/houseAllocationService/';
 var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
-var votes_url = 'http://10.100.4.54:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://10.100.4.54:9763/services/house_allocation/votes_nominee/';
-var peopleNames_url = 'http://10.100.4.54:9763/services/house_allocation/people_names/';
-var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
+var votes_url = 'http://localhost:9763/services/houseAllocationService/votes/';
+var votesNominee_url = 'http://localhost:9763/services/houseAllocationService/votes_nominee/';
+var peopleNames_url = 'http://localhost:9763/services/houseAllocationService/people_names/';
+var current_elections_url = 'http://10.100.4.54:9763/services/houseAllocationService/current-elections/';
 
 
 
@@ -231,7 +231,7 @@ function getEventInstanceFromEvent(eventID){
 		return parse(data.data);
 }
 
-function getNominees(){
+function getVotes(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
@@ -395,13 +395,8 @@ function addNominee(vote){
 
 		var result = post(votes_url, vote, optionalHeaders, "json");
 
-		// 		log.info(result);
-
-		//event_id = result.data.GeneratedKeys.Entry.ID
-
-		
-
-		
-		//return event_id;
+		response.contentType = 'application/json';
+			response.content = {
+				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
 }
 %>
