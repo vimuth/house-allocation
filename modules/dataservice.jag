@@ -206,12 +206,12 @@ function updateEvent(data){
 				deleteAward(deletedAwards[i]);
 			}
 
-			
+				
 			for(var id in data.editedActivities){
 				var result = post(url+'activity/edit/',data.editedActivities[id] ,optionalHeaders,'json', function(data,xhr){
 					log.info("successfully updated the activity");
 				});
-				
+
 			}
 
 			for(var id in data.editedAwards){
@@ -219,9 +219,6 @@ function updateEvent(data){
 					log.info("successfully updated the award");
 				});
 			}
-
-
-
 }
 
 function getEvents(){
@@ -234,8 +231,7 @@ function getEvents(){
 function getAwards(){
 	var data = get(url+'awards_instance',null,{
 		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-			
+		return parse(data.data);			
 }
 
 
@@ -246,8 +242,6 @@ function getEventNames(){
 		"Accept":"application/json"},"application/json");
 		log.info(data.data);
 		return parse(data.data);
-
-
 }
 
 function deleteEvent(id){
@@ -520,7 +514,8 @@ function addNominee(vote){
 function deleteActivity(activity_id){
 	var activity_instances = get(url+ 'activity/instances/'+activity_id,null,{
 		"Accept":"application/json"},"application/json");
-		if(activity_instances.Entries==""){
+		log.info(activity_instances.Entries);
+		if(activity_instances.Entries==null){
 			del(url+'activity/'+activity_id);
 		}
 		else{
@@ -535,7 +530,7 @@ function deleteActivity(activity_id){
 function deleteAward(award_id){
 	var award_instances = get(url+ 'award/instances/'+award_id,null,{
 		"Accept":"application/json"},"application/json");
-		if(award_instances.Entries==""){
+		if(award_instances.Entries==null){
 			del(url+'award/'+award_id);
 		}
 		else{
