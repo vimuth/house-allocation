@@ -131,37 +131,32 @@ function addEventInstance(data){
 function getActivitiesAndAwardsForEvent(data){
 
 	var dataDup = {
-		"eventInstance":{
-		"eventName":"dgcgbgc"}
+		"eventInstance":data
 	};
 	var eventID = this.getEventIDFromName(dataDup);
 	//log.info(eventID);
 	var activities = this.getActivitiesForEventID(eventID);
 	var awards = this.getAwardsForEventID(eventID);
-
 	var eventActivitiesAndAwards = {
-		"activities":activities.activities,"awards":awards.awards};
+		"activities":activities.activityCollection.activity,"awards":awards.event_awardCollection.event_award};
 
 		return eventActivitiesAndAwards;
 }
 
 function getActivitiesForEventID(id){
-	var activities = {
-		"activities":[{
-		"name":"a1","description":"d1"},{
-		"name":"a2","description":"d2"}]};
-		//log.info(activities);
-		return activities;
+	newURl = 'http://localhost:9763/services/house_allocation/';
+	var data = get(newURl+'activities_from_event_id/'+id,null,{
+		"Accept":"application/json"},"application/json");
+				log.info("received activities:"+data.data);
+		return parse(data.data);
 }
 
 function getAwardsForEventID(id){
-
-	var awards = {
-		"awards":[{
-		"name":"a1","description":"d1"},{
-		"name":"a2","description":"d2"}]};
-		//log.info(awards);
-		return awards;
+	newURl = 'http://localhost:9763/services/house_allocation/';
+	var data = get(newURl+'awards_from_event_id/'+id,null,{
+		"Accept":"application/json"},"application/json");
+		log.info("received awards:"+data.data);
+		return parse(data.data);
 
 }
 

@@ -22,11 +22,11 @@ var verb = request.getMethod();
 			
 			var data = request.getContent();
  			log.info(data);
-			//var id = dataService.addEventInstance(data);
+			var id = dataService.addEventInstance(data);
 			response.contentType = 'application/json';
 
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/eventInstances/'+id} ;
+			//response.content = {
+			//	'redirect':true, 'url':'/TestApp2/eventInstances/'+id} ;
 
 		} catch (e) {
 			log.error(e.toString());
@@ -45,7 +45,7 @@ var verb = request.getMethod();
 					//log.info("Dgfgh");
 					//var data = request.getContent();
 		 			log.info(eventList.event_nameCollection);
-		 			var data = {"eventName":"1"};
+		 			var data = {"eventName":eventName};
 					var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
 					//log.info(actAndAwards);
 					caramel = require('caramel');

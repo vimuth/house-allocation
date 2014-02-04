@@ -52,10 +52,6 @@
 							<td>Event Instance Name</td> 
 							<td><input type="text" name="eventInstanceName" id="eventInstanceName"></td>
 							</tr>
-
-							<tr>
-
-
 							<tr>
 							<td>Description</td>  
 							<td>	<textarea name="eventInstanceDescription" id="eventInstanceDescription" rows="4" cols="40"></textarea></td></tr>
@@ -87,7 +83,7 @@
 				<td>{{type}}</td>
 				<td><input type="datetime" id="{{name}}_act_datetime" style="visibility:hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 				<td><input type="text" id="{{name}}_act_venue" style="visibility:hidden" value="venue"></td>
-				<td><textarea id="{{name}}_act_description" rows="4" cols="40" value="description" style="display:none"></textarea></td>
+				<td><textarea id="{{name}}_act_description" rows="4" style="display:none" cols="40" >description of the event instance</textarea></td>
 			</tr>
 		{{/each}}
 		</tbody>
@@ -101,7 +97,6 @@
 			<tr>
 				<th>Name</th>
 				<th>Description</th>
-				<th>Vote</th>
 				<th>Type</th>
 			</tr>
 		</thead>
@@ -109,7 +104,7 @@
 			{{#each awards}}
 				<tr>
 					<td><input type="checkbox" id="{{name}}award" onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
-					<td>{{description}}</td>
+					<td>{{discription}}</td>
 					<td>{{vote}}</td>
 					<td>{{type}}</td>
 					<td><input type="datetime" id="{{name}}_awd_start" style="visibility:hidden" value="yyyy-mm-ddThh:mm:ss"></td>
