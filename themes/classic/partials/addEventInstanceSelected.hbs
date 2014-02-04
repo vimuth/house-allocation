@@ -105,10 +105,16 @@
 				<tr>
 					<td><input type="checkbox" id="{{name}}award" onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
 					<td>{{discription}}</td>
-					<td>{{vote}}</td>
 					<td>{{type}}</td>
 					<td><input type="datetime" id="{{name}}_awd_start" style="visibility:hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 					<td><input type="datetime" id="{{name}}_awd_end" style="visibility:hidden" value="yyyy-mm-ddThh:mm:ss"></td>
+					
+					<script type="text/javascript">
+						if ('{{type}}'!='v'){
+							document.getElementById('{{name}}_awd_start').style.display = "none";		
+							document.getElementById('{{name}}_awd_end').style.display = "none";
+						}
+					</script>
 			</tr>
 		{{/each}}
 
@@ -140,11 +146,12 @@
 			} else {
 				theDiv.style.visibility = "hidden";
 			}
+		
     }
 
     function changeDisplay(id){
     	var theDiv = document.getElementById(id);
-			if (theDiv.style.display="none") {
+			if (theDiv.style.display=="none") {
 				theDiv.style.display="";
 			} else {
 				theDiv.style.display="none";
@@ -186,7 +193,6 @@
     	{{#each awards}}
     		var awardName = "{{name}}";
     		if (document.getElementById(awardName+"award").checked){
-    			document.getElementById(awardName+"award").style.display="none";
 				var awardInstance = new Object();
     			awardInstance.awardName = awardName;
     			awardInstance.awardID = "{{id}}";
