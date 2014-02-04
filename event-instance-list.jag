@@ -37,8 +37,8 @@ var log = new Log();
 				'username': username},
 				'title': {
 				text :'History'},
-				'main' : {'title':'History',
-				'role': admin, 'events': data}
+				'main' : {'title':'History Of Events',
+				'role': admin, 'events': data, 'past':true}
 			});
 	}
 	
@@ -63,10 +63,9 @@ var log = new Log();
 				'username': username},
 				'title': {
 				text :'Current Events'},
-				'main' : {'title':'Current Events',
-				'role': admin, 'events': data}
+				'main' : {'title':'Current Events and activities',
+				'role': admin, 'events': data, 'current':true}
 			});
 	}
 }());
 %>
-

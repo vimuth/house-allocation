@@ -1,9 +1,10 @@
 <div>
 	<h3 style="margin-top: 0px">{{title}} :</h3>
 	<div class="list-group">
-
-		{{#each events.Entry}} <a style="margin: 0px; padding: 0px"
-			href='{{url "/event-instance/"}}{{id}}' class="list-group-item"> <!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+		{{#if past}} {{#each events.Entry}} <a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
 			style="clear: both;" />
 			-->
 
@@ -37,7 +38,44 @@
 		<div>
 			<br />
 		</div>
-		{{/each}}
+		{{/each}} {{/if}} {{#if current}} {{#each events.Entry}} <a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+			style="clear: both;" />
+			-->
+
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
+				</div>
+
+				<div style="width: 50%; float: left">
+					<p class="list-group-item-text">
+						<br />{{description}}
+						<br/>Start Date :{{startDate}}
+						<br/>End Date   :{{endDate}}
+					</p>
+				</div>
+
+				<div style="width: 50%; float: right">
+
+
+					<p class="list-group-item-text">
+						<br/> <b>Up coming activities</b>
+						<br/>Nearest Event: <br/>venue: {{venue}}<br/> date: {{datetime}}
+					</p>				
+
+
+				</div>
+				<br style="clear: both;" />
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{/each}} {{/if}}
 
 	</div>
 </div>

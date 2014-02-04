@@ -1,15 +1,17 @@
 <%
 
-var url = 'http://10.100.4.54:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/house_allocation/';
 var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
-var votes_url = 'http://10.100.4.54:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://10.100.4.54:9763/services/house_allocation/votes_nominee/';
-var peopleNames_url = 'http://10.100.4.54:9763/services/house_allocation/people_names/';
+var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
+var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
+var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
 var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
+
+
 
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
 
@@ -87,9 +89,10 @@ function addEventInstance(data){
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	log.info("Received event instance"+data.eventInstance);
-	var optionalHeaders = 
-		{"Accept":"application/json"};
-	var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
+	var optionalHeaders =
+	{
+		"Accept":"application/json"};
+		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
 		var eventIdObj = parse(result.data);
 		var eventID = eventIdObj.event_id.event_id.id;
@@ -106,26 +109,28 @@ function addEventInstance(data){
 			log.info("Add event instance:"+eventInst);
 			event_instance_id = result.data.GeneratedKeys.Entry.ID;
 
-		var activityInstances = data.activityInstance;
-		log.info("received activities:"+activityInstances);
-		var awardInstances = data.awardInstance;
+			var activityInstances = data.activityInstance;
+			log.info("received activities:"+activityInstances);
+			var awardInstances = data.awardInstance;
 
-		log.info("received awards:"+awardInstances);
+			log.info("received awards:"+awardInstances);
 
-		for(var i=0;i<activityInstances.length;i++){
-			log.info(i);
-			var activityInstance = {"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
-				var result = post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
-			log.info("added activity instance :"+activityInstance);
-		}
+			for(var i=0;i<activityInstances.length;i++){
+				log.info(i);
+				var activityInstance = {
+					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
+					var result = post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
+					log.info("added activity instance :"+activityInstance);
+			}
 
-		for (var i=0;i<awardInstances.length;i++){
-			var awardInstance = {"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
-				var result = post(newURl+"add_award_instance", awardInstance, optionalHeaders, "json");
-				log.info("added event award instance: "+awardInstance);
-		}
+			for (var i=0;i<awardInstances.length;i++){
+				var awardInstance = {
+					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
+					var result = post(newURl+"add_award_instance", awardInstance, optionalHeaders, "json");
+					log.info("added event award instance: "+awardInstance);
+			}
 
-		return event_instance_id;
+			return event_instance_id;
 }
 
 function getActivitiesAndAwardsForEvent(data){
@@ -168,6 +173,45 @@ function updateEvent(event){
 			log.info("successfully updated the event");
 		});
 
+
+			var activities = data.activities;
+			for(var i=0;i<activities.length;i++){
+				var activity = {
+					"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
+					var result = post(activities_url, activity, optionalHeaders, "json");
+
+			}
+
+			var awards = data.awards;
+			for(var i=0;i<awards.length;i++){
+				var award = {
+					"event_id":event_id,"name":awards[i].name,"description":awards[i].description,"type":awards[i].type,"isVote":awards[i].isVote};
+					var result = post(awards_url, award, optionalHeaders, "json");
+			}
+
+			var deletedActivities = data.deletedActivities;
+			for(var i=0;i<deletedActivities.length;i++){
+				deleteActivity(deletedActivities[i]);
+			}
+
+			var deletedAwards = data.deletedAwards;
+			for(var i=0;i<deletedAwards.length;i++){
+				deleteAward(deletedAwards[i]);
+			}
+
+
+			for(var id in data.editedActivities){
+				var result = post(url+'activity/edit/',data.editedActivities[id] ,optionalHeaders,'json', function(data,xhr){
+					log.info("successfully updated the activity");
+				});
+
+			}
+
+			for(var id in data.editedAwards){
+				var result = post(url+'award/edit/',data.editedAwards[id] ,optionalHeaders,'json', function(data,xhr){
+					log.info("successfully updated the award");
+				});
+			}
 }
 
 function getEvents(){
@@ -181,7 +225,6 @@ function getAwards(){
 	var data = get(url+'awards_instance',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-			
 }
 
 
@@ -192,8 +235,6 @@ function getEventNames(){
 		"Accept":"application/json"},"application/json");
 		log.info(data.data);
 		return parse(data.data);
-
-
 }
 
 function deleteEvent(id){
@@ -308,7 +349,7 @@ function getNames(id){
 }
 
 function getCurrentEvents(){
-	var data = parse(get(url+'current-events',null,{
+	var data = parse(get(url+'current-events-details',null,{
 		"Accept":"application/json"},"application/json").data);
 
 		if(!(data.Entries.Entry instanceof Array)){
@@ -370,4 +411,60 @@ function getEventInstance(eventID){
 
 		return {"eventInstance":eventInstance.event_instanceCollection.event_instance, "awards":awards,"activities":activities };
 }
+
+
+
+function getId(){
+	var data = get(url+ 'people',null,{
+		"Accept":"application/json"},"application/json");
+		var peopleData= parse(data.data);
+		var people= peopleData.peopleCollection;
+
+		return people;
+			
+}
+function addNominee(vote){
+	var optionalHeaders = {
+		"Accept":"application/json" };
+
+		var result = post(votes_url, vote, optionalHeaders, "json");
+
+
+}
+
+function getVotes(){
+	var data = get(url+'votes',null,{
+		"Accept":"application/json"},"application/json");
+
+		return parse(data.data);
+}
+
+function deleteActivity(activity_id){
+	var activity_instances = get(url+ 'activity/instances/'+activity_id,null,{
+			"Accept":"application/json"},"application/json");
+	log.info(activity_instances.Entries);
+	if(activity_instances.Entries==null){
+		del(url+'activity/'+activity_id);
+	}
+	else{
+		get(url+ 'activity/remove-event/'+activity_id,null,{
+			"Accept":"application/json"},"application/json");
+	}
+}
+
+//deleting a award. First check if there is any instances of that award.
+//if there are mark the event as null so that event instances can use the data if there is a need
+//else delete completely
+function deleteAward(award_id){
+	var award_instances = get(url+ 'award/instances/'+award_id,null,{
+		"Accept":"application/json"},"application/json");
+		if(award_instances.Entries==null){
+			del(url+'award/'+award_id);
+		}
+		else{
+			get(url+ 'award/remove-event/'+award_id,null,{
+				"Accept":"application/json"},"application/json");
+		}
+}
+
 %>

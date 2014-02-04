@@ -1,8 +1,11 @@
 <%
-var caramel
+var caramel;
 var log = new Log();
 
+var verb = request.getMethod();
+
 (function () {
+
 	var username=session.get('username');
 
 	if(username!="admin"){
@@ -10,10 +13,87 @@ var log = new Log();
 		return;
 	}
 
-	try{ 
+	if( verb=='POST'){
+		var dataService = require('modules/dataservice.jag');
+		try {
+			var id=0;
+			var data = request.getContent();
+			log.info(data);
+
+			
+			var pp = dataService.getId();
+			//log.info(pp);
+			for (var i=0 ;i< pp.people.length;i++)
+			{
+
+
+				//log.info(pp);
+          		if(pp.people[i].name == data.Nominee.name)
+          		{
+          			//g.info(pp);
+          		id = pp.people[i].id
+                   log.info(id);
+
+          		}
+          		
+
+
+       		}
+				
+			var vote = new Object();
+			// voter_id to be taken from session
+				vote.voter_id = 454446;
+				vote.nominee_id = id;
+
+			//event_award_instance to be taken from session
+				vote.event_award_instance_id = 453646;
+
+
+
+			var voteData = dataService.getVotes();//  event id to be taken from session
+       
+        //log.info(vote);
+       var exist=1;
+
+		for (var i=0 ;i< voteData.votesCollection.votes.length;i++)
+			{
+          		if (vote.voter_id ==voteData.votesCollection.votes[i].voter_id)
+          		{
+
+          			exist =0;
+          		}
+			}
+
+
+       if (exist == 1){
+           dataService.addNominee(vote);
+		    response.contentType = 'application/json';
+			response.content = {
+				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
+			}
+
+		
+    		else
+           {
+    			
+			response.contentType = 'application/json';
+			response.content = {
+				'redirect':true, 'url':'/TestApp2/voteError.jag'} ;
+			} 
+
+//
+		} catch (e) {
+			log.error(e.toString());
+			response.sendRedirect("/TestApp2/error.jag");
+		}
+
+	}
+	else{
+		if (verb=='GET'){
+			try{ 
 		var dataService = require('modules/dataservice.jag');
 
-		var data = dataService.getNominees(77);
+		var data = dataService.getNominees(77);//  event id to be taken from session
        var nominees = [nominees];
        var peopleNames = [peopleNames];
         
@@ -30,10 +110,26 @@ var log = new Log();
 
  var people = { "names" : peopleNames };
 
-		caramel = require('caramel');
+var results = [];
+var idsSeen = {}, idSeenValue = {};
+for (var i = 0, len = people.names.length, name; i < len; ++i) {
+    name= people.names[i].name;
+    if (idsSeen[name] !== idSeenValue) {
+        results.push(people.names[i]);
+        idsSeen[name] = idSeenValue;
+    }
+}
+
+log.info(results);
+
+people = { "names" : results };
+
+
+
+caramel = require('caramel');
 
 		
-log.info(people);
+//log.info(people);
 		caramel.render({
 			'header':{
 				'username': username
@@ -51,6 +147,9 @@ log.info(people);
 	}
 	catch(e){
 		//response.sendRedirect("/TestApp2/error.jag");
+	}
+
+		}
 	}
 }());
 %>

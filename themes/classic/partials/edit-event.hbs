@@ -27,15 +27,17 @@
 		<tbody>
 			{{#each activities.activity}}
 			<tr>
-				<td>{{name}}</td>
-				<td>{{description}}</td>
+				<td id="ID" style="display: none;">{{id}}</td>
+				<td><div id="actName" style="display:inline">{{name}}</div><input style="display:none" class="form-control" id="actNameInput" type="text" value="{{name}}"/></td>
+				<td><div id="actDesc" style="display:inline">{{description}}</div><textarea style="display:none" class="form-control" id="actDescInput" rows="1">{{description}}</textarea></td>
 				<td align="center">{{type}}</td>
-				<td align="center"><button type="button" id="edit-button"
+				<td align="center" id="edit-button"><button onclick="editActivity($(this));"
+						type="button" 
 						style="padding-left: 15px; padding-right: 15px"
 						class="btn btn-warning btn-xs">edit</button></td>
-				<td align="center"><button type="button" id="del-button"
+				<td align="center" id="del-button"><button type="button" 
 						class="btn btn-danger btn-xs"
-						onclick="deleteActivity({{id}},$(this));">delete</button></td>
+						onclick="deleteActivity('{{id}}',$(this));">delete</button></td>
 			</tr>
 
 			{{/each}}
@@ -59,15 +61,16 @@
 		<tbody>
 			{{#each awards}}
 			<tr>
-				<td>{{name}}</td>
-				<td>{{description}}</td>
-				<td align="center">{{isVote}}</td>
+				<td id="ID" style="display: none;">{{id}}</td>
+				<td><div id="awdName" style="display:inline">{{name}}</div><input style="display:none" class="form-control" id="awdNameInput" type="text" value="{{name}}"/></td>
+				<td><div id="awdDesc" style="display:inline">{{description}}</div><textarea style="display:none" class="form-control" id="awdDescInput" rows="1">{{description}}</textarea></td>
+				<td align="center"><input id="awdIsVoteInput" type="checkbox" {{#if_eq isVote "true"}}checked{{/if_eq}} disabled></td>
 				<td align="center">{{type}}</td>
-				<td align="center"><button type="button"
-						style="padding-left: 15px; padding-right: 15px" id="edit-button"
-						class="btn btn-warning btn-xs">edit</button></td>
-				<td align="center"><button type="button"
-						onclick="deleteActivity({{id}},$(this));"
+				<td align="center" id="edit-button"><button type="button"
+						style="padding-left: 15px; padding-right: 15px"
+						class="btn btn-warning btn-xs" onclick="editAward($(this));">edit</button></td>
+				<td align="center" id="del-button"><button type="button"
+						onclick="deleteAward('{{id}}',$(this));"
 						class="btn btn-danger btn-xs">delete</button></td>
 			</tr>
 
@@ -144,13 +147,87 @@
 		var awardList = [];
 		var activityDeleteList = [];
 		var awardDeleteList = [];
+		var editedActivities = {};
+		var editedAwards = {};
 		
-
+		function editActivity(button){
+			var row = button.parent().parent();
+			row.find("#actName").css('display', 'none');
+			row.find("#actNameInput").css('display', 'inline');
+			row.find("#actDesc").css('display', 'none');
+	        row.find("#actDescInput").css('display', 'inline');
+			var input = $('<button onclick="submitActivity($(this));"type="button" id="activity-submit-button" style="padding-left: 15px; padding-right: 15px" class="btn btn-success btn-xs">submit</button>');
+	        row.find("#edit-button").html(input);
+	        var input = $('</div><button onclick="cancelActivityEdit($(this));"type="button" id="submit-button" style="padding-left: 15px; padding-right: 15px" class="btn btn-warning btn-xs">cancel</button>');
+	        row.find("#del-button").html(input);
+		}
+		
+		function cancelActivityEdit(button){
+			var row = button.parent().parent();
+			row.find("#actName").css('display', 'inline');
+			row.find("#actNameInput").css('display', 'none');
+			row.find("#actDesc").css('display', 'inline');
+	        row.find("#actDescInput").css('display', 'none');
+	      	row.find("#edit-button").html('<button onclick="editActivity($(this));" type="button" style="padding-left: 15px; padding-right: 15px" class="btn btn-warning btn-xs">edit</button>');
+	        row.find("#del-button").html('<button type="button" class="btn btn-danger btn-xs" onclick="deleteActivity('+row.find("#ID").html()+',$(this));">delete</button>');
+		}
+		
+		function submitActivity(button){
+			var row = button.parent().parent();
+			var id = row.find("#ID").html();
+			var name=row.find("#actNameInput").val();
+			var description = row.find("#actDescInput").val();
+			
+			row.find("#actName").html(name);
+			row.find("#actDesc").html(description);
+			
+			editedActivities["#"+id] = {'id':id,'name':name,'description':description};
+			
+			cancelActivityEdit(button);
+		}
+		
+		function editAward(button){
+			var row = button.parent().parent();
+			row.find("#awdName").css('display', 'none');
+			row.find("#awdNameInput").css('display', 'inline');
+			row.find("#awdDesc").css('display', 'none');
+	        row.find("#awdDescInput").css('display', 'inline');
+	        
+			var input = $('<button onclick="submitAward($(this));"type="button" id="activity-submit-button" style="padding-left: 15px; padding-right: 15px" class="btn btn-success btn-xs">submit</button>');
+	        row.find("#edit-button").html(input);
+	        var input = $('</div><button onclick="cancelAwardEdit($(this));"type="button" id="submit-button" style="padding-left: 15px; padding-right: 15px" class="btn btn-warning btn-xs">cancel</button>');
+	        row.find("#del-button").html(input);
+		}
+		
+		function cancelAwardEdit(button){
+			var row = button.parent().parent();
+			row.find("#awdName").css('display', 'inline');
+			row.find("#awdNameInput").css('display', 'none');
+			row.find("#awdDesc").css('display', 'inline');
+	        row.find("#awdDescInput").css('display', 'none');
+	        
+	      	row.find("#edit-button").html('<button onclick="editAward($(this));" type="button" style="padding-left: 15px; padding-right: 15px" class="btn btn-warning btn-xs">edit</button>');
+	        row.find("#del-button").html('<button type="button" class="btn btn-danger btn-xs" onclick="deleteAward('+row.find("#ID").html()+',$(this));">delete</button>');
+		}
+		
+		function submitAward(button){
+			var row = button.parent().parent();
+			var id = row.find("#ID").html();
+			var name=row.find("#awdNameInput").val();
+			var description = row.find("#awdDescInput").val();
+			
+			row.find("#awdName").html(name);
+			row.find("#awdDesc").html(description);
+			
+			editedAwards["#"+id] = {'id':id,'name':name,'description':description};
+			
+			cancelAwardEdit(button);
+		}
+		
 		
 		function deleteActivity(id, button){
 			if (confirm("Are you sure you want delete this activity?")) {
 			activityDeleteList.push(id);
-			
 			button.attr("disabled", true);
 			var row = button.parent().parent();
 			row.find('#edit-button').attr("disabled", true);
@@ -159,6 +236,7 @@
 			return false;
 			}
 		}
+		
 		function deleteAward(id, button){
 			if (confirm("Are you sure you want delete this award?")) {
 			awardDeleteList.push(id);
@@ -229,7 +307,7 @@
 				award.name = awardName;
 				award.description = awardDescription;
 				award.type = awardType;
-				award.isVote = awardIsVote
+				award.isVote = awardIsVote;
 
 				awardList.push(award);
 
@@ -284,13 +362,16 @@
 															data : JSON
 															.stringify({
 																"event" : {
+																	"id" : {{event.id}},
 																	"name" : eventName,
 																	"description" : eventDescription
 																},
 																"activities" : activityList,
 																"awards" : awardList,
 																"deletedActivities" : activityDeleteList,
-																"deletedAwards" : activityDeleteList
+																"deletedAwards" : awardDeleteList,
+																"editedActivities":editedActivities,
+																"editedAwards":editedAwards
 															}),
 															success : function(
 																	msg) {

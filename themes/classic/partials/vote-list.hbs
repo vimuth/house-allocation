@@ -8,27 +8,137 @@
 	<h2>Nominees </h2>
 
 
-	<form>
+	<form id="activityForm" name="newActivity"
+			>
 <table class="table" id="activityTable">
 	<tbody>	
 		
 				{{#each names}}
  				
  					
- 					<tr><input type="radio" name="Nominee_name" value="{{name}}">{{name}}<br><br> </tr>
+ 					<tr><input type="radio" id="Nominee_name" value="{{name}}"  onclick="addNominee();" >{{name}}<br><br> </tr>
 				{{/each}}				
 	
 		</tbody>
-	</table>
+</table>
 
-
-
-
-</form>	
-
+</form>
 	
+
+
+
+
+<form id="myform" name="newEvent">
+	<div class="form-group">
+		<label for="eventName">Add Nominee</label> <input type="text"
+			class="form-control" id="eventName" placeholder="Enter Nominee Name"
+			required>
+	</div>
+	
+</form>
+<button id="submitButton" type="submit" class="btn btn-default">Add</button>
+
+
+
+
+</div>
+</div>
 		
 	</div>
 
 	</div>
 </div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+		
+		
+
+		
+		
+var nominee;
+		
+		
+
+		$(document)
+				.ready(
+						function() {
+
+							$('#submitButton')
+									.click(
+											function() {
+
+												var eventName = document
+														.getElementById('eventName').value;
+												
+
+												$
+														.ajax({
+															type : "POST",
+															contentType : "application/json",
+															url : "{{url "/vote-list.jag"}}",
+
+															data : JSON
+																	.stringify({
+																		"Nominee" : {
+																			"name" : eventName,
+																			
+																		}
+																		
+																		
+																	}),
+															success : function(
+																	msg) {
+																if(msg.redirect){
+																	window.location = msg.url;
+																};
+															}
+														});
+
+											});
+
+						});
+
+
+
+		function addNominee() {
+		 var nomineeName = document.getElementById('Nominee_name').value;
+												
+
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "{{url "/vote-list.jag"}}",
+
+				data : JSON
+						.stringify({
+							"Nominee" : {
+								"name" : nomineeName,
+										}
+																		
+																		
+																	}),
+				success : function(
+								msg) {
+						if(msg.redirect){
+						window.location = msg.url;
+					};
+				}
+			});
+
+		}
+
+
+</script>
+
+	
+
+
+
+
