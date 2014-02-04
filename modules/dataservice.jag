@@ -394,14 +394,8 @@ function getAwardInstanceForEvent(eventID){
 		for(i=0;i<data.Entries.Entry.length;i++){
 
 			if(data.Entries.Entry[i].type == "G"){
-				// 				var winners = parse(get(url+'activity/winner-house/'+data.activityCollection.activity[i].id,null,{
-				// 					"Accept":"application/json"},"application/json").data);
-
-				// 					if(!(winners.Entries.Entry instanceof Array)){
-				// 						winners.Entries.Entry = [winners.Entries.Entry];
-				// 					}
-
-				// 					data.activityCollection.activity[i].winner = winners.Entries.Entry;
+				var winners = getAwardWinnerHouses(data.Entries.Entry[i].id);
+				data.Entries.Entry[i].winner = winners.Entries.Entry;
 			}
 			else{
 				var winners = getAwardWinners(data.Entries.Entry[i].id);
@@ -432,6 +426,17 @@ function getAwardWinners(awardID){
 		if(!(data.Entries.Entry instanceof Array)){
 			data.Entries.Entry = [data.Entries.Entry];
 		}
+		return data;
+}
+
+//returns a list of award winners
+function getAwardWinnerHouses(awardID){
+	var data = parse(get(url+'award/winner-house/'+awardID,null,{
+		"Accept":"application/json"},"application/json").data);
+		if(!(data.Entries.Entry instanceof Array)){
+			data.Entries.Entry = [data.Entries.Entry];
+		}
+		log.info(data);
 		return data;
 }
 
