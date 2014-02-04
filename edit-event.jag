@@ -20,7 +20,10 @@ var verb = request.getMethod();
 		try {
 
 			var data = request.getContent();
-			dataService.updateEvent(data.event);
+			
+			log.info(data);
+			
+			dataService.updateEvent(data);
 			
 			
 			response.contentType = 'application/json';

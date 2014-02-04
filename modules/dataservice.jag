@@ -170,13 +170,57 @@ function getAwardsForEventID(id){
 
 }
 
-function updateEvent(event){
-	var headers = {
+function updateEvent(data){
+
+	var event_id = data.event.id;
+
+	var optionalHeaders = {
 		"Accept": "application/json"};
 
-		var result = post(url+'edit-event',event,headers,'json', function(data,xhr){
+		var result = post(url+'edit-event',data.event,optionalHeaders,'json', function(data,xhr){
 			log.info("successfully updated the event");
 		});
+
+			var activities = data.activities;
+			for(var i=0;i<activities.length;i++){
+				var activity = {
+					"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
+					var result = post(activities_url, activity, optionalHeaders, "json");
+
+			}
+
+			var awards = data.awards;
+			for(var i=0;i<awards.length;i++){
+				var award = {
+					"event_id":event_id,"name":awards[i].name,"description":awards[i].description,"type":awards[i].type,"isVote":awards[i].isVote};
+					var result = post(awards_url, award, optionalHeaders, "json");
+			}
+
+			var deletedActivities = data.deletedActivities;
+			for(var i=0;i<deletedActivities.length;i++){
+				deleteActivity(deletedActivities[i]);
+			}
+
+			var deletedAwards = data.deletedAwards;
+			for(var i=0;i<deletedAwards.length;i++){
+				deleteAward(deletedAwards[i]);
+			}
+
+			
+			for(var id in data.editedActivities){
+				var result = post(url+'activity/edit/',data.editedActivities[id] ,optionalHeaders,'json', function(data,xhr){
+					log.info("successfully updated the activity");
+				});
+				
+			}
+
+			for(var id in data.editedAwards){
+				var result = post(url+'award/edit/',data.editedAwards[id] ,optionalHeaders,'json', function(data,xhr){
+					log.info("successfully updated the award");
+				});
+			}
+
+
 
 }
 
@@ -469,4 +513,35 @@ function addNominee(vote){
 
 		var result = post(votes_url, vote, optionalHeaders, "json");
 }
+
+//deleting a activity. First check if there is any instances of that activity.
+//if there are mark the event as null so that event instances can use the data if there is a need
+//else delete completely
+function deleteActivity(activity_id){
+	var activity_instances = get(url+ 'activity/instances/'+activity_id,null,{
+		"Accept":"application/json"},"application/json");
+		if(activity_instances.Entries==""){
+			del(url+'activity/'+activity_id);
+		}
+		else{
+			get(url+ 'activity/remove-event/'+activity_id,null,{
+				"Accept":"application/json"},"application/json");
+		}
+}
+
+//deleting a award. First check if there is any instances of that award.
+//if there are mark the event as null so that event instances can use the data if there is a need
+//else delete completely
+function deleteAward(award_id){
+	var award_instances = get(url+ 'award/instances/'+award_id,null,{
+		"Accept":"application/json"},"application/json");
+		if(award_instances.Entries==""){
+			del(url+'award/'+award_id);
+		}
+		else{
+			get(url+ 'award/remove-event/'+award_id,null,{
+				"Accept":"application/json"},"application/json");
+		}
+}
+
 %>
