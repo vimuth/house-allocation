@@ -231,7 +231,7 @@ function getEventInstanceFromEvent(eventID){
 		return parse(data.data);
 }
 
-function getVotes(){
+function getNominees(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
@@ -395,8 +395,12 @@ function addNominee(vote){
 
 		var result = post(votes_url, vote, optionalHeaders, "json");
 
-		response.contentType = 'application/json';
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
+		
+}
+
+function getVotes(){
+	var data = get(url+'votes',null,{
+		"Accept":"application/json"},"application/json");
+		return parse(data.data);
 }
 %>
