@@ -1,12 +1,16 @@
-<form class="form-inline" role="form">
+<form class="form-horizontal" onsubmit='search(); return false;' id="myform" name="newEvent">
 	<div class="form-group">
-		<label class="sr-only" for="nameInput">Name</label> <input type="text"
-			class="form-control" id="nameInput" placeholder="Enter name">
+		<label for="nameInput" class="col-sm-3 control-label">Member Name</label>
+		<div class="col-sm-5">
+			<input type="text" style="display: inline" class="form-control"
+				id="nameInput" placeholder="Enter Name" required>
+		</div>
+		<div class="col-sm-2">
+			<button type="assign" 
+				class="btn btn-default">Assign House</button>
+		</div>
 	</div>
-	<button type="submit" onclick='search(); return false;'
-		class="btn btn-default">Search</button>
 </form>
-
 
 <div id="con-error" style="margin-top: 10px; display: none"
 	class="alert alert-danger alert-dismissable">
