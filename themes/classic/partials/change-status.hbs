@@ -1,0 +1,108 @@
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<label class="sr-only" for="nameInput">Name</label> <input type="text"
+			class="form-control" id="nameInput" placeholder="Enter name">
+	</div>
+	<button type="submit" onclick='search(); return false;'
+		class="btn btn-default">Search</button>
+</form>
+
+
+<div id="con-error" style="margin-top: 10px; display: none"
+	class="alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert"
+		aria-hidden="true">&times;</button>
+	<strong>Error!</strong> There was an error performing the operation
+</div>
+
+<table style="display: none" id="searchResults" class="table">
+
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>House</th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+	</tbody>
+
+</table>
+
+<script>
+
+function search(){
+	var houses= ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
+	var name = $('#nameInput').val();
+	$('#searchResults').css('display','');
+	$('#searchResults > tbody').html('');
+	
+	$
+	.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "{{url "/change-status.jag?name="}}"+name,
+
+		data : {},
+		success : function(
+				msg) {
+			if(msg){
+				for (var i = 0; i < msg.length; i++) {
+				if(msg[i].isActive=="true"){
+					var button = '<button type="submit" onclick=\'deactivate("'+msg[i].name+'",$(this))\' class="btn btn-xs btn-warning">Deactivate</button>';
+				}
+				else{
+					var button = '<button type="submit" onclick=\'activate("'+msg[i].name+'",$(this))\' class="btn btn-xs btn-success">Activate</button>';
+				} 
+				
+				$('#searchResults > tbody:last').append('<tr><td>' + msg[i].name + '</td><td>'
+								+ houses[msg[i].house_id] + '</td><td>'
+								+ button + '</td></tr>'); 
+			}
+			}else{
+				$('#searchResults > tbody:last').append('<tr><td COLSPAN=2>'+ '<div id="con-error" style="margin-top: 10px;" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Error!</strong> The querry doesnt match any names</div>'+ '</td></tr>'); 
+			}
+		}
+	});
+}
+
+function deactivate(name,button){
+	$
+	.ajax({
+		type : "GET",
+		contentType : "application/json",
+		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=deactivate&name="+name),
+		data : {},
+		success : function(
+				msg) {
+			
+			if(msg.success="true")
+					button.parent().html('<button type="submit" onclick=\'activate("'+name+'",$(this))\' class="btn btn-xs btn-success">Activate</button>');
+				else
+					$('#con-error').css('display',''); 
+			}
+		
+	});
+}
+
+function activate(name,button){
+	$
+	.ajax({
+		type : "GET",
+		contentType : "application/json",
+		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=activate&name="+name),
+		data : {},
+		success : function(
+				msg) {
+			if(msg.success="true")
+					button.parent().html('<button type="submit" onclick=\'deactivate("'+name+'",$(this))\' class="btn btn-xs btn-warning">Deactivate</button>');
+				else
+					$('#con-error').css('display',''); 
+			}
+		
+	});
+}
+
+
+</script>
