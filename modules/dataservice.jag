@@ -73,7 +73,7 @@ function getEventIDFromName(data){
 	newURl = 'http://localhost:9763/services/house_allocation/';
 	var optionalHeaders = {
 		"Accept":"application/json" };
-		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,{
+		var result = get(newURl+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
 			"Accept":"application/json"},"application/json");
 			log.info(result);
 			var eventIdObj = parse(result.data);

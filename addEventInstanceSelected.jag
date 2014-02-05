@@ -40,6 +40,9 @@ var verb = request.getMethod();
 			var uriMatcher = new URIMatcher(request.getRequestURI());
 			//log.info(request.getRequestURI);
 			if(uriMatcher.match('/TestApp2/addEventInstanceSelected/{name}')) {
+				
+				log.info(uriMatcher.elements().name);
+				
 				try{
 					var eventName = uriMatcher.elements().name;
 		 			log.info(eventList.event_nameCollection);
