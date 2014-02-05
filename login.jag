@@ -9,8 +9,6 @@ var verb = request.getMethod();
 
 		caramel = require('caramel');
 
-		// 		log.info(request.getQueryString());
-
 		caramel.render({
 			'location': {
 			'redirectlink':request.getQueryString()
@@ -22,7 +20,23 @@ var verb = request.getMethod();
 		var username=request.getParameter("username");
 		var password=request.getParameter("password");
 
-		// 		log.info("redirectlink"+request.getParameter("location"));
+// 		var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
+// 		var ldapAuthentication = new ldapAuth();
+
+// 		var resultArray = ldapAuthentication.ldapAuth(username,password);
+		
+// 		log.info(resultArray);
+
+// 		if(resultArray == true){
+
+// 			session.put("username",username);
+// 			session.put("role",'admin');
+// 			response.sendRedirect(request.getParameter("location"));
+// 			return;
+// 		}
+// 		else{
+// 			response.sendRedirect("index.jag");
+// 		}
 
 		if((username.equals("admin") && password.equals("admin")))
 		{

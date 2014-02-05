@@ -24,9 +24,10 @@ log.info("got here : "+verb);
 // 			try{
 
 				var id = uriMatcher.elements().id;
-				var data = dataService.getEventInstanceFromEvent(id);
+				var instances = dataService.getEventInstanceFromEvent(id);
+				var event = dataService.getEvent(id);
 
-				log.info(data);
+				log.info(event);
 
 				caramel = require('caramel');
 				Handlebars = require('handlebars');
@@ -46,7 +47,9 @@ log.info("got here : "+verb);
 					text :"Confirm Delete"},
 					'body': {
 						'id':id,
-						"Entry" : data.Entries.Entry}
+						"Entry" : instances.Entries.Entry,
+						"event" : event
+						}
 					});
 // 			}
 // 			catch(e){

@@ -13,22 +13,22 @@
 					<h3 class="panel-title">{{name}}</h3>
 				</div>
 
-				<div style="width: 50%; float: left">
+				<div style="width: 70%; float: left">
 					<p class="list-group-item-text">
 						<br />{{description}}
 					</p>
 				</div>
 
-				<div style="width: 50%; float: right">
-					<div style="width: 40%; float: left">
+				<div style="width: 30%; float: right">
+				<!--  	<div style="width: 60%; float: left">-->
 						<p class="list-group-item-text">
-							<br /> <br /> <br /> <b>First Place Winner</b>
+							<br />   <b>First Place Winner </b>
 						</p>
-					</div>
-					<div style="width: 60%; float: right">
-						<img src="themes/classic/images/image{{house_id}}.jpeg"
-							alt="Smiley face">
-					</div>
+					<!-- 	</div>-->
+					<!-- 	<div style="width: 40%; float: right">-->
+						<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+							alt="Smiley face" height="80" width="80">
+					<!-- 	</div>-->
 
 				</div>
 				<br style="clear: both;" />
@@ -53,6 +53,8 @@
 				<div style="width: 50%; float: left">
 					<p class="list-group-item-text">
 						<br />{{description}}
+						<br/>Start Date :{{startDate}}
+						<br/>End Date   :{{endDate}}
 					</p>
 				</div>
 
@@ -61,6 +63,7 @@
 
 					<p class="list-group-item-text">
 						<br/> <b>Up coming activities</b>
+						<br/>Nearest activity: <br/>venue: {{venue}}<br/> date: {{datetime}}
 					</p>				
 
 

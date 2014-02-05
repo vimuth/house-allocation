@@ -15,12 +15,46 @@
 			{{description}} : {{startDate}} : {{endDate}} </a> {{/each}}
 	</div>
 
-	<div class="btn-group">
-		<button type="button" onclick="document.location.href='{{url "/events/"}}'" class="btn btn-info">Cancel</button>
-		<button type="button" onclick="document.location.href='{{url "/edit-event/"}}{{id}}'" class="btn btn-warning">Edit Event</button>
-		<button type="button"
-			onclick="deleteEvent({{id}});" class="btn btn-danger">Delete Event</button>
+	<div style="margin-top: 10px" class="panel panel-danger">
+		<div  class="panel-heading">
+			<h3 class="panel-title">{{event.event.name}}</h3>
+		</div>
+		<div class="panel-body">Description : {{event.event.description}}</div>
+
+		<div class="panel-body">
+
+			<div class="panel">Activities :</div>
+
+			<div class="list-group">
+				{{#each event.activities.activity}} <a href="#" class="list-group-item">
+					{{name}} : {{description}} <span
+					class="label label-default pull-right">{{#if_eq type
+						"G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
+				</a> {{/each}}
+			</div>
+
+			<div class="panel">Awards :</div>
+
+			<div class="list-group">
+				{{#each event.awards}} <a href="#" class="list-group-item"> {{name}} :
+					{{description}}<span class="label label-default pull-right">{{#if_eq
+						type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span> <span
+					class="label label-primary pull-right" id="voteLabel">{{#if_eq
+						isVote "true"}}Vote{{/if_eq}}</span>
+				</a> {{/each}}
+			</div>
+		</div>
 	</div>
+	
+	<div style="margin-bottom: 50px" class="btn-group pull-right">
+		<button type="button" onclick="document.location.href='{{url "
+			/events/"}}'" class="btn btn-info">Cancel</button>
+		<button type="button" onclick="document.location.href='{{url "
+			/edit-event/"}}{{id}}'" class="btn btn-warning">Edit Event</button>
+		<button type="button" onclick="deleteEvent({{id}});"
+			class="btn btn-danger">Delete Event</button>
+	</div>
+
 </div>
 
 <script>

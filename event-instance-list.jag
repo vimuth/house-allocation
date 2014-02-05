@@ -63,7 +63,7 @@ var log = new Log();
 				'username': username},
 				'title': {
 				text :'Current Events'},
-				'main' : {'title':'Current Events',
+				'main' : {'title':'Current Events and activities',
 				'role': admin, 'events': data, 'current':true}
 			});
 	}
