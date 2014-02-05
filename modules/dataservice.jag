@@ -454,10 +454,19 @@ function getId(){
 			
 }
 function addNominee(vote){
+	try{
 	var optionalHeaders = {
 		"Accept":"application/json" };
 
 		var result = post(votes_url, vote, optionalHeaders, "json");
+
+		return true;
+}
+catch(e){
+		log.error(e);
+		return false;
+		}		
+
 
 
 }

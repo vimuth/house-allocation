@@ -1,0 +1,62 @@
+<%
+var caramel
+var log = new Log();
+
+(function () {
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag")
+		return;
+	}
+
+	try{
+		var dataService = require('modules/dataservice.jag');
+		var data = dataService.getEventAwardInstance();
+
+
+		log.info(data);
+
+		var date = new Date();date ; 
+        date.setDate(date.getDate() - 1);date ;
+
+        var endDate = data.event_award_instanceCollection.event_award_instance[1].vote_endDate;
+
+        var end_date=DateTime.Parse(endDate );
+       
+        log.info(end_date);
+
+       // log.info( date.getDate());
+
+    for(var i =0; i< data.event_award_instanceCollection.event_award_instance.length; i++){
+         //var endDate = data.event_award_instanceCollection.event_award_instance[i].vote_endDate;
+         
+         
+
+    		//if((endDate.getDate() == date.getDate() )  && (endDate.getMonth() == date.getMonth() ) &&  (endDate.getYear() == date.getYear() ) )
+    		//{
+    			//print("yayyy");
+    		//}
+
+
+    }
+
+
+
+		caramel = require('caramel');
+
+			
+		caramel.render({
+			'header':{
+			'username': username
+		},
+		'title': {
+		text :'Winners'},
+		//'body': body
+		});
+	}
+	catch(e){
+		//response.sendRedirect("/TestApp2/error.jag");
+	}
+}());
+%>
