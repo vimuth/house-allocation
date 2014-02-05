@@ -20,14 +20,14 @@
 				</div>
 
 				<div style="width: 30%; float: right">
-				<!--  	<div style="width: 60%; float: left">-->
-						<p class="list-group-item-text">
-							<br />   <b>First Place Winner </b>
-						</p>
+					<!--  	<div style="width: 60%; float: left">-->
+					<p class="list-group-item-text">
+						<br /> <b>First Place Winner </b>
+					</p>
 					<!-- 	</div>-->
 					<!-- 	<div style="width: 40%; float: right">-->
-						<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
-							alt="Smiley face" height="80" width="80">
+					<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+						alt="Smiley face" height="80" width="80">
 					<!-- 	</div>-->
 
 				</div>
@@ -38,7 +38,7 @@
 		<div>
 			<br />
 		</div>
-		{{/each}} {{/if}} {{#if current}} {{#each events.Entry}} <a
+		{{/each}} {{/if}} {{#if current}} {{#each events}} <a
 			style="margin: 0px; padding: 0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
 			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
@@ -49,26 +49,34 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">{{name}}</h3>
 				</div>
-
-				<div style="width: 50%; float: left">
-					<p class="list-group-item-text">
-						<br />{{description}}
-						<br/>Start Date :{{startDate}}
-						<br/>End Date   :{{endDate}}
-					</p>
+				<div class="row">
+					<div class="col-md-5" style="margin:10px">
+						<p class="list-group-item-text">
+							{{description}} <br />Start Date :{{startDate}} <br />End
+							Date :{{endDate}}
+						</p>
+					</div>
+					{{#if activities}}
+					<div  class="col-md-6" style="margin:10px">
+						<p class="list-group-item-text">
+							 <b>Up coming activities</b> 
+							 <table class="table">
+							 	<thead>
+							 		<th>name</th><th>description</th><th>venue</th>
+							 	</thead>
+							 	<tbody>
+							 	
+							 	{{#each activities}}
+							 	<tr><td>{{name}}</td><td>{{description}}</td><td>{{venue}}</td></tr>
+							 	{{/each}}
+							 	
+							 	</tbody>
+							 </table>
+							 
+						</p>
+					</div>
+					{{/if}}
 				</div>
-
-				<div style="width: 50%; float: right">
-
-
-					<p class="list-group-item-text">
-						<br/> <b>Up coming activities</b>
-						<br/>Nearest activity: <br/>venue: {{venue}}<br/> date: {{datetime}}
-					</p>				
-
-
-				</div>
-				<br style="clear: both;" />
 			</div>
 
 		</a>
