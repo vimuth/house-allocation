@@ -16,12 +16,21 @@
 				{{#each names}}
  				
  					
- 					<tr><input type="radio" id="Nominee_name" value="{{name}}"  onclick="addNominee();" >{{name}}<br><br> </tr>
-				{{/each}}				
-	
-		</tbody>
-</table>
+ 					<tr><input type="radio" id="{{name}}Nominee_name" value="{{name}}"  >{{name}}<br> <br> </tr>
 
+                   
+				{{/each}}				
+	            
+
+
+
+
+
+		</tbody>
+
+		
+</table>
+<input type="button" id="addButton" class="button" value="Add" onclick="addNominee();" />
 </form>
 	
 
@@ -108,7 +117,12 @@ var nominee;
 
 
 		function addNominee() {
-		 var nomineeName = document.getElementById('Nominee_name').value;
+			{{#each names}}
+
+			var name = "{{name}}";
+		 
+    		if ((document.getElementById(name+"Nominee_name")).checked){
+    		
 												
 
 			$.ajax({
@@ -119,7 +133,7 @@ var nominee;
 				data : JSON
 						.stringify({
 							"Nominee" : {
-								"name" : nomineeName,
+								"name" : name,
 										}
 																		
 																		
@@ -131,8 +145,10 @@ var nominee;
 					};
 				}
 			});
-
 		}
+{{/each}}
+		}
+
 
 
 </script>

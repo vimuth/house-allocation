@@ -39,20 +39,27 @@ var verb = request.getMethod();
 
 
        		}
-				
+       		var awardId ;
+       		var uriMatcher = new URIMatcher(request.getRequestURI());
+	       if(uriMatcher.match('/TestApp2/votes/{id}')) {
+		
+
+				awardId = uriMatcher.elements().id;
+		}
 			var vote = new Object();
 			// voter_id to be taken from session
-				vote.voter_id = 454446;
+				vote.voter_id = 34343;
 				vote.nominee_id = id;
 
-			//event_award_instance to be taken from session
-				vote.event_award_instance_id = 453646;
+
+			 //vote.event_award_instance_id =3242;
+				vote.event_award_instance_id = awardId;
 
 
 
 			var voteData = dataService.getVotes();//  event id to be taken from session
        
-        //log.info(vote);
+        log.info(vote);
        var exist=1;
 
 		for (var i=0 ;i< voteData.votesCollection.votes.length;i++)
@@ -61,18 +68,22 @@ var verb = request.getMethod();
           		{
 
           			exist =0;
+
           		}
 			}
 
 
        if (exist == 1){
-           dataService.addNominee(vote);
+       	
+           if(dataService.addNominee(vote));
+           {
+           log.info(exist);
 		    response.contentType = 'application/json';
 			response.content = {
 				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
 			}
 
-		
+		}
     		else
            {
     			
@@ -100,8 +111,8 @@ var verb = request.getMethod();
 
 		for (var i=0 ;i< data.votesCollection.votes.length;i++)
 			{
-          		nominees[i] = data.votesCollection.votes[i].nominee_id;
-          		peopleNames[i] = dataService.getNames(nominees[i]);
+          	nominees[i] = data.votesCollection.votes[i].nominee_id;
+          	peopleNames[i] = dataService.getNames(nominees[i]);
 
 
        		}
@@ -114,13 +125,13 @@ var results = [];
 var idsSeen = {}, idSeenValue = {};
 for (var i = 0, len = people.names.length, name; i < len; ++i) {
     name= people.names[i].name;
-    if (idsSeen[name] !== idSeenValue) {
+   if (idsSeen[name] !== idSeenValue) {
         results.push(people.names[i]);
-        idsSeen[name] = idSeenValue;
-    }
+       idsSeen[name] = idSeenValue;
+   }
 }
 
-log.info(results);
+//log.info(results);
 
 people = { "names" : results };
 
