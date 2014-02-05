@@ -1,0 +1,57 @@
+<form class="form-inline" onsubmit='search(); return false;' role="form">
+	<div class="form-group">
+		<label class="sr-only" for="nameInput">Name</label> <input type="text"
+			class="form-control" id="nameInput" placeholder="Enter name">
+	</div>
+	<button type="submit" class="btn btn-default">Search</button>
+</form>
+
+<tr id="searchResults" class="table">
+
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>House</th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr></tr>
+	</tbody>
+
+</tr>
+
+<script>
+
+function search(){
+	var houses= ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
+	var name = $('#nameInput').val();
+	$
+	.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "{{url "/change-status.jag?name="}}"+name,
+
+		data : {},
+		success : function(
+				msg) {
+			alert(msg);
+			for (var i = 0; i < msg.length; i++) {
+				if(msg[i].isActive){
+					var button = '<button type="submit" class="btn btn-warning">Deactivate</button>';
+				}
+				else{
+					var button = '<button type="submit" class="btn btn-danger">Activate</button>';
+				}
+				
+				$('#searchResults > tbody:last').append(
+						'<tr><td>' + msg[i].name + '</td><td>'
+								+ houses[msg[i].house_id] + '</td><td>'
+								+ button + '</td></tr>');
+			}
+		}
+	});
+}
+
+</script>

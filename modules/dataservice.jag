@@ -1,15 +1,15 @@
 <%
 
 var url = 'http://localhost:9763/services/house_allocation/';
-var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
-var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
-var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
-var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
-var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
+var events_url = 'http://localhost:9763/services/house_allocation/events/';
+var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
+var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
+var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
+var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
 var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
 var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
 var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
-var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
+var current_elections_url = 'http://localhost:9763/services/house_allocation/current-elections/';
 
 
 
@@ -444,6 +444,9 @@ function getVotes(){
 		return parse(data.data);
 }
 
+//deleting an activity. First check if there is any instances of that activity.
+//if there are mark the event as null so that event instances can use the data if there is a need
+//else delete completely
 function deleteActivity(activity_id){
 	var activity_instances = get(url+ 'activity/instances/'+activity_id,null,{
 			"Accept":"application/json"},"application/json");
@@ -471,5 +474,18 @@ function deleteAward(award_id){
 				"Accept":"application/json"},"application/json");
 		}
 }
+
+
+function searchPeople(name){
+	var people = parse(get(url+ 'people/search/'+name,null,{
+			"Accept":"application/json"},"application/json").data);
+		
+	if(people.Entries==null){
+		Entries={Entry:[]}
+	}
+	return people.Entries.Entry;
+}
+
+
 
 %>
