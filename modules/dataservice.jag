@@ -1,14 +1,14 @@
 <%
 
-var url = 'http://localhost:9763/services/house_allocation/';
+var url = 'http://10.100.4.54:9763/services/house_allocation/';
 var events_url = 'http://10.100.4.54:9763/services/house_allocation/events/';
 var activities_url = 'http://10.100.4.54:9763/services/house_allocation/activities/';
 var awards_url = 'http://10.100.4.54:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://10.100.4.54:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://10.100.4.54:9763/services/house_allocation/event_instance';
-var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
-var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
+var votes_url = 'http://10.100.4.54:9763/services/house_allocation/votes/';
+var votesNominee_url = 'http://10.100.4.54:9763/services/house_allocation/votes_nominee/';
+var peopleNames_url = 'http://10.100.4.54:9763/services/house_allocation/people_names/';
 var current_elections_url = 'http://10.100.4.54:9763/services/house_allocation/current-elections/';
 
 
@@ -356,6 +356,17 @@ function getCurrentEvents(){
 			data.Entries.Entry = [data.Entries.Entry];
 		}
 		return data.Entries;
+}
+
+function getEventActivities(id){
+	var data = parse(get(url+'event-activities-details',null,{
+			"Accept":"application/json"},"application/json").data);
+	
+			if(!(data.Entries.Entry instanceof Array)){
+				data.Entries.Entry = [data.Entries.Entry];
+			}
+			return data.Entries;
+	
 }
 
 function getPastEvents(){
