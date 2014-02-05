@@ -6,6 +6,7 @@ var log = new Log();
 var dataService = require('modules/dataservice.jag');
 var verb = request.getMethod();
 
+
 (function () {
 
 	var username=session.get('username');
@@ -15,12 +16,18 @@ var verb = request.getMethod();
 		return;
 	}
 
-	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/edit-event-instance/{id}')) {
-		if(verb=='GET'){
+	var isAdmin = session.get('role')=='admin';
 
+	var uriMatcher = new URIMatcher(request.getRequestURI());
+
+	if(verb=='GET'){
+		if(uriMatcher.match('/TestApp2/edit-event-instance/{id}')) {
 			var id = uriMatcher.elements().id;
 			var data = dataService.getEventInstance(id);
+
+// 			log.info(data);
+			
+			data.isAdmin = isAdmin;
 
 			caramel = require('caramel');
 			Handlebars = require('handlebars');
@@ -46,12 +53,21 @@ var verb = request.getMethod();
 				// 				response.sendRedirect("/TestApp2/error.jag");
 				// 			}
 		}
-	}
-	else{
-		response.sendRedirect("/TestApp2/event-list.jag");
-		return;
+		else{
+			// 		response.sendRedirect("/TestApp2/event-list.jag");
+			return;
+		}
 	}
 
+	if(verb=='POST'){
+		var operation = request.getParameter('operation');
+
+		if(operation=="setRank"){
+			
+			dataService.setEventRanking(request.getContent());
+			
+		}
+	}
 }());
 %>
 

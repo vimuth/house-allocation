@@ -2,84 +2,222 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">{{eventInstance.name}}</h3>
 	</div>
-	<div class="panel-body">Description :
-		{{eventInstance.description}}</div>
-
 	<div class="panel-body">
 
-		<div class="panel">Activities :</div>
+		<div class="row">
+			<div class="col-md-7">Description :
+				{{eventInstance.description}}</div>
+
+			<div class="col-md-5">
+				<div class="panel">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							Results {{#if isAdmin}} <span>
+								<button class="btn btn-warning btn-xs pull-right"
+									onclick="setRank($(this))">Set Results</button>
+							</span> {{/if}}
+						</h3>
+					</div>
+					<div id="rankPanel" style="display:" class="panel-body">
+						<table class="table table-condensed">
+
+							{{#each ranks}}
+							<tr>
+
+								<td><h2>{{rank}}</h2></td>
+								<td><img
+									src="/TestApp2/themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+									alt="Smiley face" height="80" width="80"></td>
+
+							</tr>
+							{{/each}}
+
+						</table>
+					</div>
+					<div id="rankInputForm" style="display: none" class="panel-body">
+
+						<ul class="list-group">
+							<li class="list-group-item">
+								<div class="row">
+									<div class="center-block col-md-7">CloudBots :</div>
+									<div class="col-md-5">
+										<input name="1" type="text" class="Rank form-control" id="Rank"
+											placeholder="Rank">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<div class="center-block col-md-7">Legion :</div>
+									<div class="col-md-5">
+										<input name="2" type="text" class="Rank form-control" id="Rank"
+											placeholder="Rank">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<div class="center-block col-md-7">Titans :</div>
+									<div class="col-md-5">
+										<input name="3" type="text" class="Rank form-control" id="Rank"
+											placeholder="Rank">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<div class="center-block col-md-7">WildBoars :</div>
+									<div class="col-md-5">
+										<input name="4" type="text" class="Rank form-control" id="Rank"
+											placeholder="Rank">
+									</div>
+								</div>
+							</li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+		<table style="margin: 0px" class="table table-condensed">
+
+			<tr style="margin: 0px; padding: 0px">
+				<td style="margin: 0px; padding: 0px; border: none">
+					<h4>From : {{eventInstance.startDate}}</h4>
+				</td>
+			</tr>
+			<tr style="margin: 0px; padding: 0px">
+				<td style="margin: 0px; padding: 0px; border: none">
+					<h4>To : {{eventInstance.endDate}}</h4>
+				</td>
+			</tr>
+		</table>
+
+		<h4 class="panel">Activities :</h4>
 
 		<ul class="list-group">
-			{{#each activities}} 
-			
-				<li class="list-group-item">
+			{{#each activities}}
+
+			<li class="list-group-item">
 				<div class="row">
 
-				<div class="col-md-7">
-				
-					<h4 class="list-group-item-heading">{{name}}</h4>
-					<p>
-						{{description}}
-						
-					</p>
+					<div class="col-md-7">
+
+						<h4 class="list-group-item-heading">{{name}}</h4>
+						<p>{{description}}</p>
+						<p>At : {{venue}}</p>
+						<p>On : {{datetime}}</p>
 					</div>
 					<div class="col-md-5">
-					{{#unless winner}}
-						<span class="label label-default pull-right">
-						{{#if_eq type "G"}}Group{{/if_eq}}
-						{{#if_eq type "I"}}Individual{{/if_eq}} 
-						</span>
-						{{/unless}}
-						{{#if winner}}
-							<h4>Results :</h4>
-								<ul class="list-group">
-								{{#each winner}}
-									<li class="list-group-item">
-										<h5 style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px;">
-											{{rank}} : {{description}} <span
-												class="label label-primary pull-right">{{winner}} </span>
-										</h5>
-									</li> 
-								{{/each}}
-							</ul> 
+						{{#unless winner}} <span class="label label-default pull-right">
+							{{#if_eq type "G"}}Group{{/if_eq}} {{#if_eq type
+							"I"}}Individual{{/if_eq}} </span> {{/unless}} {{#if winner}}
+						<h4>Results :</h4>
+						<table style="margin: 0px" class="table table-condensed">
+							{{#each winner}}
+							<tr>
+								<td style="border: none"><h5>{{rank}} :
+										{{description}}</h5></td>
+
+								<td style="border: none">{{#if_eq ../type "I"}}
+									<h5>{{winner}}</h5> {{/if_eq}} {{#if_eq ../type "G"}} <img
+									class="pull-right"
+									src="/TestApp2/themes/classic/images/Cliub Logos-0{{winner}}.jpg"
+									alt="Smiley face" height="40" width="40"> {{/if_eq}}
+								</td>
+							</tr>
+							{{/each}}
+						</table>
 						{{/if}}
-						</div>
-				</li> 
-			{{/each}}
+					</div>
+				</div>
+				<div class="row">Button</div>
+			</li> {{/each}}
 		</ul>
 
-		<div class="panel">Awards :</div>
+		<h4 class="panel">Awards :</h4>
 
-		<ul  class="list-group">
-			{{#each awards}} 
+		<ul class="list-group">
+			{{#each awards}}
 			<li class="list-group-item">
-			<div class="row">
+				<div class="row">
 
-				<div class="col-md-9">
-				<h4 class="list-group-item-heading">{{name}}</h4>
+					<div class="col-md-8">
+						<h4 class="list-group-item-heading">{{name}}</h4>
 
-				<p>
-					{{description}}
-				</p>
-				</div>
-				<div class="col-md-3">
-					{{#unless winner}} <span class="label label-default pull-right">{{#if_eq
-						type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span> <span
-						class="label label-primary pull-right" id="voteLabel">{{#if_eq
-						isVote "true"}}Vote{{/if_eq}}</span>
-					{{/unless}}
-					
-					{{#if winner}}
-							<span class="pull-right" style="margin-top:0px">
-								{{#each winner}}
-											{{name}}
-								{{/each}}
-							</span>
+						<p>{{description}}</p>
+					</div>
+					<div class="col-md-4">
+						{{#unless winner}} <span class="label label-default pull-right">{{#if_eq
+							type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
+						<span class="label label-primary pull-right" id="voteLabel">{{#if_eq
+							isVote "true"}}Vote{{/if_eq}}</span> {{/unless}} {{#if winner}}
+						<table style="margin: 0px" class="table">
+
+							{{#each winner}}
+							<tr style="border-width: 0px; padding: 0px">
+								<td style="border: none">{{#if_eq ../type "I"}}{{name}}
+									{{/if_eq}} {{#if_eq ../type "G"}} <img
+									src="/TestApp2/themes/classic/images/Cliub Logos-0{{name}}.jpg"
+									height="60" width="60" /> {{/if_eq}}
+								</td>
+							</tr>
+							{{/each}}
+						</table>
 						{{/if}}
-						</div>
-			</div>		
-			</li> 
-			{{/each}}
+					</div>
+				</div>
+			</li> {{/each}}
 		</ul>
 	</div>
 </div>
+
+
+<script>
+	/* this function is used to set the event ranking */
+	function setRank(button) {
+		$('#rankPanel').css('display','none');
+		$('#rankInputForm').css('display','');
+		
+		button.parent().html('<button class="btn btn-success btn-xs pull-right"	onclick="submitRank($(this))">Submit</button><button class="btn btn-warning btn-xs pull-right"	onclick="cancelRanking($(this))">Cancel</button>')
+	}
+	
+	function cancelRanking(button) {
+		$('#rankPanel').css('display','');
+		$('#rankInputForm').css('display','none');
+		
+		button.parent().html('<button class="btn btn-warning btn-xs pull-right"	onclick="setRank($(this))">Set Results</button>')
+	}
+	
+	function submitRank(button) {
+		var ranks = [];
+		
+		$('.Rank').each(function() {
+			if ($(this).val().match(/^\d+$/)){
+				ranks.push({'house_id': $(this).attr('name'),'rank':$(this).val()});
+			}
+		});
+		
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : '{{url "/edit-event-instance/"}}'+'?operation=setRank',
+			data : JSON.stringify({'eventId':'{{eventInstance.id}}', 'rankings':ranks}),
+			success : function(msg) 
+			{
+				if(msg.redirect){
+					window.location = msg.url;
+				};
+				location.reload();
+			}
+		});
+
+	}
+</script>

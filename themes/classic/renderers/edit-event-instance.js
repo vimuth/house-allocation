@@ -9,7 +9,7 @@ var render = function(theme, data, meta, require) {
 			context : data.title
 		}],
 		main : [ {
-			partial : 'event-instance',
+			partial : 'edit-event-instance',
 			context : data.body
 		} ]
 	});
