@@ -72,11 +72,10 @@ function getEventIDFromName(data){
 	newURl = 'http://localhost:9763/services/house_allocation/';
 	var optionalHeaders = {
 		"Accept":"application/json" };
-		log.info(data.eventInstance.eventName);
 		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,{
 			"Accept":"application/json"},"application/json");
+			log.info(result);
 			var eventIdObj = parse(result.data);
-			log.info(eventIdObj);
 			var eventID = eventIdObj.event_id.event_id.id;
 
 			return eventID;
@@ -118,7 +117,7 @@ function addEventInstance(data){
 			for(var i=0;i<activityInstances.length;i++){
 				log.info(i);
 				var activityInstance = {
-					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"discription":activityInstances[i].activityInstDesc};
+					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
 					var result = post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
 					log.info("added activity instance :"+activityInstance);
 			}
@@ -139,7 +138,7 @@ function getActivitiesAndAwardsForEvent(data){
 		"eventInstance":data
 	};
 	var eventID = this.getEventIDFromName(dataDup);
-	//log.info(eventID);
+	log.info("########################"+eventID);
 	var activities = this.getActivitiesForEventID(eventID);
 	var awards = this.getAwardsForEventID(eventID);
 	var eventActivitiesAndAwards = {
@@ -153,6 +152,8 @@ function getActivitiesForEventID(id){
 	var data = get(newURl+'activities_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json");
 				log.info("received activities:"+data.data);
+				
+	log.info(data);
 		return parse(data.data);
 }
 

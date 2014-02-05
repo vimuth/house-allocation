@@ -42,8 +42,6 @@ var verb = request.getMethod();
 			if(uriMatcher.match('/TestApp2/addEventInstanceSelected/{name}')) {
 				try{
 					var eventName = uriMatcher.elements().name;
-					//log.info("Dgfgh");
-					//var data = request.getContent();
 		 			log.info(eventList.event_nameCollection);
 		 			var data = {"eventName":eventName};
 					var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);

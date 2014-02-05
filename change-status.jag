@@ -27,7 +27,6 @@ var verb = request.getMethod();
 		
 	}
 	if(verb=="POST"){
-		
 			
 		var name = request.getParameter('name');
 		
@@ -35,6 +34,8 @@ var verb = request.getMethod();
 		
 		log.info(dataService.searchPeople(name));
 		response.content = dataService.searchPeople(name);
+		
+		return;
 
 	}
 
