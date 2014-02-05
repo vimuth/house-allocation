@@ -50,24 +50,24 @@
 					<h3 class="panel-title">{{name}}</h3>
 				</div>
 				<div class="row">
-					<div class="col-md-5" style="margin:10px">
+					<div class="col-md-3" style="margin:10px">
 						<p class="list-group-item-text">
-							{{description}} <br />Start Date :{{startDate}} <br />End
-							Date :{{endDate}}
+							{{description}} <br />Start Date :<div class="startDate">{{startDate}}</div> <br />End
+							Date :<div class="endDate">{{endDate}}</div>
 						</p>
 					</div>
 					{{#if activities}}
-					<div  class="col-md-6" style="margin:10px">
+					<div  class="col-md-8" style="margin:10px">
 						<p class="list-group-item-text">
 							 <b>Up coming activities</b> 
 							 <table class="table">
 							 	<thead>
-							 		<th>name</th><th>description</th><th>venue</th>
+							 		<th>name</th><th>description</th><th>venue</th><th>Date</th>
 							 	</thead>
 							 	<tbody>
 							 	
 							 	{{#each activities}}
-							 	<tr><td>{{name}}</td><td>{{description}}</td><td>{{venue}}</td></tr>
+							 	<tr><td>{{name}}</td><td>{{description}}</td><td>{{venue}}</td><td><div class="date">{{datetime}}</div></td></tr>
 							 	{{/each}}
 							 	
 							 	</tbody>
@@ -87,3 +87,23 @@
 
 	</div>
 </div>
+
+
+<script>
+
+$(".date").each(function() {
+	var datetime =new Date($(this).html());
+	$(this).html(datetime.toDateString());
+});
+
+$(".startDate").each(function() {
+	var datetime =new Date($(this).html());
+	$(this).html(datetime.toDateString());
+});
+
+$(".endDate").each(function() {
+	var datetime =new Date($(this).html());
+	$(this).html(datetime.toDateString());
+});
+
+</script>

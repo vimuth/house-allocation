@@ -372,6 +372,13 @@ function getCurrentEvents(){
 					activities.Entries.Entry = [activities.Entries.Entry];
 				}
 				events[i].activities = activities.Entries.Entry;
+				
+				var temp = new Date(new String(events[i].endDate));
+				
+				log.info(temp);
+				
+// 				events[i].endDate = ().toDateString();
+				
 		}
 
 		return events;
