@@ -75,9 +75,12 @@
 	<table class="table" id="activityTable">
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>Name</th>				
+				<th>Group/Individual</th>
 				<th>Description</th>
-				<th>Type</th>
+				<th>Activity Date</th>
+				<th>Venue</th>
+				<th>Additional info</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,14 +88,14 @@
 			<tr>
 				<td><input type="checkbox" id="{{name}}act"
 					onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
+				<td style=>{{type}}</td>
 				<td>{{description}}</td>
-				<td>{{type}}</td>
 				<td><input type="datetime" id="{{name}}_act_datetime"
 					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 				<td><input type="text" id="{{name}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
 				<td><textarea id="{{name}}_act_description" rows="4"
-						style="display: none" cols="40">description of the event instance</textarea></td>
+						style="display:none" cols="40">{{description}}. Add more...</textarea></td>
 			</tr>
 			{{/each}}
 		</tbody>
@@ -106,7 +109,10 @@
 			<tr>
 				<th>Name</th>
 				<th>Description</th>
-				<th>Type</th>
+				<th>Group/Individual</th>
+				<th>Is Votable?</th>
+				<th>Voting Start Date</th>
+				<th>Voting End Date</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -116,17 +122,18 @@
 					onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
 				<td>{{description}}</td>
 				<td>{{type}}</td>
+				<td>{{isVote}}</td>
 				<td><input type="datetime" id="{{name}}_awd_start"
 					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 				<td><input type="datetime" id="{{name}}_awd_end"
 					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 
 				<script type="text/javascript">
-						if ('{{type}}'!='v'){
+						if ('{{isVote}}'!='false'){
 							document.getElementById('{{name}}_awd_start').style.display = "none";		
 							document.getElementById('{{name}}_awd_end').style.display = "none";
 						}
-					</script>
+				</script>
 			</tr>
 			{{/each}}
 
@@ -138,7 +145,7 @@
 	<input type="button" id="addButton" class="button" value="Add"
 		onclick="addEventInstance();" /> <input style="margin-left: 5px;"
 		type="button" class="button" value="Cancel"
-		onclick="showHideCommon();" />
+		onclick="cancel();" />
 </div>
 
 <script type="text/javascript"> 
@@ -151,6 +158,10 @@
         theDiv.style.display = "";
         theDiv = document.getElementById('awardSection');
         theDiv.style.display = "";
+    }
+
+    function cancel(){
+    	document.location.href = '{{url "/addEventInstance2.jag"}}';
     }
 
     function changeVisibility(id){
@@ -195,7 +206,7 @@
     			activityInstance.activityID= "{{id}}";
     			activityInstance.activityInstDate = document.getElementById(activityName+"_act_datetime").value;
     			activityInstance.activityInstVenue = document.getElementById(activityName+"_act_venue").value;
-    			activityInstance.activityInstDesc = document.getElementById(activityName+"_act_description".value);
+    			activityInstance.activityInstDesc = document.getElementById(activityName+"_act_description").value;
     			actInst.push(activityInstance);	
 			}
     	{{/each}}
