@@ -497,6 +497,12 @@ function getEventInstance(eventID){
 					Entry:[]};
 			}
 
+				
+			if(!(ranks.Entries.Entry instanceof Array)){
+				ranks.Entries.Entry = [ranks.Entries.Entry];
+			}
+				
+				
 			var awards = getAwardInstanceForEvent(eventID);
 			var activities = getActivityInstanceForEvent(eventID);
 
@@ -623,6 +629,21 @@ function setEventRanking(data){
 			log.info("Error");
 		}
 
+}
+
+function updateEventInfo(data){
+
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'event-instance/update',data,headers,'json', function(data,xhr){
+				log.info("successfully updated the event");
+			});
+			return true;
+	}
+	catch(e){
+		return false;
+	}
 }
 
 

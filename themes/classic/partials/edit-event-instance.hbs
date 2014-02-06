@@ -1,12 +1,72 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">{{eventInstance.name}}</h3>
+		<h3 id="nameTag" class="panel-title">{{eventInstance.name}}</h3>
+
+		<div id="nameInput" style="display: none" class="form-group">
+			<input type="text" class="form-control" id="eventName"
+				placeholder="Enter Event Name" value="{{eventInstance.name}}"
+				required>
+		</div>
+
 	</div>
 	<div class="panel-body">
 
 		<div class="row">
-			<div class="col-md-7">Description :
-				{{eventInstance.description}}</div>
+			<div class="col-md-7">
+				<div style="display:" id="infoView">
+					<h4>Description :</h4>
+					<div id="desc">{{eventInstance.description}}</div>
+
+					<table style="margin: 0px" class="table table-condensed">
+						<!-- <thead>
+					<tr>
+						<th></th><th></th>
+					</tr>
+					</thead> -->
+						<tbody>
+							<tr style="margin: 0px; padding: 0px">
+								<td style="margin: 0px; padding: 0px; border: none">
+									<h4>From</h4>
+								</td>
+								<td style="border: none" id="sDate">{{eventInstance.startDate}}</td>
+							</tr>
+							<tr style="margin: 0px; padding: 0px">
+								<td style="margin: 0px; padding: 0px; border: none">
+									<h4>To</h4>
+								</td>
+								<td style="border: none" id="eDate">{{eventInstance.endDate}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div id="infoInput" style="display: none">
+					<form id="myform" name="newEvent">
+
+						<div class="form-group">
+							<label for="eventDescriptionInput">Description</label>
+							<textarea class="form-control" id="eventDescriptionInput"
+								rows="3">{{eventInstance.description}}</textarea>
+						</div>
+
+						<div id="nameInput" class="form-group">
+							<label for="sdatepicker">Start Date</label> <input type="text"
+								class="dateInput form-control" id="sdatepicker"
+								value={{eventInstance.startDate}} />
+						</div>
+
+						<div id="nameInput" class="form-group">
+							<label for="edatepicker">Start Date</label> <input type="text"
+								class="dateInput form-control" id="edatepicker"
+								value={{eventInstance.endDate}} />
+						</div>
+					</form>
+
+				</div>
+				<div>
+					<button class="btn btn-warning btn-xs pull-right"
+						onclick="editEvent($(this))">Edit Basic Info</button>
+				</div>
+			</div>
 
 			<div class="col-md-5">
 				<div class="panel">
@@ -41,8 +101,8 @@
 								<div class="row">
 									<div class="center-block col-md-7">CloudBots :</div>
 									<div class="col-md-5">
-										<input name="1" type="text" class="Rank form-control" id="Rank"
-											placeholder="Rank">
+										<input name="1" type="text" class="Rank form-control"
+											id="Rank" placeholder="Rank">
 									</div>
 								</div>
 							</li>
@@ -50,8 +110,8 @@
 								<div class="row">
 									<div class="center-block col-md-7">Legion :</div>
 									<div class="col-md-5">
-										<input name="2" type="text" class="Rank form-control" id="Rank"
-											placeholder="Rank">
+										<input name="2" type="text" class="Rank form-control"
+											id="Rank" placeholder="Rank">
 									</div>
 								</div>
 							</li>
@@ -59,8 +119,8 @@
 								<div class="row">
 									<div class="center-block col-md-7">Titans :</div>
 									<div class="col-md-5">
-										<input name="3" type="text" class="Rank form-control" id="Rank"
-											placeholder="Rank">
+										<input name="3" type="text" class="Rank form-control"
+											id="Rank" placeholder="Rank">
 									</div>
 								</div>
 							</li>
@@ -68,8 +128,8 @@
 								<div class="row">
 									<div class="center-block col-md-7">WildBoars :</div>
 									<div class="col-md-5">
-										<input name="4" type="text" class="Rank form-control" id="Rank"
-											placeholder="Rank">
+										<input name="4" type="text" class="Rank form-control"
+											id="Rank" placeholder="Rank">
 									</div>
 								</div>
 							</li>
@@ -83,21 +143,6 @@
 
 			</div>
 		</div>
-
-
-		<table style="margin: 0px" class="table table-condensed">
-
-			<tr style="margin: 0px; padding: 0px">
-				<td style="margin: 0px; padding: 0px; border: none">
-					<h4>From : {{eventInstance.startDate}}</h4>
-				</td>
-			</tr>
-			<tr style="margin: 0px; padding: 0px">
-				<td style="margin: 0px; padding: 0px; border: none">
-					<h4>To : {{eventInstance.endDate}}</h4>
-				</td>
-			</tr>
-		</table>
 
 		<h4 class="panel">Activities :</h4>
 
@@ -115,6 +160,7 @@
 						<p>On : {{datetime}}</p>
 					</div>
 					<div class="col-md-5">
+
 						{{#unless winner}} <span class="label label-default pull-right">
 							{{#if_eq type "G"}}Group{{/if_eq}} {{#if_eq type
 							"I"}}Individual{{/if_eq}} </span> {{/unless}} {{#if winner}}
@@ -135,9 +181,16 @@
 							{{/each}}
 						</table>
 						{{/if}}
+
+
 					</div>
 				</div>
-				<div class="row">Button</div>
+				<div class="row">
+					<div class="btn-group" style="margin-left:10px">
+						<button type="button" onclick="editActivity($(this),{{id}})" class="btn btn-warning btn-xs">Edit</button>
+						<button type="button" onclick="deleteActivity($(this),{{id}})" class="btn btn-danger btn-xs">Delete</button>
+					</div>
+				</div>
 			</li> {{/each}}
 		</ul>
 
@@ -180,44 +233,133 @@
 
 
 <script>
+	$(document).ready(
+
+	/* This is the function that will get executed after the DOM is fully loaded */
+	function() {
+		$(".dateInput").datepicker({
+			changeMonth : true,//this option for allowing user to select month
+			changeYear : true,
+			dateFormat : "yy-mm-dd"
+		//this option for allowing user to select from year range
+		});
+	}
+
+	);
+
 	/* this function is used to set the event ranking */
 	function setRank(button) {
-		$('#rankPanel').css('display','none');
-		$('#rankInputForm').css('display','');
-		
-		button.parent().html('<button class="btn btn-success btn-xs pull-right"	onclick="submitRank($(this))">Submit</button><button class="btn btn-warning btn-xs pull-right"	onclick="cancelRanking($(this))">Cancel</button>')
+		$('#rankPanel').css('display', 'none');
+		$('#rankInputForm').css('display', '');
+
+		button
+				.parent()
+				.html(
+						'<button class="btn btn-success btn-xs pull-right"	onclick="submitRank($(this))">Submit</button><button class="btn btn-warning btn-xs pull-right"	onclick="cancelRanking($(this))">Cancel</button>')
 	}
-	
+
 	function cancelRanking(button) {
-		$('#rankPanel').css('display','');
-		$('#rankInputForm').css('display','none');
-		
-		button.parent().html('<button class="btn btn-warning btn-xs pull-right"	onclick="setRank($(this))">Set Results</button>')
+		$('#rankPanel').css('display', '');
+		$('#rankInputForm').css('display', 'none');
+
+		button
+				.parent()
+				.html(
+						'<button class="btn btn-warning btn-xs pull-right"	onclick="setRank($(this))">Set Results</button>')
 	}
-	
+
 	function submitRank(button) {
 		var ranks = [];
-		
+
 		$('.Rank').each(function() {
-			if ($(this).val().match(/^\d+$/)){
-				ranks.push({'house_id': $(this).attr('name'),'rank':$(this).val()});
+			if ($(this).val().match(/^\d+$/)) {
+				ranks.push({
+					'house_id' : $(this).attr('name'),
+					'rank' : $(this).val()
+				});
 			}
 		});
-		
-		
+
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}'+'?operation=setRank',
-			data : JSON.stringify({'eventId':'{{eventInstance.id}}', 'rankings':ranks}),
-			success : function(msg) 
-			{
-				if(msg.redirect){
+			url : '{{url "/edit-event-instance/"}}' + '?operation=setRank',
+			data : JSON.stringify({
+				'eventId' : '{{eventInstance.id}}',
+				'rankings' : ranks
+			}),
+			success : function(msg) {
+				if (msg.redirect) {
 					window.location = msg.url;
-				};
+				}
+				;
 				location.reload();
 			}
 		});
 
+	}
+
+	function editEvent(button) {
+
+		$('#nameTag').css('display', 'none');
+		$('#nameInput').css('display', '');
+		$('#infoView').css('display', 'none');
+		$('#infoInput').css('display', '');
+
+		button
+				.parent()
+				.html(
+						'<button class="btn btn-success btn-xs pull-right" onclick="submitInfo($(this))">Submit</button><button class="btn btn-warning btn-xs pull-right" onclick="cancelEditEvent($(this))">cancel</button>')
+	}
+
+	function cancelEditEvent(button) {
+
+		$('#nameTag').css('display', '');
+		$('#nameInput').css('display', 'none');
+		$('#infoView').css('display', '');
+		$('#infoInput').css('display', 'none');
+
+		button
+				.parent()
+				.html(
+						'<button class="btn btn-warning btn-xs pull-right" onclick="editEvent($(this))">Edit Basic Info</button>')
+	}
+
+	function submitInfo(button) {
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : '{{url "/edit-event-instance/"}}' + '?operation=updateInfo',
+			data : JSON.stringify({
+				'id' : '{{eventInstance.id}}',
+				'name' : $('#eventName').val(),
+				'description' : $('#eventDescriptionInput').val(),
+				'startDate' : $('#sdatepicker').val(),
+				'endDate' : $('#edatepicker').val(),
+			}),
+			success : function(msg) {
+				if (msg.success) {
+
+					$('#nameTag').html($('#eventName').val());
+					$('#desc').html($('#eventDescriptionInput').val());
+					$('#sDate').html($('#sdatepicker').val());
+					$('#eDate').html($('#edatepicker').val());
+
+				} else {
+					alert("Error");
+				}
+			}
+		});
+		cancelEditEvent(button);
+	}
+	
+	function deleteActivity(button,id){
+		
+		if(confirm("Are you sure you want to delete this Activity")){
+			
+			button.parent().parent().parent().remove()
+			return;
+		}
+		
 	}
 </script>
