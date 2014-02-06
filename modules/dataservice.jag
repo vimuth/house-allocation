@@ -495,12 +495,12 @@ function getEventInstance(eventID){
 					Entry:[]};
 			}
 
-				
+
 			if(!(ranks.Entries.Entry instanceof Array)){
 				ranks.Entries.Entry = [ranks.Entries.Entry];
 			}
-				
-				
+
+
 			var awards = getAwardInstanceForEvent(eventID);
 			var activities = getActivityInstanceForEvent(eventID);
 
@@ -644,5 +644,41 @@ function updateEventInfo(data){
 	}
 }
 
+function deleteActivityInstance(data){
+	try{
+		del(url+'activity-instance/'+data.id);
+		return true;
+	}
+	catch(e){
+		return false;
+	}
+
+}
+
+function deleteAwardInstance(data){
+	try{
+		del(url+'award-instance/'+data.id);
+		return true;
+	}
+	catch(e){
+		return false;
+	}
+
+}
+
+function updateActivityInstance(data){
+
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'activity-instance/update',data,headers,'json', function(data,xhr){
+				log.info("successfully updated the event");
+			});
+			return true;
+	}
+	catch(e){
+		return false;
+	}
+}
 
 %>

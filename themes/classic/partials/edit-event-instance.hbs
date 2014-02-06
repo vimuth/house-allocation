@@ -94,6 +94,7 @@
 
 						</table>
 					</div>
+					{{#if isAdmin}}
 					<div id="rankInputForm" style="display: none" class="panel-body">
 
 						<ul class="list-group">
@@ -137,6 +138,7 @@
 						</ul>
 
 					</div>
+					{{/if}}
 
 				</div>
 
@@ -153,11 +155,33 @@
 				<div class="row">
 
 					<div class="col-md-7">
-
 						<h4 class="list-group-item-heading">{{name}}</h4>
-						<p>{{description}}</p>
-						<p>At : {{venue}}</p>
-						<p>On : {{datetime}}</p>
+						<div style="display:" id="actInfoDisplay">
+							<p id='description'>{{description}}</p>
+							<p id='venue'>At : {{venue}}</p>
+							<p id='datetime'>On : {{datetime}}</p>
+						</div>
+						<form style="display: none" id="actInfoForm" name="actInfoForm">
+							<div class="form-group">
+								<label for="actDescription">Description</label>
+								<textarea class="form-control" id="actDesc" rows="3">{{description}}</textarea>
+							</div>
+							<div class="form-group">
+								<label for="actVenue">Venue</label> <input type="text"
+									class="form-control" id="actVenue" value="{{venue}}" required>
+							</div>
+							<div class="form-group">
+								<label for="inputDate">Date/Time : </label>
+								<div class='input-group date' id='inputDate'>
+									<input type='text' class="form-control" id='actDateInput'
+										data-format="YYYY-MM-DD HH:mm" value="{{datetime}}" /> <span
+										class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div>
+							</div>
+						</form>
+
+
 					</div>
 					<div class="col-md-5">
 
@@ -184,13 +208,15 @@
 
 
 					</div>
-				</div>
+				</div> {{#if ../isAdmin}}
 				<div class="row">
-					<div class="btn-group" style="margin-left:10px">
-						<button type="button" onclick="editActivity($(this),{{id}})" class="btn btn-warning btn-xs">Edit</button>
-						<button type="button" onclick="deleteActivity($(this),{{id}})" class="btn btn-danger btn-xs">Delete</button>
+					<div class="btn-group" style="margin-left: 10px">
+						<button type="button" onclick='editActivity($(this),"{{id}}")'
+							class="btn btn-warning btn-xs">Edit</button>
+						<button type="button" onclick='deleteActivity($(this),"{{id}}")'
+							class="btn btn-danger btn-xs">Delete</button>
 					</div>
-				</div>
+				</div> {{/if}}
 			</li> {{/each}}
 		</ul>
 
@@ -204,7 +230,45 @@
 					<div class="col-md-8">
 						<h4 class="list-group-item-heading">{{name}}</h4>
 
-						<p>{{description}}</p>
+						<div style="display:" id="awdInfoDisplay">
+							<p id='description'>{{description}}</p>
+							{{#if_eq isVote "true"}}{{#unless winner}}
+							<p id='voteEnd'>Voting Ends On :{{vote_endDate}}</p>
+							{{/unless}}{{/if_eq}}
+						</div>
+
+						<form style="display: none"
+							onsubmit='submitEditedAward($(this),"{{id}}","{{isVote}}");return false;'
+							id="awdInfoForm" name="awdInfoForm">
+							<div class="form-group">
+								<label for="awdDescription">Description</label>
+								<textarea class="form-control" id="awdDescription" rows="3">{{description}}</textarea>
+							</div>
+							<div class="form-group">
+
+								<label for="inputDate">Voting start on : </label>
+								<div class='input-group date' id='inputDate'>
+									<input type='text' class="form-control"
+										id='awdVoteStartDateInput' data-format="YYYY-MM-DD HH:mm"
+										value="{{vote_startDate}}" /> <span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputDate">Voting ends on : </label>
+								<div class='input-group date' id='inputDate'>
+									<input type='text' class="form-control"
+										id='awdVoteEndDateInput' data-format="YYYY-MM-DD HH:mm"
+										value="{{vote_endDate}}" /> <span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-success btn-xs">Submit</button>
+							<button onclick='cancelEditAward($(this,"{{id}}"));return false;'
+								class="btn btn-warning btn-xs">Cancel</button>
+						</form>
+
 					</div>
 					<div class="col-md-4">
 						{{#unless winner}} <span class="label label-default pull-right">{{#if_eq
@@ -225,7 +289,16 @@
 						</table>
 						{{/if}}
 					</div>
-				</div>
+				</div> {{#if ../isAdmin}}
+				<div style="display:" id="awdAdminButtons" class="row">
+					<div class="btn-group" style="margin-left: 10px">
+						<button type="button"
+							onclick="editAward($(this),{{id}},{{isVote}})"
+							class="btn btn-warning btn-xs">Edit</button>
+						<button type="button" onclick="deleteAward($(this),{{id}})"
+							class="btn btn-danger btn-xs">Delete</button>
+					</div>
+				</div> {{/if}}
 			</li> {{/each}}
 		</ul>
 	</div>
@@ -237,12 +310,7 @@
 
 	/* This is the function that will get executed after the DOM is fully loaded */
 	function() {
-		$(".dateInput").datepicker({
-			changeMonth : true,//this option for allowing user to select month
-			changeYear : true,
-			dateFormat : "yy-mm-dd"
-		//this option for allowing user to select from year range
-		});
+		$('#inputDate').datetimepicker();
 	}
 
 	);
@@ -356,10 +424,152 @@
 	function deleteActivity(button,id){
 		
 		if(confirm("Are you sure you want to delete this Activity")){
-			
-			button.parent().parent().parent().remove()
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=deleteActivity',
+				data : JSON.stringify({ 'id':id
+				}),
+				success : function(msg) {
+					if (msg.success) {
+						button.parent().parent().parent().remove()
+
+					} else {
+						alert("Error");
+					}
+				}
+			});
 			return;
 		}
+		
+	}
+	function deleteAward(button,id){
+		
+		if(confirm("Are you sure you want to delete this Award")){
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=deleteAward',
+				data : JSON.stringify({ 'id':id
+				}),
+				success : function(msg) {
+					if (msg.success) {
+						button.parent().parent().parent().remove()
+
+					} else {
+						alert("Error");
+					}
+				}
+			});
+			return;
+		}
+		
+	}
+	
+	function editActivity(button,id){
+		
+		button.parent().parent().parent().find('#actInfoDisplay').css('display', 'none');
+		
+		button.parent().parent().parent().find('#actInfoForm').css('display', '');
+		
+		button.parent().html('<button type="button" onclick="submitEditedActivity($(this),\''+id+'\')" class="btn btn-success btn-xs">Submit</button><button type="button" onclick="cancelEditActivity($(this),\''+id+'\')" class="btn btn-warning btn-xs">Cancel</button>');
+	
+	}
+	
+	function cancelEditActivity(button,id){
+		button.parent().parent().parent().find('#actInfoDisplay').css('display', '');
+		
+		button.parent().parent().parent().find('#actInfoForm').css('display', 'none');
+		
+		button.parent().html('<button type="button" onclick="editActivity($(this),\''+id+'\')" class="btn btn-warning btn-xs">Edit</button><button type="button" onclick="deleteActivity($(this),\''+id+'\')" class="btn btn-danger btn-xs">Delete</button>');
+	}
+	
+	
+	function submitEditedActivity(button, id){
+		var description = button.parent().parent().parent().find('#actDesc').val();
+		var venue = button.parent().parent().parent().find('#actVenue').val();
+		var date =  moment(button.parent().parent().parent().find('#actDateInput').val());
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : '{{url "/edit-event-instance/"}}' + '?operation=updateActivity',
+			data : JSON.stringify({
+				'id' : id,
+				'description' : description,
+				'datetime' : date.format('YYYY-MM-DD HH:mm'),
+				'venue' : venue,
+			}),
+			success : function(msg) {
+				if (msg.success) {
+
+					button.parent().parent().parent().find('#description').html(description);
+					button.parent().parent().parent().find('#venue').html("At : "+venue);
+					button.parent().parent().parent().find('#datetime').html("On : "+date.toString());
+					
+					cancelEditActivity(button,id);
+
+				} else {
+					alert("Error");
+				}
+			}
+		});
+		
+	}
+	
+	function editAward(button,id,isVote){
+		button.parent().parent().parent().find('#awdInfoDisplay').css('display', 'none');
+		button.parent().parent().parent().find('#awdInfoForm').css('display', '');
+		button.parent().parent().css('display', 'none');
+	}
+	
+	function cancelEditAward(button,id){
+		button.parent().parent().find('#awdInfoDisplay').css('display', '');
+		button.parent().parent().find('#awdInfoForm').css('display', 'none');
+		button.parent().parent().parent().parent().find('#awdAdminButtons').css('display', '');
+		
+	}
+	
+	
+	function submitEditedAward(form, id,isVote){
+		
+		if(isVote){
+			var description = form.find('#awdDescription').val();
+			var startDate = form.find('#awdVoteStartDateInput').val();
+			var endDate = form.find('#awdVoteEndDateInput').val();
+			alert(description);
+		}
+		else{
+			
+		}
+		/*var description = button.parent().parent().parent().find('#actDesc').val();
+		var venue = button.parent().parent().parent().find('#actVenue').val();
+		var date =  moment(button.parent().parent().parent().find('#actDateInput').val());
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : '{{url "/edit-event-instance/"}}' + '?operation=updateActivity',
+			data : JSON.stringify({
+				'id' : id,
+				'description' : description,
+				'datetime' : date.format('YYYY-MM-DD HH:mm'),
+				'venue' : venue,
+			}),
+			success : function(msg) {
+				if (msg.success) {
+
+					button.parent().parent().parent().find('#description').html(description);
+					button.parent().parent().parent().find('#venue').html("At : "+venue);
+					button.parent().parent().parent().find('#datetime').html("On : "+date.toString());
+					
+					cancelEditAward(button,id);
+
+				} else {
+					alert("Error");
+				}
+			}
+		}); */
 		
 	}
 </script>

@@ -25,8 +25,8 @@ var verb = request.getMethod();
 			var id = uriMatcher.elements().id;
 			var data = dataService.getEventInstance(id);
 
-			// 			log.info(data);
-				
+						log.info(data);
+
 			data.isAdmin = isAdmin;
 
 			caramel = require('caramel');
@@ -63,15 +63,60 @@ var verb = request.getMethod();
 		var operation = request.getParameter('operation');
 
 		if(operation=="setRank"){
-				
+
 			dataService.setEventRanking(request.getContent());
-				
+
 		}
+
 		if(operation=="updateInfo"){
 			response.contentType = 'application/json';
 
 			log.info(request.getContent());
 			var result=dataService.updateEventInfo(request.getContent());
+			if(result){
+				response.content = {
+					'success':true,} ;
+			}
+			else{
+				response.content = {
+					'success':false, 'error':'Error'} ;
+			}
+		}
+
+		if(operation=="deleteActivity"){
+			response.contentType = 'application/json';
+
+			log.info(request.getContent());
+			var result=dataService.deleteActivityInstance(request.getContent());
+			if(result){
+				response.content = {
+					'success':true,} ;
+			}
+			else{
+				response.content = {
+					'success':false, 'error':'Error'} ;
+			}
+		}
+
+		if(operation=="deleteAward"){
+			response.contentType = 'application/json';
+
+			log.info(request.getContent());
+			var result=dataService.deleteAwardInstance(request.getContent());
+			if(result){
+				response.content = {
+					'success':true,} ;
+			}
+			else{
+				response.content = {
+					'success':false, 'error':'Error'} ;
+			}
+		}
+		if(operation=="updateActivity"){
+			response.contentType = 'application/json';
+
+			log.info(request.getContent());
+			var result=dataService.updateActivityInstance(request.getContent());
 			if(result){
 				response.content = {
 					'success':true,} ;
