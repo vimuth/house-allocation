@@ -89,9 +89,7 @@ function addEventInstance(data){
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	log.info("Received event instance"+data.eventInstance);
-	var optionalHeaders =
-	{
-		"Accept":"application/json"};
+	var optionalHeaders ={"Accept":"application/json"};
 		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
 		var eventIdObj = parse(result.data);
@@ -106,7 +104,7 @@ function addEventInstance(data){
 			"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
 
 			var result = post(newURl+"add_event_instance", eventInst, optionalHeaders, "json");
-			log.info("Add event instance:"+eventInst);
+			log.info("Added event instance:"+eventInst);
 			event_instance_id = result.data.GeneratedKeys.Entry.ID;
 
 			var activityInstances = data.activityInstance;
@@ -115,17 +113,21 @@ function addEventInstance(data){
 
 			log.info("received awards:"+awardInstances);
 
-			for(var i=0;i<activityInstances.length;i++){
+			for(var i=0;i<(activityInstances.length)/2;i++){
 				log.info(i);
+				
 				var activityInstance = {
 					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
-					var result = post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
+					log.info("adding activity instance :"+activityInstance);
+					post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
 					log.info("added activity instance :"+activityInstance);
 			}
 
-			for (var i=0;i<awardInstances.length;i++){
+			for (var i=0;i<(awardInstances.length)/2;i++){
+				
 				var awardInstance = {
 					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
+					log.info("adding event award instance: "+awardInstance);
 					var result = post(newURl+"add_award_instance", awardInstance, optionalHeaders, "json");
 					log.info("added event award instance: "+awardInstance);
 			}
