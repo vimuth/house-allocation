@@ -1,7 +1,5 @@
 <%
-
-
-var url = 'http://localhost:9763/services/house_allocation/';
+var url = 'http://10.100.4.54:9763/services/house_allocation/';
 var events_url = 'http://localhost:9763/services/house_allocation/events/';
 var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
 var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
