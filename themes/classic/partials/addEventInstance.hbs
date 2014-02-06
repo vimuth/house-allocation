@@ -68,7 +68,7 @@
 										class="button" value="Add" onclick="addEventInstance();" /> 
 									<input
 										style="margin-left: 5px;" type="button" class="button"
-										value="Cancel" onclick="showHideCommon();" />
+										value="Cancel" onclick="cancel();" />
 								</td>
 							</tr>
 						</tbody>
@@ -146,6 +146,10 @@
 	function getActivitiesAndAwards() {
 		document.location.href = '{{url "/addEventInstanceSelected/"}}' + document.getElementById('events').value;
 	}
+
+	function cancel(){
+    	document.location.href = '{{url "/"}}';
+    }
    /* $(document).ready(function() {
 
         $('#addButton').click(function() {
