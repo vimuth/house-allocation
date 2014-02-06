@@ -681,4 +681,19 @@ function updateActivityInstance(data){
 	}
 }
 
+function updateAwardInstance(data){
+
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'award-instance/update',data,headers,'json', function(data,xhr){
+				log.info("successfully updated the event");
+			});
+			return true;
+	}
+	catch(e){
+		return false;
+	}
+}
+
 %>

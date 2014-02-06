@@ -28,13 +28,13 @@
 								<td style="margin: 0px; padding: 0px; border: none">
 									<h4>From</h4>
 								</td>
-								<td style="border: none" id="sDate">{{eventInstance.startDate}}</td>
+								<td style="border: none" id="sDate">{{formatDate eventInstance.startDate}}</td>
 							</tr>
 							<tr style="margin: 0px; padding: 0px">
 								<td style="margin: 0px; padding: 0px; border: none">
 									<h4>To</h4>
 								</td>
-								<td style="border: none" id="eDate">{{eventInstance.endDate}}</td>
+								<td style="border: none" id="eDate">{{formatDate eventInstance.endDate}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -159,7 +159,7 @@
 						<div style="display:" id="actInfoDisplay">
 							<p id='description'>{{description}}</p>
 							<p id='venue'>At : {{venue}}</p>
-							<p id='datetime'>On : {{datetime}}</p>
+							<p id='datetime'>On :{{formatDate datetime}}</p>
 						</div>
 						<form style="display: none" id="actInfoForm" name="actInfoForm">
 							<div class="form-group">
@@ -172,9 +172,9 @@
 							</div>
 							<div class="form-group">
 								<label for="inputDate">Date/Time : </label>
-								<div class='input-group date' id='inputDate'>
+								<div class='inputDate input-group date' id='inputDate'>
 									<input type='text' class="form-control" id='actDateInput'
-										data-format="YYYY-MM-DD HH:mm" value="{{datetime}}" /> <span
+										data-format="YYYY-MM-DD HH:mm" value="{{formatDate datetime}}" /> <span
 										class="input-group-addon"><span
 										class="glyphicon glyphicon-calendar"></span> </span>
 								</div>
@@ -229,25 +229,24 @@
 
 					<div class="col-md-8">
 						<h4 class="list-group-item-heading">{{name}}</h4>
+						<p id='description'>{{description}}</p>
 
 						<div style="display:" id="awdInfoDisplay">
-							<p id='description'>{{description}}</p>
 							{{#if_eq isVote "true"}}{{#unless winner}}
-							<p id='voteEnd'>Voting Ends On :{{vote_endDate}}</p>
+							<p id='voteStart'>Voting Starts On :{{formatDate vote_startDate}}</p>
+							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate}}</p>
 							{{/unless}}{{/if_eq}}
 						</div>
 
 						<form style="display: none"
 							onsubmit='submitEditedAward($(this),"{{id}}","{{isVote}}");return false;'
 							id="awdInfoForm" name="awdInfoForm">
-							<div class="form-group">
-								<label for="awdDescription">Description</label>
-								<textarea class="form-control" id="awdDescription" rows="3">{{description}}</textarea>
-							</div>
+
+							{{#if_eq isVote "true"}}{{#unless winner}}
 							<div class="form-group">
 
 								<label for="inputDate">Voting start on : </label>
-								<div class='input-group date' id='inputDate'>
+								<div class='inputDate input-group date' id='inputDate'>
 									<input type='text' class="form-control"
 										id='awdVoteStartDateInput' data-format="YYYY-MM-DD HH:mm"
 										value="{{vote_startDate}}" /> <span class="input-group-addon"><span
@@ -256,16 +255,18 @@
 							</div>
 							<div class="form-group">
 								<label for="inputDate">Voting ends on : </label>
-								<div class='input-group date' id='inputDate'>
+								<div class='inputDate input-group date' id='inputDate'>
 									<input type='text' class="form-control"
 										id='awdVoteEndDateInput' data-format="YYYY-MM-DD HH:mm"
 										value="{{vote_endDate}}" /> <span class="input-group-addon"><span
 										class="glyphicon glyphicon-calendar"></span> </span>
 								</div>
 							</div>
-
+							<input type="hidden" id="startDate" value="{{vote_startDate}}">
+							<input type="hidden" id="endDate" value="{{vote_endDate}}">
+							{{/unless}}{{/if_eq}}
 							<button type="submit" class="btn btn-success btn-xs">Submit</button>
-							<button onclick='cancelEditAward($(this,"{{id}}"));return false;'
+							<button onclick='cancelEditAward($(this));return false;'
 								class="btn btn-warning btn-xs">Cancel</button>
 						</form>
 
@@ -310,7 +311,7 @@
 
 	/* This is the function that will get executed after the DOM is fully loaded */
 	function() {
-		$('#inputDate').datetimepicker();
+		$('.inputDate').datetimepicker();
 	}
 
 	);
@@ -523,53 +524,70 @@
 		button.parent().parent().css('display', 'none');
 	}
 	
-	function cancelEditAward(button,id){
+	function cancelEditAward(button){
 		button.parent().parent().find('#awdInfoDisplay').css('display', '');
 		button.parent().parent().find('#awdInfoForm').css('display', 'none');
 		button.parent().parent().parent().parent().find('#awdAdminButtons').css('display', '');
-		
 	}
 	
 	
 	function submitEditedAward(form, id,isVote){
+		var now = moment();
 		
-		if(isVote){
-			var description = form.find('#awdDescription').val();
-			var startDate = form.find('#awdVoteStartDateInput').val();
-			var endDate = form.find('#awdVoteEndDateInput').val();
-			alert(description);
-		}
-		else{
+		var messages = [];
+		
+			var current_start = moment(form.find('#startDate').val());
+			var current_end = moment(form.find('#endDate').val());
 			
-		}
-		/*var description = button.parent().parent().parent().find('#actDesc').val();
-		var venue = button.parent().parent().parent().find('#actVenue').val();
-		var date =  moment(button.parent().parent().parent().find('#actDateInput').val());
-		
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}' + '?operation=updateActivity',
-			data : JSON.stringify({
-				'id' : id,
-				'description' : description,
-				'datetime' : date.format('YYYY-MM-DD HH:mm'),
-				'venue' : venue,
-			}),
-			success : function(msg) {
-				if (msg.success) {
-
-					button.parent().parent().parent().find('#description').html(description);
-					button.parent().parent().parent().find('#venue').html("At : "+venue);
-					button.parent().parent().parent().find('#datetime').html("On : "+date.toString());
-					
-					cancelEditAward(button,id);
-
-				} else {
-					alert("Error");
+			var startDate = moment(form.find('#awdVoteStartDateInput').val());
+			var endDate = moment(form.find('#awdVoteEndDateInput').val());
+			
+			//wrong dates
+			if(endDate-startDate<0){
+				alert("Start Date can't be after End Date");
+				return false;
+			}
+			
+			//dates should be valid
+			if(!startDate.isValid()||!endDate.isValid()){
+				alert("Please enter correct dates");
+				return false;
+			}
+			
+			//while in the voting period
+			if(current_start-now<0 && current_end-now>0){
+				if(endDate-startDate<0){
+					alert("Start Date can't be after End Date");
+					return false;
+				}
+				if(startDate-current_start!=0){
+					alert("Currently in voting period. So changing the start date is not possible");
+					return false;
 				}
 			}
-		}); */
+			
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=updateAward',
+				data : JSON.stringify({
+					'id' : id,
+					'vote_start_date' : startDate.format('YYYY-MM-DD HH:mm'),
+					'vote_end_date' : endDate.format('YYYY-MM-DD HH:mm')
+				}),
+				success : function(msg) {
+					if (msg.success) {
+						
+						location.reload();
+
+					} else {
+						alert("Error");
+					}
+				}
+			});
+			
+			
+		}
 		
-	}
+	
 </script>
