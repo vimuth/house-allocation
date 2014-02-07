@@ -1,9 +1,7 @@
 <%
 
-
-
-newURl = 'http://10.100.4.54:9763/services/house_allocation/';
-var url = 'http://10.100.4.54:9763/services/house_allocation/';
+newURl = 'http://localhost:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/house_allocation/';
 
 var events_url = 'http://localhost:9763/services/house_allocation/events/';
 var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
@@ -73,7 +71,7 @@ function addEvent(data){
 
 function getEventIDFromName(data){
 
-	
+
 	var optionalHeaders = {
 		"Accept":"application/json" };
 		var result = get(newURl+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
@@ -83,6 +81,7 @@ function getEventIDFromName(data){
 			var eventID = eventIdObj.event_id.event_id.id;
 
 			return eventID;
+			
 }
 
 function addEventInstance(data){
@@ -91,7 +90,8 @@ function addEventInstance(data){
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	log.info("Received event instance"+data.eventInstance);
-	var optionalHeaders ={"Accept":"application/json"};
+	var optionalHeaders ={
+		"Accept":"application/json"};
 		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
 		var eventIdObj = parse(result.data);
@@ -117,7 +117,7 @@ function addEventInstance(data){
 
 			for(var i=0;i<(activityInstances.length)/2;i++){
 				log.info(i);
-				
+
 				var activityInstance = {
 					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
 					log.info("adding activity instance :"+activityInstance);
@@ -126,7 +126,7 @@ function addEventInstance(data){
 			}
 
 			for (var i=0;i<(awardInstances.length)/2;i++){
-				
+
 				var awardInstance = {
 					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
 					log.info("adding event award instance: "+awardInstance);
@@ -695,6 +695,52 @@ function updateAwardInstance(data){
 	catch(e){
 		return false;
 	}
+}
+
+function getIDFromName(name){
+	log.info(name);
+	var people = parse(get(url+ 'people/id',{
+		'name':name},{
+		"Accept":"application/json"},"application/json").data);
+
+		log.info(people);
+		return people;
+}
+
+
+function addAwardWinnerIndividual(data){
+	var name = getIDFromName(data.name);
+
+	if(name.Entries==""){
+		return {'success':false, 'error' : "name not found"};
+	}
+	else{
+		try{
+			var headers = {
+				"Accept": "application/json"};
+				var result = post(url+'award-instance/winner',{
+					"people_id":name.Entries.Entry.id, "event_award_instance_id":data.id},headers,'json', function(data,xhr){
+					});
+					return {'success':true};
+		}
+		catch(e){
+			return {'success':false, 'error' : "Internal Error"};
+		}
+	}
+}
+
+function addAwardWinnerHouse(data){
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'award-instance/winner-house',data,headers,'json', function(data,xhr){
+			});
+			return {'success':true};
+	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
 }
 
 %>

@@ -28,13 +28,15 @@
 								<td style="margin: 0px; padding: 0px; border: none">
 									<h4>From</h4>
 								</td>
-								<td style="border: none" id="sDate">{{formatDate eventInstance.startDate}}</td>
+								<td style="border: none" id="sDate">{{formatDate
+									eventInstance.startDate}}</td>
 							</tr>
 							<tr style="margin: 0px; padding: 0px">
 								<td style="margin: 0px; padding: 0px; border: none">
 									<h4>To</h4>
 								</td>
-								<td style="border: none" id="eDate">{{formatDate eventInstance.endDate}}</td>
+								<td style="border: none" id="eDate">{{formatDate
+									eventInstance.endDate}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -62,10 +64,14 @@
 					</form>
 
 				</div>
+
+				{{#if isAdmin}}
 				<div>
 					<button class="btn btn-warning btn-xs pull-right"
 						onclick="editEvent($(this))">Edit Basic Info</button>
 				</div>
+				{{/if}}
+
 			</div>
 
 			<div class="col-md-5">
@@ -174,8 +180,8 @@
 								<label for="inputDate">Date/Time : </label>
 								<div class='inputDate input-group date' id='inputDate'>
 									<input type='text' class="form-control" id='actDateInput'
-										data-format="YYYY-MM-DD HH:mm" value="{{formatDate datetime}}" /> <span
-										class="input-group-addon"><span
+										data-format="YYYY-MM-DD HH:mm" value="{{formatDate datetime}}" />
+									<span class="input-group-addon"><span
 										class="glyphicon glyphicon-calendar"></span> </span>
 								</div>
 							</div>
@@ -227,13 +233,14 @@
 			<li class="list-group-item">
 				<div class="row">
 
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<h4 class="list-group-item-heading">{{name}}</h4>
 						<p id='description'>{{description}}</p>
 
 						<div style="display:" id="awdInfoDisplay">
 							{{#if_eq isVote "true"}}{{#unless winner}}
-							<p id='voteStart'>Voting Starts On :{{formatDate vote_startDate}}</p>
+							<p id='voteStart'>Voting Starts On :{{formatDate
+								vote_startDate}}</p>
 							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate}}</p>
 							{{/unless}}{{/if_eq}}
 						</div>
@@ -271,23 +278,77 @@
 						</form>
 
 					</div>
-					<div class="col-md-4">
-						{{#unless winner}} <span class="label label-default pull-right">{{#if_eq
-							type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
-						<span class="label label-primary pull-right" id="voteLabel">{{#if_eq
-							isVote "true"}}Vote{{/if_eq}}</span> {{/unless}} {{#if winner}}
-						<table style="margin: 0px" class="table">
+					<div class="col-md-6">
 
-							{{#each winner}}
-							<tr style="border-width: 0px; padding: 0px">
-								<td style="border: none">{{#if_eq ../type "I"}}{{name}}
-									{{/if_eq}} {{#if_eq ../type "G"}} <img
+						{{#if ../isAdmin}} {{#if_eq ../type "I"}}
+						<form style="display: none"
+							onsubmit="addAwardWinnerIndividual($(this)); return false;"
+							id="winnerForm" name="actInfoForm">
+
+							<div class="form-group">
+								<label for="name">Winner</label> <input type="text"
+									class="form-control" id="nameInput" required>
+							</div>
+							<button type="submit" class="btn btn-success btn-xs">Submit</button>
+							<input id="id" value="{{../id}}" hidden />
+						</form>
+						{{/if_eq}} {{#if_eq ../type "G"}}
+						<form style="display: none"
+							onsubmit="addAwardWinnerGroup($(this)); return false;"
+							id="winnerForm" name="awdWinnerForm">
+
+							<div class="form-group">
+								<label class="checkbox"> <input type="checkbox"
+									class="house" id="1" value="1">Cloud Bots
+								</label> <label class="checkbox"> <input type="checkbox"
+									class="house" id="2" value="2">Legion
+								</label> <label class="checkbox"> <input type="checkbox"
+									class="house" id="3" value="3">Titans
+								</label> <label class="checkbox"> <input type="checkbox"
+									class="house" id="4" value="4">Wild Boars
+								</label>
+							</div>
+							<input id="id" value="{{../id}}" hidden />
+							<button type="submit" class="btn btn-success btn-xs">Submit</button>
+
+						</form>
+						{{/if_eq}}
+
+						<button id="setWinnerButton" type="button"
+							class="btn btn-warning btn-xs pull-right"
+							onclick='$(this).parent().find("#winnerForm").css("display",""); $(this).parent().find("#voteButton").css("display","none"); $(this).css("display","none")'>Add
+							Winner</button>
+						{{/if}} {{#unless winner}} {{#if_eq isVote "true"}}
+						{{#isVotingPeriod vote_startDate vote_endDate}}
+
+
+						<button id="voteButton" type="button"
+							class="btn btn-success btn-xs pull-right"
+							onclick='window.location.href="/TestApp2/votes/{{id}}"'{{#if ../../../isAdmin}}disabled{{/if}} >Vote
+							for your pick</button>
+
+
+						{{/isVotingPeriod}} {{/if_eq}} {{/unless}} {{#if winner}}
+						
+						{{#if_eq ../type "G"}}
+						{{#each winner}} 
+								<img class="pull-right"
 									src="/TestApp2/themes/classic/images/Cliub Logos-0{{name}}.jpg"
-									height="60" width="60" /> {{/if_eq}}
-								</td>
-							</tr>
-							{{/each}}
+									height="60" width="60" />
+						{{/each}} 
+						{{/if_eq}} 
+						
+						{{#if_eq ../type "I"}}
+						<table style="margin: 0px" class="table">
+							
+								{{#each winner}} 
+									<tr style="border-width: 0px; padding: 0px">
+									
+									
+								<td class="pull-right" style="border: none"><b>{{name}}</b></td> </tr> {{/each}}
+							
 						</table>
+						{{/if_eq}}
 						{{/if}}
 					</div>
 				</div> {{#if ../isAdmin}}
@@ -588,6 +649,58 @@
 			
 			
 		}
+	
+	function addAwardWinnerIndividual(form){
+		var name=form.find('#nameInput').val();
+		var id= form.find('#id').val();
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : '{{url "/edit-event-instance/"}}' + '?operation=addAwardWinnerIndividual',
+			data : JSON.stringify({
+				'id' : id,
+				'name':name
+			}),
+			success : function(msg) {
+				if (msg.success) {
+					location.reload();
+
+				} else {
+					alert(msg.error);
+				}
+			}
+		});
+	}
+	
+	function addAwardWinnerGroup(form){
+	
+		var id= form.find('#id').val();
+		var winners = [];
+		
+		form.find('.house:checked').each(function() {
+			winners.push({'event_award_instance_id':id ,'house_id':this.id});
+		});
+		
+		if(winners.length>0){
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=addAwardWinnerHouse',
+				data : JSON.stringify(winners),
+				success : function(msg) {
+					if (msg.success) {
+						location.reload();
+	
+					} else {
+						alert(msg.error);
+					} 
+				}
+			});
+		}
+		form.css("display","none");
+		form.parent().find("#setWinnerButton").css("display","");
+	}
 		
 	
 </script>
