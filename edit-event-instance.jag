@@ -176,7 +176,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				response.contentType = 'application/json';
 
 				var winners = request.getContent();
-				
+
 				log.info(winners);
 
 				try{
@@ -188,7 +188,27 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				}
 				catch(e){
 					log.error(e);
+
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+			if(operation=="removeAwardWinnerIndividual"){
+				response.contentType = 'application/json';
 					
+				var winners = request.getContent();
+				log.info(winners);
+				try{
+					if(winners.isIndividual=="true"){
+						dataService.deleteAwardWinnerIndividual(winners.winners);
+					}
+					else{
+						dataService.deleteAwardWinnerGroup(winners.winners);
+					}
+					response.content = {
+						'success':true,} ;
+				}
+				catch(e){
 					response.content = {
 						'success':false, 'error':'Error'} ;
 				}

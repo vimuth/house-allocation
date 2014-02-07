@@ -279,11 +279,34 @@
 
 					</div>
 					<div class="col-md-6">
+					<!-- Remove winners are enabled  if there are any winners -->
+						{{#if winner}}
+						<form style="display:none"
+							onsubmit="removeAwardWinners($(this)); return false;"
+							id="deleteAwardWinnerForm" name="deleteAwardWinnerForm" class="pull-right">
+
+							<div class="form-group">
+								{{#each winner}} <label class="checkbox"> <input
+									type="checkbox" class="name" id="{{name}}" value="{{name}}">{{#if_eq
+									../type "I"}}{{name}}{{/if_eq}} {{#if_eq ../type "G"}} <img
+									src="/TestApp2/themes/classic/images/Cliub Logos-0{{name}}.jpg"
+									height="40" width="40" /> {{/if_eq}}
+
+
+								</label> {{/each}}
+							</div>
+							<input id="individual" value="{{#if_eq
+									../type "I"}}true{{/if_eq}}" hidden/>
+							<input id="id" value="{{../id}}" hidden />
+							<button type="submit" class="btn btn-danger btn-xs">Remove</button>
+							<button type="button" class="btn btn-warning btn-xs" onclick="$(this).parent().css('display','none');$(this).parents().eq(1).find('#winnerButtons').css('display','');$(this).parents().eq(1).find('#winnerlist').css('display',''); return false;">Cancel</button>
+						</form>
+						{{/if}}
 
 						{{#if ../isAdmin}} {{#if_eq ../type "I"}}
 						<form style="display: none"
 							onsubmit="addAwardWinnerIndividual($(this)); return false;"
-							id="winnerForm" name="actInfoForm">
+							id="winnerForm" name="actInfoForm" class="pull-right">
 
 							<div class="form-group">
 								<label for="name">Winner</label> <input type="text"
@@ -295,7 +318,7 @@
 						{{/if_eq}} {{#if_eq ../type "G"}}
 						<form style="display: none"
 							onsubmit="addAwardWinnerGroup($(this)); return false;"
-							id="winnerForm" name="awdWinnerForm">
+							id="winnerForm" name="awdWinnerForm" class="pull-right">
 
 							<div class="form-group">
 								<label class="checkbox"> <input type="checkbox"
@@ -314,10 +337,26 @@
 						</form>
 						{{/if_eq}}
 
-						<button id="setWinnerButton" type="button"
-							class="btn btn-warning btn-xs pull-right"
-							onclick='$(this).parent().find("#winnerForm").css("display",""); $(this).parent().find("#voteButton").css("display","none"); $(this).css("display","none")'>Add
-							Winner</button>
+						<table id="winnerButtons" class="pull-right">
+							<tr>
+								<td>
+									<button id="setWinnerButton" type="button"
+										class="btn btn-warning btn-xs pull-right"
+										onclick='$(this).parents().eq(4).find("#winnerForm").css("display",""); $(this).parents().eq(3).css("display","none"); $(this).css("display","none")'>Add
+										Winner</button>
+								</td>
+							</tr>
+							{{#if winner}}
+							<tr>
+								<td>
+									<button id="setWinnerButton" type="button"
+										class="btn btn-danger btn-xs pull-right"
+										onclick='$(this).parents().eq(4).find("#deleteAwardWinnerForm").css("display",""); $(this).parents().eq(3).css("display","none");$(this).parents().eq(4).find("#winnerlist").css("display","none");'>Remove
+										Winner</button>
+								</td>
+							</tr>
+							{{/if}}
+						</table>
 						{{/if}} {{#unless winner}} {{#if_eq isVote "true"}}
 						{{#isVotingPeriod vote_startDate vote_endDate}}
 
@@ -329,27 +368,26 @@
 
 
 						{{/isVotingPeriod}} {{/if_eq}} {{/unless}} {{#if winner}}
-						
-						{{#if_eq ../type "G"}}
-						{{#each winner}} 
-								<img class="pull-right"
-									src="/TestApp2/themes/classic/images/Cliub Logos-0{{name}}.jpg"
-									height="60" width="60" />
-						{{/each}} 
-						{{/if_eq}} 
-						
-						{{#if_eq ../type "I"}}
+						<div id="winnerlist">
+						 {{#if_eq
+						../type "G"}} {{#each winner}} <img class="pull-right"
+							src="/TestApp2/themes/classic/images/Cliub Logos-0{{name}}.jpg"
+							height="60" width="60" /> {{/each}} {{/if_eq}} {{#if_eq ../type
+						"I"}}
 						<table style="margin: 0px" class="table">
-							
-								{{#each winner}} 
-									<tr style="border-width: 0px; padding: 0px">
-									
-									
-								<td class="pull-right" style="border: none"><b>{{name}}</b></td> </tr> {{/each}}
-							
+
+							{{#each winner}}
+							<tr style="border-width: 0px; padding: 0px">
+
+
+								<td class="pull-right" style="border: none"><b>{{name}}</b></td>
+							</tr>
+							{{/each}}
+
 						</table>
 						{{/if_eq}}
-						{{/if}}
+						</div>
+						 {{/if}}
 					</div>
 				</div> {{#if ../isAdmin}}
 				<div style="display:" id="awdAdminButtons" class="row">
@@ -702,5 +740,33 @@
 		form.parent().find("#setWinnerButton").css("display","");
 	}
 		
+	
+	function removeAwardWinners(form){
+		var id= form.find('#id').val();
+		var isIndividual = form.find('#individual').val();
+		
+		var winners = [];
+		
+		form.find('.name:checked').each(function() {
+			winners.push({'event_award_instance_id':id ,'name':this.id});
+		});
+		
+		if(winners.length>0){
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=removeAwardWinnerIndividual',
+				data : JSON.stringify({'isIndividual':isIndividual,'winners':winners}),
+				success : function(msg) {
+					if (msg.success) {
+						location.reload();
+	
+					} else {
+						alert(msg.error);
+					} 
+				}
+			});
+		}
+	}
 	
 </script>

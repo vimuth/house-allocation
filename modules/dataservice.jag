@@ -81,7 +81,7 @@ function getEventIDFromName(data){
 			var eventID = eventIdObj.event_id.event_id.id;
 
 			return eventID;
-			
+
 }
 
 function addEventInstance(data){
@@ -698,12 +698,10 @@ function updateAwardInstance(data){
 }
 
 function getIDFromName(name){
-	log.info(name);
 	var people = parse(get(url+ 'people/id',{
 		'name':name},{
 		"Accept":"application/json"},"application/json").data);
 
-		log.info(people);
 		return people;
 }
 
@@ -742,5 +740,30 @@ function addAwardWinnerHouse(data){
 	}
 
 }
+
+function deleteAwardWinnerIndividual(data){
+	var headers = {
+				"Accept": "application/json"};
+	for(var i =0;i<data.length;i++){
+		var id = getIDFromName(data[i].name);
+
+		log.info(id.Entries.Entry.id);
+		var result = post(url+'delete-award-winner',{
+			'people_id':id.Entries.Entry.id ,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+			});
+		
+	}
+}
+function deleteAwardWinnerGroup(data){
+	var headers = {
+				"Accept": "application/json"};
+	for(var i =0;i<data.length;i++){
+		var result = post(url+'delete-award-winner-house',{
+			'house_id':data[i].name,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+			});
+		
+	}
+}
+
 
 %>
