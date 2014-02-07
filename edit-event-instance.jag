@@ -66,7 +66,8 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 				caramel.render({
 					'header':{
-					'username': username
+					'username': username,
+					'isAdmin':isAdmin
 				},
 				'title': {
 				text :data.eventInstance.name},
@@ -204,6 +205,43 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 					}
 					else{
 						dataService.deleteAwardWinnerGroup(winners.winners);
+					}
+					response.content = {
+						'success':true,} ;
+				}
+				catch(e){
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+
+			if(operation=="addAcivityRanking"){
+				response.contentType = 'application/json';
+
+				var data = request.getContent();
+				log.info(data);
+
+				if(data.isIndividual=="true"){
+					response.content = dataService.addActivityWinner(data);
+				}
+				else{
+					response.content = dataService.addActivityWinnerHouse(data);
+				}
+
+			}
+				
+			
+			if(operation=="removeActivityWinners"){
+				response.contentType = 'application/json';
+
+				var data = request.getContent();
+				log.info(data);
+				try{
+					if(data.isIndividual=="true"){
+						dataService.deleteActivityWinnerIndividual(data.winners);
+					}
+					else{
+						dataService.deleteActivityWinnerGroup(data.winners);
 					}
 					response.content = {
 						'success':true,} ;

@@ -190,10 +190,118 @@
 
 					</div>
 					<div class="col-md-5">
+					
+					
+						{{#if ../isAdmin}}
+						
+						
+							<table id="winnerButtons" class="pull-right">
+								<tr>
+									<td>
+										<button id="setWinnerButton" type="button"
+											class="btn btn-warning btn-xs"
+											onclick='$(this).parents().eq(4).find("#addActivityRankForm").css("display",""); $(this).parents().eq(3).css("display","none");'>Add
+											Winner</button>
+									</td>
+									{{#if winner}}
+							
+									<td>
+										<button id="setWinnerButton" type="button"
+											class="btn btn-danger btn-xs"
+											onclick='$(this).parents().eq(4).find("#deleteActivityWinnerForm").css("display",""); $(this).parents().eq(3).css("display","none");$(this).parents().eq(4).find("#winner-list").css("display","none");'>Remove
+											Winner</button>
+									</td>
+								
+									{{/if}}
+								</tr>
+							</table>
+						
+						
+						
+							<form style="display:none"
+							onsubmit="addActivityRank($(this)); return false;"
+							id="addActivityRankForm" name="addActivityRankForm" class="pull-right">
+
+
+							<div id="asd" class="form-group">
+								<label for="eventName">Rank</label> 
+								<input type="number" class="form-control" id="rankInput"
+									placeholder="Enter Rank"
+									required min="1">
+							</div>
+						
+							<div class="form-group">
+								<label for="eventDescriptionInput">Description</label>
+								<textarea class="form-control" id="eventDescriptionInput"
+									rows="3">{{eventInstance.description}}</textarea>
+							</div>
+
+						
+							{{#if_eq type "G"}}
+							<div class="form-group">
+								<select id="winner" class="form-control">
+								  <option value="1">Cloud Bots</option>
+								  <option value="2">Legion</option>
+								  <option value="3">Titans</option>
+								  <option value="4">Wild Boars</option>
+								</select>
+							</div>
+							{{/if_eq}}
+							{{#if_eq type "I"}}
+							<div class="form-group">
+								<label for="eventName">Name</label> 
+								<input type="text" class="form-control" id="winner"
+									placeholder="Enter Rank"
+									required>
+							</div>
+							{{/if_eq}}
+							
+							<input id="isIndividual" value="{{#if_eq
+									../type "I"}}true{{/if_eq}}" hidden/>
+							<input id="id" value="{{../id}}" hidden />
+							<button type="submit" class="btn btn-success btn-xs">submit</button>
+							<button type="button" class="btn btn-warning btn-xs" onclick="$(this).parent().css('display','none');$(this).parents().eq(1).find('#winnerButtons').css('display',''); return false;">Cancel</button>
+						</form>
+							
+							
+						{{#if winner}}
+						<form style="display:none"
+							onsubmit="removeActivityWinners($(this)); return false;"
+							id="deleteActivityWinnerForm" name="deleteActivityWinnerForm" class="pull-right">
+
+							<div class="form-group">
+								{{#each winner}} <label class="checkbox"> <input
+									type="checkbox" class="name" id="{{winner}}" value="{{winner}}">{{rank}} : {{#if_eq
+									../type "I"}}{{winner}}{{/if_eq}} {{#if_eq ../type "G"}} <img
+									src="/TestApp2/themes/classic/images/Cliub Logos-0{{winner}}.jpg"
+									height="40" width="40" /> {{/if_eq}}
+
+
+								</label> {{/each}}
+							</div>
+							<input id="individual" value="{{#if_eq
+									../type "I"}}true{{/if_eq}}" hidden/>
+							<input id="id" value="{{../id}}" hidden />
+							<button type="submit" class="btn btn-danger btn-xs">Remove</button>
+							<button type="button" class="btn btn-warning btn-xs" onclick="$(this).parent().css('display','none');$(this).parents().eq(1).find('#winnerButtons').css('display','');$(this).parents().eq(1).find('#winnerlist').css('display',''); return false;">Cancel</button>
+						</form>
+						{{/if}}
+							
+							
+						{{/if}}
+
+
+
+
+
 
 						{{#unless winner}} <span class="label label-default pull-right">
 							{{#if_eq type "G"}}Group{{/if_eq}} {{#if_eq type
-							"I"}}Individual{{/if_eq}} </span> {{/unless}} {{#if winner}}
+							"I"}}Individual{{/if_eq}} </span> {{/unless}} 
+							
+							
+						{{#if winner}}
+						<div id="winner-list">
 						<h4>Results :</h4>
 						<table style="margin: 0px" class="table table-condensed">
 							{{#each winner}}
@@ -210,6 +318,7 @@
 							</tr>
 							{{/each}}
 						</table>
+						</div>
 						{{/if}}
 
 
@@ -363,7 +472,7 @@
 
 						<button id="voteButton" type="button"
 							class="btn btn-success btn-xs pull-right"
-							onclick='window.location.href="/TestApp2/votes/{{id}}"'{{#if ../../../isAdmin}}disabled{{/if}} >Vote
+							onclick='window.location.href="/TestApp2/votes/{{id}}"'{{#if ../../../../isAdmin}}disabled{{/if}} >Vote
 							for your pick</button>
 
 
@@ -404,7 +513,7 @@
 	</div>
 </div>
 
-
+{{#if isAdmin}}
 <script>
 	$(document).ready(
 
@@ -769,4 +878,60 @@
 		}
 	}
 	
+	function addActivityRank(form){
+		var id= form.find('#id').val();
+		var isIndividual= form.find('#isIndividual').val();
+		var rank= form.find('#rankInput').val();
+		var description= form.find('#eventDescriptionInput').val();
+		var winner = form.find('#winner').val();
+		
+		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=addAcivityRanking',
+				data : JSON.stringify({'isIndividual':isIndividual,'winner':winner,'id':id,'rank':rank, 'description':description}),
+				success : function(msg) {
+					if (msg.success) {
+						location.reload(); 
+	
+					} else {
+						alert(msg.error);
+					} 
+				}
+			}); 
+	}
+	
+	function removeActivityWinners(form){
+		
+		
+		var id= form.find('#id').val();
+		var isIndividual = form.find('#individual').val();
+		
+		var winners = [];
+		
+		form.find('.name:checked').each(function() {
+			winners.push({'activity_instance_id':id ,'name':this.id});
+		});
+		
+		if(winners.length>0){
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : '{{url "/edit-event-instance/"}}' + '?operation=removeActivityWinners',
+				data : JSON.stringify({'isIndividual':isIndividual,'winners':winners}),
+				success : function(msg) {
+					if (msg.success) {
+						location.reload();
+	
+					} else {
+						alert(msg.error);
+					} 
+				}
+			});
+		}
+	}
+	
+	
 </script>
+{{/if}}

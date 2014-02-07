@@ -743,26 +743,88 @@ function addAwardWinnerHouse(data){
 
 function deleteAwardWinnerIndividual(data){
 	var headers = {
-				"Accept": "application/json"};
-	for(var i =0;i<data.length;i++){
-		var id = getIDFromName(data[i].name);
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var id = getIDFromName(data[i].name);
 
-		log.info(id.Entries.Entry.id);
-		var result = post(url+'delete-award-winner',{
-			'people_id':id.Entries.Entry.id ,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
-			});
-		
-	}
+			log.info(id.Entries.Entry.id);
+			var result = post(url+'delete-award-winner',{
+				'people_id':id.Entries.Entry.id ,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
 }
 function deleteAwardWinnerGroup(data){
 	var headers = {
-				"Accept": "application/json"};
-	for(var i =0;i<data.length;i++){
-		var result = post(url+'delete-award-winner-house',{
-			'house_id':data[i].name,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
-			});
-		
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var result = post(url+'delete-award-winner-house',{
+				'house_id':data[i].name,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
+}
+
+function addActivityWinnerHouse(data){
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'add-activity-winner-house',{
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json', function(data,xhr){
+				});
+				return {'success':true};
 	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
+}
+
+function addActivityWinner(data){
+	try{
+		var id = getIDFromName(data.winner);
+
+		if(id.Entries==""){
+			return {'success':false, 'error' : "name not found in the database"};
+		}
+
+		
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'add-activity-winner',{
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json', function(data,xhr){
+				});
+				return {'success':true};
+	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
+}
+
+function deleteActivityWinnerIndividual(data){
+	log.info(data);
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var id = getIDFromName(data[i].name);
+
+			var result = post(url+'delete-activity-winner',{
+				'people_id':id.Entries.Entry.id ,'activity_instance_id':data[i].activity_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
+}
+function deleteActivityWinnerGroup(data){
+	log.info(data);
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var result = post(url+'delete-activity-winner-house',{
+				'house_id':data[i].name,'activity_instance_id':data[i].activity_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
 }
 
 
