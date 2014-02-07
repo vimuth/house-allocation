@@ -1,15 +1,26 @@
 
-				<form id="myform" name="newEventInstance">
-					<table id="eventInstance" class="styledLeft">
-						<thead>
-							<tr>
-								<th colspan="2">New Event Instance</th>
-							</tr>
-						</thead>
-						<tbody>						
-							<td>Event Name</td> 
-							<td><select name="events" id="events" onchange="getActivitiesAndAwards()">
-							<option value="select an event">Select an Event</option>
+<form id="myform" name="newEventInstance">
+	<font size="5">New Event Instance</font>
+	<br/><br/>
+	<table id="eventInstance" class="styledLeft">
+
+		<!--  		<th colspan="2"><font size="5">New Event Instance</font></th>-->
+
+
+		<thead>
+
+
+		</thead>
+		<tbody>
+			
+			<tr>
+				<td style="width: 150px;">Event Name :</td>
+				<td></td>
+				<td><select name="events" id="events"
+					onchange="getActivitiesAndAwards()">
+						<option value="select an event" style="width: 320px;">Select an
+							Event</option>
+
 						<script type="text/javascript">
 
 						 var sel = document.getElementById('events');  
@@ -20,62 +31,19 @@
 						 	    sel.appendChild(opt);
 						 	{{/each}}
 
-/*
 
-							var cuisines = [];
-							cuisines = ["Xccb","sdgdfh"];     
-							var sel = document.getElementById('events');
-							for(var i = 0; i < cuisines.length; i++) {
-							    var opt = document.createElement('option');
-							    opt.innerHTML = cuisines[i];
-							    opt.value = cuisines[i];
-							    sel.appendChild(opt);
-							}
-
-
-*/
 							</script>
-<!-- 								<option value="volvo">e1</option>
-								<option value="saab">e2</option> 
-								
-								<option value="dgcgbgc">dgcgbgc</option>  -->
-							</select>
-							<a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New Event?</a>
 
-							</td>
-							</tr>
-
-							<tr>							
-							<td>Event Instance Name</td> 
-							<td><input type="text" name="eventInstanceName" id="eventInstanceName"></td>
-							</tr>
-
-							<tr>
+				</select> <a href="{{url " /addEvent.jag"}} " style="margin-left: 5px;">New
+						Event?</a></td>
+			</tr>
 
 
-							<tr>
-							<td>Description</td>  
-							<td>	<textarea name="eventInstanceDescription" id="eventInstanceDescription" rows="4" cols="40"></textarea></td></tr>
-							
-							<tr>
-							<td>Start Date 
-							<input type="datetime" name=startDate id="startDate" value="dd-mm-yyyyThh:mm:ss"></td>
-							<td>End Date  
-							<input type="datetime" name=endDate id="endDate" value="dd-mm-yyyyThh:mm:ss"></td></tr>
-							
-							<tr>
-								<td><input type="button" id="addButton"
-										class="button" value="Add" onclick="addEventInstance();" /> 
-									<input
-										style="margin-left: 5px;" type="button" class="button"
-										value="Cancel" onclick="cancel();" />
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
+		</tbody>
+	</table>
+</form>
 
-<div style="padding-top: 10px; display:none;" id="activitySection">
+<div style="padding-top: 10px; display: none;" id="activitySection">
 	Activities :
 	<table class="table" id="activityTable">
 
@@ -92,7 +60,7 @@
 
 	</table>
 </div>
-<div style="padding-top: 10px; display:none;" id="awardSection">
+<div style="padding-top: 10px; display: none;" id="awardSection">
 	Awards :
 	<table class="table" id="awardTable">
 		<thead>
