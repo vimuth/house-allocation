@@ -92,9 +92,9 @@ function addEventInstance(data){
 	log.info("Received event instance"+data.eventInstance);
 	var optionalHeaders ={
 		"Accept":"application/json"};
-		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
+/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
-		//var eventIdObj = parse(result.data);
+		//var eventIdObj = parse(result.data);*/
 		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 		var eventInstDescription = data.eventInstance.description;
