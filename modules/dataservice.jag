@@ -167,6 +167,13 @@ function getAwardsForEventID(id){
 		return parse(data.data);
 
 }
+function getAwardVotes(id){
+	var data = get(votes_url+ id,null,{
+		"Accept":"application/json"},"application/json");
+		var voteData= parse(data.data);
+		return voteData;
+
+}
 
 function updateEvent(event){
 	var headers = {

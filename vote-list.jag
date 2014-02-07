@@ -59,7 +59,7 @@ function sss()
 		}
 			var vote = new Object();
 			// voter_id to be taken from session
-				vote.voter_id = 3;
+				vote.voter_id = 6;
 				vote.nominee_id = id;
                 awardId=77;
 
@@ -82,7 +82,7 @@ function sss()
 
           		}
 			}
-
+       
 
        if (exist == 1){
        	
@@ -111,19 +111,24 @@ function sss()
 
 	}
 	else{
-		if (verb=='GET'){
-			try{ 
-		var dataService = require('modules/dataservice.jag');
+		  if (verb=='GET'){
+				try{ 
+						var dataService = require('modules/dataservice.jag');
 
-		var data = dataService.getNominees(77);//  event id to be taken from session
-       var nominees = [nominees];
-       var peopleNames = [peopleNames];
+						var data = dataService.getNominees(77);//  event id to be taken from session
+						var voteData = dataService.getAwardVotes(77);
+       					var nominees = [nominees];
+       					var peopleNames = [peopleNames];
+       					var voter_id=6;
+       					var voter= new Object();
+       					voter.voterId= voter_id;
+       					log.info(voter);
+
+       					if(data.votesCollection == "")
+       					{
 
 
-       if(data.votesCollection == ""){
-
-
-var pp = dataService.getId();
+							var pp = dataService.getId();
 
 
 
@@ -131,93 +136,87 @@ var pp = dataService.getId();
 
 
 
-var employees = { "details" : pp};
+							var employees = { "details" : pp};
 
 
 
-caramel = require('caramel');
+							caramel = require('caramel');
 
 		
 //log.info(pp.name);
-		caramel.render({
-			'header':{
-				'username': username
-			},
-			'title': {
-				text :'Votes'
-			},
+							caramel.render({
+											'header':{
+											'username': username
+											},
+											'title': {
+											text :'Votes'
+											},
 			
-			'vote': { 'people':pp.people}
-		})
-
-
-
-		;
+											'vote': { 'people':pp.people}
+							});
 
 
        	
-       }
-        log.info(data);
+       					}
+        				//log.info(data);
 
-		for (var i=0 ;i< data.votesCollection.votes.length;i++)
-			{
-          	nominees[i] = data.votesCollection.votes[i].nominee_id;
-          	peopleNames[i] = dataService.getNames(nominees[i]);
+						for (var i=0 ;i< data.votesCollection.votes.length;i++)
+							{
+          						nominees[i] = data.votesCollection.votes[i].nominee_id;
+          						peopleNames[i] = dataService.getNames(nominees[i]);
 
 
-       		}
+       						}
         
- log.info(nominees);
+ 						//log.info(nominees);
 
- var people = { "names" : peopleNames };
+ 						var people = { "names" : peopleNames };
 
-var results = [];
-var idsSeen = {}, idSeenValue = {};
-for (var i = 0, len = people.names.length, name; i < len; ++i) {
-    name= people.names[i].name;
-   if (idsSeen[name] !== idSeenValue) {
-       results.push(people.names[i]);
-      idsSeen[name] = idSeenValue;
-  }
-}
+						var results = [];
+						var idsSeen = {}, idSeenValue = {};
+						for (var i = 0, len = people.names.length, name; i < len; ++i) 
+						{
+    						name= people.names[i].name;
+   							if (idsSeen[name] !== idSeenValue) 
+   								{
+      					 			results.push(people.names[i]);
+     						 		idsSeen[name] = idSeenValue;
+  								}
+						}
 
-log.info(results);
-var pp = dataService.getId();
+						//log.info(results);
+						var pp = dataService.getId();
 
 
 
-			//log.info(pp);
+			log.info(voteData.votesCollection.votes);
 
-people = { "names" : results };
+						people = { "names" : results };
 
-var employees = { "details" : pp};
+						var employees = { "details" : pp};
 
-log.info(people.names);
+						//log.info(people.names);
 
-caramel = require('caramel');
+						caramel = require('caramel');
 
 		
 //log.info(pp.name);
-		caramel.render({
-			'header':{
-				'username': username
-			},
-			'title': {
-				text :'Votes'
-			},
+						caramel.render({
+										'header':{
+										'username': username
+										},
+										'title': {
+										text :'Votes'
+										},
 			
-			'vote': {'nominees':people.names , 'people':pp.people}
-		})
+										'vote': {'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+										});
+				}
+				catch(e){
+						//response.sendRedirect("/TestApp2/error.jag");
+				}		
 
-
-
-		;
-	}
-	catch(e){
-		//response.sendRedirect("/TestApp2/error.jag");
-	}
-
+			}
 		}
-	}
 }());
 %>
