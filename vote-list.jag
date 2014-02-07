@@ -4,6 +4,13 @@ var log = new Log();
 
 var verb = request.getMethod();
 
+function sss()
+{
+    alert('alert');
+}
+
+
+
 (function () {
 
 	var username=session.get('username');
@@ -22,7 +29,10 @@ var verb = request.getMethod();
 
 			
 			var pp = dataService.getId();
-			//log.info(pp);
+
+
+
+			log.info(pp);
 			for (var i=0 ;i< pp.people.length;i++)
 			{
 
@@ -35,8 +45,9 @@ var verb = request.getMethod();
                    log.info(id);
 
           		}
-          		
 
+          		
+          		
 
        		}
        		var awardId ;
@@ -48,9 +59,9 @@ var verb = request.getMethod();
 		}
 			var vote = new Object();
 			// voter_id to be taken from session
-				vote.voter_id = 34343;
+				vote.voter_id = 3;
 				vote.nominee_id = id;
-
+                awardId=77;
 
 			 //vote.event_award_instance_id =3242;
 				vote.event_award_instance_id = awardId;
@@ -107,7 +118,46 @@ var verb = request.getMethod();
 		var data = dataService.getNominees(77);//  event id to be taken from session
        var nominees = [nominees];
        var peopleNames = [peopleNames];
-        
+
+
+       if(data.votesCollection == ""){
+
+
+var pp = dataService.getId();
+
+
+
+			//log.info(pp);
+
+
+
+var employees = { "details" : pp};
+
+
+
+caramel = require('caramel');
+
+		
+//log.info(pp.name);
+		caramel.render({
+			'header':{
+				'username': username
+			},
+			'title': {
+				text :'Votes'
+			},
+			
+			'vote': { 'people':pp.people}
+		})
+
+
+
+		;
+
+
+       	
+       }
+        log.info(data);
 
 		for (var i=0 ;i< data.votesCollection.votes.length;i++)
 			{
@@ -117,7 +167,7 @@ var verb = request.getMethod();
 
        		}
         
- //print (nominees);
+ log.info(nominees);
 
  var people = { "names" : peopleNames };
 
@@ -126,21 +176,28 @@ var idsSeen = {}, idSeenValue = {};
 for (var i = 0, len = people.names.length, name; i < len; ++i) {
     name= people.names[i].name;
    if (idsSeen[name] !== idSeenValue) {
-        results.push(people.names[i]);
-       idsSeen[name] = idSeenValue;
-   }
+       results.push(people.names[i]);
+      idsSeen[name] = idSeenValue;
+  }
 }
 
-//log.info(results);
+log.info(results);
+var pp = dataService.getId();
+
+
+
+			//log.info(pp);
 
 people = { "names" : results };
 
+var employees = { "details" : pp};
 
+log.info(people.names);
 
 caramel = require('caramel');
 
 		
-//log.info(people);
+//log.info(pp.name);
 		caramel.render({
 			'header':{
 				'username': username
@@ -149,7 +206,7 @@ caramel = require('caramel');
 				text :'Votes'
 			},
 			
-			'vote': people
+			'vote': {'nominees':people.names , 'people':pp.people}
 		})
 
 
