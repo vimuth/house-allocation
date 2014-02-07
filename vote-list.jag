@@ -50,59 +50,28 @@ function sss()
           		
 
        		}
-       		var awardId ;
-       		var uriMatcher = new URIMatcher(request.getRequestURI());
-	       if(uriMatcher.match('/TestApp2/votes/{id}')) {
-		
-
-				awardId = uriMatcher.elements().id;
-		}
+       		
 			var vote = new Object();
 			// voter_id to be taken from session
-				vote.voter_id = 6;
+				vote.voter_id = 70;
 				vote.nominee_id = id;
-                awardId=77;
+               
+			 vote.event_award_instance_id =data.Nominee.award;
+				//vote.event_award_instance_id = awardId;
 
-			 //vote.event_award_instance_id =3242;
-				vote.event_award_instance_id = awardId;
+log.info(data);
 
-
-
-			var voteData = dataService.getVotes();//  event id to be taken from session
-       
-        log.info(vote);
-       var exist=1;
-
-		for (var i=0 ;i< voteData.votesCollection.votes.length;i++)
-			{
-          		if (vote.voter_id ==voteData.votesCollection.votes[i].voter_id)
-          		{
-
-          			exist =0;
-
-          		}
-			}
-       
-
-       if (exist == 1){
+			
        	
-           if(dataService.addNominee(vote));
-           {
-           log.info(exist);
-		    response.contentType = 'application/json';
+         if(dataService.addNominee(vote));
+          {
+           
+		  response.contentType = 'application/json';
 			response.content = {
 				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
 			}
 
-		}
-    		else
-           {
-    			
-			response.contentType = 'application/json';
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/voteError.jag'} ;
-			} 
-
+		
 //
 		} catch (e) {
 			log.error(e.toString());
@@ -115,14 +84,44 @@ function sss()
 				try{ 
 						var dataService = require('modules/dataservice.jag');
 
-						var data = dataService.getNominees(77);//  event id to be taken from session
-						var voteData = dataService.getAwardVotes(77);
+						
        					var nominees = [nominees];
        					var peopleNames = [peopleNames];
-       					var voter_id=6;
-       					var voter= new Object();
+       					var voter_id=70;
+       					
+
+
+       					var award_id ;
+       		            var uriMatcher = new URIMatcher(request.getRequestURI());
+	                     if(uriMatcher.match('/TestApp2/votes/{id}')) {
+									award_id = uriMatcher.elements().id;
+						}
+
+                        var data = dataService.getNominees(award_id);//  event id to be taken from session
+						var voteData = dataService.getAwardVotes(award_id);
+
+
+						var voter= new Object();
        					voter.voterId= voter_id;
+       					voter.eventId= award_id;
        					log.info(voter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        					if(data.votesCollection == "")
        					{
@@ -130,7 +129,7 @@ function sss()
 
 							var pp = dataService.getId();
 
-
+        
 
 			//log.info(pp);
 

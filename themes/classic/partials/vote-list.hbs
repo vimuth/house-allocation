@@ -101,11 +101,12 @@ var nominee;
 												if (validateNominee()){
 
 													if(validateVoter()){
+														var award = "{{voter.eventId}}"
 
 												var eventName = document
 														.getElementById('eventName').value;
 												
-
+														
 												$
 														.ajax({
 															type : "POST",
@@ -116,6 +117,7 @@ var nominee;
 																	.stringify({
 																		"Nominee" : {
 																			"name" : eventName,
+																			"award" : award,
 																			
 																		}
 																		
@@ -129,7 +131,8 @@ var nominee;
 															}
 														});
 
-													}}
+													}
+													}
 
 											});
 
@@ -261,13 +264,15 @@ var warningLabel = document
 
 		function addNominee() {
 			if (validateVoter()){
+
+			var award = "{{voter.eventId}}"
 			{{#each nominees}}
 
 			var name = "{{name}}";
 		 
     		if ((document.getElementById(name+"Nominee_name")).checked){
     		
-												
+											
 
 			$.ajax({
 				type : "POST",
@@ -278,6 +283,7 @@ var warningLabel = document
 						.stringify({
 							"Nominee" : {
 								"name" : name,
+								"award" : award,
 										}
 																		
 																		
