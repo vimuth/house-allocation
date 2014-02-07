@@ -1,0 +1,51 @@
+<%
+var caramel;
+var log = new Log();
+var dataService = require('modules/dataservice.jag');
+//var eventList = dataService.getEventNames();
+var verb = request.getMethod();
+
+(function () {
+
+	var username=session.get('username');
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag");
+		return;
+	}
+
+	if (verb=='GET'){
+
+			var uriMatcher = new URIMatcher(request.getRequestURI());
+			log.info(request.getRequestURI);
+			if(uriMatcher.match('/TestApp2/search/{name}')) {
+				
+				//log.info(uriMatcher.elements().name);
+				
+				try{
+					var eventName = uriMatcher.elements().name;
+		 			//log.info(eventList.event_nameCollection);
+		 			var data = {"eventName":eventName};
+					//var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
+					//log.info(actAndAwards);
+					var eventInstances = dataService.getEventsWithKey(data);
+					log.info("received matched events : "+eventInstances);
+					caramel = require('caramel');
+					caramel.render({
+						'header':{
+						'username': username
+					},
+					'title': {
+					text :'Matched Events'
+					},
+					'eventInstances':eventInstances.event_instanceCollection});
+				}
+				catch(e){
+					log.error(e);
+				}
+			}
+	}
+	
+}());
+%>
+
