@@ -2,13 +2,14 @@
 
 newURl = 'http://localhost:9763/services/house_allocation/';
 var url = 'http://localhost:9763/services/house_allocation/';
+
 var events_url = 'http://localhost:9763/services/house_allocation/events/';
 var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
 var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
 var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
 var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
 var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
+var votesNominee_url = 'http://host:9763/services/house_allocation/votes_nominee/';
 var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
 var current_elections_url = 'http://localhost:9763/services/house_allocation/current-elections/';
 
@@ -70,7 +71,7 @@ function addEvent(data){
 
 function getEventIDFromName(data){
 
-	
+
 	var optionalHeaders = {
 		"Accept":"application/json" };
 		var result = get(newURl+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
@@ -80,6 +81,7 @@ function getEventIDFromName(data){
 			var eventID = eventIdObj.event_id.event_id.id;
 
 			return eventID;
+
 }
 
 function addEventInstance(data){
@@ -88,8 +90,14 @@ function addEventInstance(data){
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	log.info("Received event instance"+data.eventInstance);
+<<<<<<< HEAD
 	var optionalHeaders ={"Accept":"application/json"};
 	//	var result = get(newURl+'event_id_from_name/'+encodeURidata.eventInstance.eventName,null,optionalHeaders,"application/json");
+=======
+	var optionalHeaders ={
+		"Accept":"application/json"};
+		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
+>>>>>>> de0933b0117357961acaf142b500b6e5e9618e9c
 
 		//var eventIdObj = parse(result.data);
 		var eventID = this.getEventIDFromName(data);
@@ -114,7 +122,7 @@ function addEventInstance(data){
 
 			for(var i=0;i<(activityInstances.length)/2;i++){
 				log.info(i);
-				
+
 				var activityInstance = {
 					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
 					log.info("adding activity instance :"+activityInstance);
@@ -123,7 +131,7 @@ function addEventInstance(data){
 			}
 
 			for (var i=0;i<(awardInstances.length)/2;i++){
-				
+
 				var awardInstance = {
 					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
 					log.info("adding event award instance: "+awardInstance);
@@ -169,6 +177,13 @@ function getAwardsForEventID(id){
 		"Accept":"application/json"},"application/json");
 		log.info("received awards:"+data.data);
 		return parse(data.data);
+
+}
+function getAwardVotes(id){
+	var data = get(votes_url+ id,null,{
+		"Accept":"application/json"},"application/json");
+		var voteData= parse(data.data);
+		return voteData;
 
 }
 
@@ -500,12 +515,12 @@ function getEventInstance(eventID){
 					Entry:[]};
 			}
 
-				
+
 			if(!(ranks.Entries.Entry instanceof Array)){
 				ranks.Entries.Entry = [ranks.Entries.Entry];
 			}
-				
-				
+
+
 			var awards = getAwardInstanceForEvent(eventID);
 			var activities = getActivityInstanceForEvent(eventID);
 
@@ -647,6 +662,188 @@ function updateEventInfo(data){
 	catch(e){
 		return false;
 	}
+}
+
+function deleteActivityInstance(data){
+	try{
+		del(url+'activity-instance/'+data.id);
+		return true;
+	}
+	catch(e){
+		return false;
+	}
+
+}
+
+function deleteAwardInstance(data){
+	try{
+		del(url+'award-instance/'+data.id);
+		return true;
+	}
+	catch(e){
+		return false;
+	}
+
+}
+
+function updateActivityInstance(data){
+
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'activity-instance/update',data,headers,'json', function(data,xhr){
+				log.info("successfully updated the event");
+			});
+			return true;
+	}
+	catch(e){
+		return false;
+	}
+}
+
+function updateAwardInstance(data){
+
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'award-instance/update',data,headers,'json', function(data,xhr){
+				log.info("successfully updated the event");
+			});
+			return true;
+	}
+	catch(e){
+		return false;
+	}
+}
+
+function getIDFromName(name){
+	var people = parse(get(url+ 'people/id',{
+		'name':name},{
+		"Accept":"application/json"},"application/json").data);
+
+		return people;
+}
+
+
+function addAwardWinnerIndividual(data){
+	var name = getIDFromName(data.name);
+
+	if(name.Entries==""){
+		return {'success':false, 'error' : "name not found"};
+	}
+	else{
+		try{
+			var headers = {
+				"Accept": "application/json"};
+				var result = post(url+'award-instance/winner',{
+					"people_id":name.Entries.Entry.id, "event_award_instance_id":data.id},headers,'json', function(data,xhr){
+					});
+					return {'success':true};
+		}
+		catch(e){
+			return {'success':false, 'error' : "Internal Error"};
+		}
+	}
+}
+
+function addAwardWinnerHouse(data){
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'award-instance/winner-house',data,headers,'json', function(data,xhr){
+			});
+			return {'success':true};
+	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
+}
+
+function deleteAwardWinnerIndividual(data){
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var id = getIDFromName(data[i].name);
+
+			log.info(id.Entries.Entry.id);
+			var result = post(url+'delete-award-winner',{
+				'people_id':id.Entries.Entry.id ,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
+}
+function deleteAwardWinnerGroup(data){
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var result = post(url+'delete-award-winner-house',{
+				'house_id':data[i].name,'event_award_instance_id':data[i].event_award_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
+}
+
+function addActivityWinnerHouse(data){
+	try{
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'add-activity-winner-house',{
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json', function(data,xhr){
+				});
+				return {'success':true};
+	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
+}
+
+function addActivityWinner(data){
+	try{
+		var id = getIDFromName(data.winner);
+
+		if(id.Entries==""){
+			return {'success':false, 'error' : "name not found in the database"};
+		}
+
+		
+		var headers = {
+			"Accept": "application/json"};
+			var result = post(url+'add-activity-winner',{
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json', function(data,xhr){
+				});
+				return {'success':true};
+	}
+	catch(e){
+		return {'success':false, 'error' : "Internal Error"};
+	}
+
+}
+
+function deleteActivityWinnerIndividual(data){
+	log.info(data);
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var id = getIDFromName(data[i].name);
+
+			var result = post(url+'delete-activity-winner',{
+				'people_id':id.Entries.Entry.id ,'activity_instance_id':data[i].activity_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
+}
+function deleteActivityWinnerGroup(data){
+	log.info(data);
+	var headers = {
+		"Accept": "application/json"};
+		for(var i =0;i<data.length;i++){
+			var result = post(url+'delete-activity-winner-house',{
+				'house_id':data[i].name,'activity_instance_id':data[i].activity_instance_id},headers,'json', function(data,xhr){
+				});
+
+		}
 }
 
 

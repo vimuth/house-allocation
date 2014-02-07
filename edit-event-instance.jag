@@ -5,43 +5,69 @@ var Handlebars;
 var log = new Log();
 var dataService = require('modules/dataservice.jag');
 var verb = request.getMethod();
+var moment = require('modules/moment-with-langs.js').moment;
 
+Handlebars = require('handlebars');
 
-(function () {
-
-	var username=session.get('username');
-
-	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
-		return;
+Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+	if (a == b)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
+Handlebars.Handlebars.registerHelper("formatDate", function(datetime) {
+	if (moment) {
+		return moment(datetime).format('YYYY-MM-DD HH:mm');
 	}
+	else {
+		return datetime;
+	}
+});
+Handlebars.Handlebars.registerHelper("isVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.fn(this);
+	}
+	else {
+		return options.inverse(this);
+	}
+});
+Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.inverse(this);
+	}
+	else {
+		return options.fn(this);
+	}
+});
 
-	var isAdmin = session.get('role')=='admin';
+	(function () {
 
-	var uriMatcher = new URIMatcher(request.getRequestURI());
+		var username=session.get('username');
 
-	if(verb=='GET'){
-		if(uriMatcher.match('/TestApp2/edit-event-instance/{id}')) {
-			var id = uriMatcher.elements().id;
-			var data = dataService.getEventInstance(id);
+		if(username==null){
+			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+			return;
+		}
 
-			// 			log.info(data);
-				
-			data.isAdmin = isAdmin;
+		var isAdmin = session.get('role')=='admin';
 
-			caramel = require('caramel');
-			Handlebars = require('handlebars');
+		var uriMatcher = new URIMatcher(request.getRequestURI());
 
-			Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
-				if (a == b)
-					return options.fn(this);
-				else
-					return options.inverse(this);
-			});
+		if(verb=='GET'){
+			if(uriMatcher.match('/TestApp2/edit-event-instance/{id}')) {
+				var id = uriMatcher.elements().id;
+				var data = dataService.getEventInstance(id);
+
+				log.info(data);
+
+				data.isAdmin = isAdmin;
+
+				caramel = require('caramel');
 
 				caramel.render({
 					'header':{
-					'username': username
+					'username': username,
+					'isAdmin':isAdmin
 				},
 				'title': {
 				text :data.eventInstance.name},
@@ -52,36 +78,181 @@ var verb = request.getMethod();
 				// 				log.error(e);
 				// 				response.sendRedirect("/TestApp2/error.jag");
 				// 			}
-		}
-		else{
-			// 		response.sendRedirect("/TestApp2/event-list.jag");
-			return;
-		}
-	}
-
-	if(verb=='POST'){
-		var operation = request.getParameter('operation');
-
-		if(operation=="setRank"){
-				
-			dataService.setEventRanking(request.getContent());
-				
-		}
-		if(operation=="updateInfo"){
-			response.contentType = 'application/json';
-
-			log.info(request.getContent());
-			var result=dataService.updateEventInfo(request.getContent());
-			if(result){
-				response.content = {
-					'success':true,} ;
 			}
 			else{
-				response.content = {
-					'success':false, 'error':'Error'} ;
+				// 		response.sendRedirect("/TestApp2/event-list.jag");
+				return;
 			}
 		}
-	}
-}());
-%>
+
+		if(verb=='POST'){
+			var operation = request.getParameter('operation');
+
+			if(operation=="setRank"){
+
+				dataService.setEventRanking(request.getContent());
+
+			}
+
+			if(operation=="updateInfo"){
+				response.contentType = 'application/json';
+
+				log.info(request.getContent());
+				var result=dataService.updateEventInfo(request.getContent());
+				if(result){
+					response.content = {
+						'success':true,} ;
+				}
+				else{
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+
+			if(operation=="deleteActivity"){
+				response.contentType = 'application/json';
+
+				log.info(request.getContent());
+				var result=dataService.deleteActivityInstance(request.getContent());
+				if(result){
+					response.content = {
+						'success':true,} ;
+				}
+				else{
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+
+			if(operation=="deleteAward"){
+				response.contentType = 'application/json';
+
+				log.info(request.getContent());
+				var result=dataService.deleteAwardInstance(request.getContent());
+				if(result){
+					response.content = {
+						'success':true,} ;
+				}
+				else{
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+			if(operation=="updateActivity"){
+				response.contentType = 'application/json';
+
+				log.info(request.getContent());
+				var result=dataService.updateActivityInstance(request.getContent());
+				if(result){
+					response.content = {
+						'success':true,} ;
+				}
+				else{
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+			if(operation=="updateAward"){
+				response.contentType = 'application/json';
+
+				log.info(request.getContent());
+				var result=dataService.updateAwardInstance(request.getContent());
+				if(result){
+					response.content = {
+						'success':true,} ;
+				}
+				else{
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+			if(operation=="addAwardWinnerIndividual"){
+				response.contentType = 'application/json';
+					
+				log.info(request.getContent());
+				var result=dataService.addAwardWinnerIndividual(request.getContent());
+				response.content = result;
+			}
+			if(operation=="addAwardWinnerHouse"){
+				response.contentType = 'application/json';
+
+				var winners = request.getContent();
+
+				log.info(winners);
+
+				try{
+					for(var i =0;i<winners.length;i++){
+						var result=dataService.addAwardWinnerHouse(winners[i]);
+					}
+					response.content = {
+						'success':true,} ;
+				}
+				catch(e){
+					log.error(e);
+
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+			if(operation=="removeAwardWinnerIndividual"){
+				response.contentType = 'application/json';
+					
+				var winners = request.getContent();
+				log.info(winners);
+				try{
+					if(winners.isIndividual=="true"){
+						dataService.deleteAwardWinnerIndividual(winners.winners);
+					}
+					else{
+						dataService.deleteAwardWinnerGroup(winners.winners);
+					}
+					response.content = {
+						'success':true,} ;
+				}
+				catch(e){
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+
+			if(operation=="addAcivityRanking"){
+				response.contentType = 'application/json';
+
+				var data = request.getContent();
+				log.info(data);
+
+				if(data.isIndividual=="true"){
+					response.content = dataService.addActivityWinner(data);
+				}
+				else{
+					response.content = dataService.addActivityWinnerHouse(data);
+				}
+
+			}
+				
+			
+			if(operation=="removeActivityWinners"){
+				response.contentType = 'application/json';
+
+				var data = request.getContent();
+				log.info(data);
+				try{
+					if(data.isIndividual=="true"){
+						dataService.deleteActivityWinnerIndividual(data.winners);
+					}
+					else{
+						dataService.deleteActivityWinnerGroup(data.winners);
+					}
+					response.content = {
+						'success':true,} ;
+				}
+				catch(e){
+					response.content = {
+						'success':false, 'error':'Error'} ;
+				}
+			}
+		}
+
+	}());
+	%>
 
