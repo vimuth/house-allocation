@@ -1,148 +1,118 @@
 <%
 var caramel;
 var log = new Log();
-
 var verb = request.getMethod();
-
-function sss()
-{
-    alert('alert');
-}
-
-
-
 (function () {
 
-	var username=session.get('username');
-
-	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
-		return;
-	}
-
-	if( verb=='POST'){
-		var dataService = require('modules/dataservice.jag');
-		try {
-			var id=0;
-			var data = request.getContent();
-			log.info(data);
-
-			
-			var pp = dataService.getId();
-
-
-
-			log.info(pp);
-			for (var i=0 ;i< pp.people.length;i++)
+		var username=session.get('username');
+		if(username!="admin")
 			{
-
-
-				//log.info(pp);
-          		if(pp.people[i].name == data.Nominee.name)
-          		{
-          			//g.info(pp);
-          		id = pp.people[i].id
-                   log.info(id);
-
-          		}
-
-          		
-          		
-
-       		}
-       		
-			var vote = new Object();
-			// voter_id to be taken from session
-				vote.voter_id = 70;
-				vote.nominee_id = id;
-               
-			 vote.event_award_instance_id =data.Nominee.award;
-				//vote.event_award_instance_id = awardId;
-
-log.info(data);
-
-			
-       	
-         if(dataService.addNominee(vote));
-          {
-           
-		  response.contentType = 'application/json';
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
+				response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+				return;
 			}
 
-		
-//
-		} catch (e) {
-			log.error(e.toString());
-			response.sendRedirect("/TestApp2/error.jag");
-		}
+		if( verb=='POST')
+			{
+				var dataService = require('modules/dataservice.jag');
+				try {
+						var id=0;
+						var data = request.getContent();
+						log.info(data);
+						var pp = dataService.getId();
+						log.info(pp);
+						for (var i=0 ;i< pp.people.length;i++)
+							{
+								//log.info(pp);
+          						if(pp.people[i].name == data.Nominee.name)
+          						{
+          						//g.info(pp);
+          							id = pp.people[i].id
+                   					log.info(id);
+								}
+							}
+       		
+						var vote = new Object();
+						// voter_id to be taken from session
+						vote.voter_id = 70;
+						vote.nominee_id = id;
+               			vote.event_award_instance_id =data.Nominee.award;
+						//vote.event_award_instance_id = awardId;
+						log.info(data);
 
-	}
+						if(dataService.addNominee(vote));
+         				 {
+           					response.contentType = 'application/json';
+           					response.content = {'redirect':true, 'url':'/TestApp2/award-list.jag'} ;
+						}
+
+					} 
+				catch (e) {
+						log.error(e.toString());
+						response.sendRedirect("/TestApp2/error.jag");
+					}
+
+			}
 	else{
 		  if (verb=='GET'){
 				try{ 
 						var dataService = require('modules/dataservice.jag');
-
-						
-       					var nominees = [nominees];
+						var nominees = [nominees];
        					var peopleNames = [peopleNames];
        					var voter_id=70;
-       					
-
-
        					var award_id ;
        		            var uriMatcher = new URIMatcher(request.getRequestURI());
-	                     if(uriMatcher.match('/TestApp2/votes/{id}')) {
+
+
+
+
+
+
+	                    if(uriMatcher.match('/TestApp2/votes/{id}')) 
+	                    	{
 									award_id = uriMatcher.elements().id;
-						}
+							}
 
                         var data = dataService.getNominees(award_id);//  event id to be taken from session
 						var voteData = dataService.getAwardVotes(award_id);
-
-
 						var voter= new Object();
        					voter.voterId= voter_id;
        					voter.eventId= award_id;
-       					log.info(voter);
+       					
+       					//log.info(data.votesCollection.votes.length);
 
+       					if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
 
+       					{  
 
+       					 nominee= data.votesCollection.votes.nominee_id;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       					if(data.votesCollection == "")
-       					{
-
-
+       						log.info(nominee);
+          					peopleNames[0]= dataService.getNames(nominee);
+          						
+          					
+          					var people = { "names" : peopleNames };
+          					log.info(people.names);
 							var pp = dataService.getId();
-
-        
-
-			//log.info(pp);
-
-
-
-							var employees = { "details" : pp};
-
-
-
 							caramel = require('caramel');
+							caramel.render({
+											'header':{
+											'username': username
+											},
+											'title': {
+											text :'Votes'
+											},
+			//
+											'vote': { 'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+							});
+							log.info(voter);
 
-		
-//log.info(pp.name);
+       	
+       					}
+
+                     if(data.votesCollection == "")
+       					{
+							var pp = dataService.getId();
+							caramel = require('caramel');
 							caramel.render({
 											'header':{
 											'username': username
@@ -151,55 +121,68 @@ log.info(data);
 											text :'Votes'
 											},
 			
-											'vote': { 'people':pp.people}
+											'vote': { 'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
 							});
 
 
        	
        					}
-        				//log.info(data);
+                        
+       					
+
+
+
+
+       					
+
+
+
+if((data.votesCollection.votes instanceof Array) )
+{
+
+
+
+
 
 						for (var i=0 ;i< data.votesCollection.votes.length;i++)
 							{
           						nominees[i] = data.votesCollection.votes[i].nominee_id;
           						peopleNames[i] = dataService.getNames(nominees[i]);
+							}
 
-
-       						}
+							var people = { "names" : peopleNames };
+          					//log.info(people.names);
+							var pp = dataService.getId();
         
- 						//log.info(nominees);
+ 						log.info(data.votesCollection.votes.length);
 
  						var people = { "names" : peopleNames };
-
 						var results = [];
 						var idsSeen = {}, idSeenValue = {};
 						for (var i = 0, len = people.names.length, name; i < len; ++i) 
-						{
-    						name= people.names[i].name;
-   							if (idsSeen[name] !== idSeenValue) 
-   								{
-      					 			results.push(people.names[i]);
-     						 		idsSeen[name] = idSeenValue;
-  								}
-						}
+							{
+    							name= people.names[i].name;
+   								if (idsSeen[name] !== idSeenValue) 
+   									{
+      					 				results.push(people.names[i]);
+     						 			idsSeen[name] = idSeenValue;
+  									}
+							}
 
-						//log.info(results);
+							//log.info(results);
 						var pp = dataService.getId();
-
-
-
-			log.info(voteData.votesCollection.votes);
-
+						//log.info(voteData.votesCollection.votes);
 						people = { "names" : results };
 
-						var employees = { "details" : pp};
+						
+						
+        				
+
+						
 
 						//log.info(people.names);
 
 						caramel = require('caramel');
-
-		
-//log.info(pp.name);
 						caramel.render({
 										'header':{
 										'username': username
@@ -210,8 +193,12 @@ log.info(data);
 			
 										'vote': {'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes}
 										});
-				}
-				catch(e){
+
+
+					
+				}}
+				catch(e)
+				{
 						//response.sendRedirect("/TestApp2/error.jag");
 				}		
 
