@@ -28,90 +28,92 @@
 					</div>
 
 				</div>
+
+				<div style="width: 25%; float: right">
+					<div style="width: 100%; float: left">
+						<p class="list-group-item-text">
+							<br /> <b>First Place Winner </b><br /> <br />
+						</p>
+					</div>
+					<div style="width: 90%; float: right">
+						<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+							alt="Smiley face" height="80" width="80"><br /> <br />
+					</div>
+
+				</div>
+				<br style="clear: both;" />
 			</div>
 
-			<div style="width: 25%; float: right">
-				<div style="width: 100%; float: left">
-					<p class="list-group-item-text">
-						<br /> <b>First Place Winner </b><br /> <br />
-					</p>
-				</div>
-				<div style="width: 90%; float: right">
-					<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
-						alt="Smiley face" height="80" width="80"><br /> <br />
-				</div>
+		</a>
 
-			</div> <br style="clear: both;" />
-	</div>
-
-	</a>
-	<div>
-		<br />
-	</div>
-	{{/each}} {{/if}} {{#if current}} {{#each events}} <a
-		style="margin: 0px; padding: 0px"
-		href='{{url "/event-instance/"}}{{id}}' class="list-group-item"> <!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+		<div>
+			<br />
+		</div>
+		{{/each}} {{/if}} {{#if current}} {{#each events}} <a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
 			style="clear: both;" />
 			-->
 
-		<div style="margin: 0px; padding: 0px" class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">{{name}}</h3>
-			</div>
-			<div class="row">
-
-				<div class="col-md-3" style="margin: 10px">
-
-					<p class="list-group-item-text">
-					<p align="justify">{{description}}</p>
-					<br />Start Date :
-					<div class="startDate">{{startDate}}</div>
-					<br />End Date :
-					<div class="endDate">{{endDate}}</div>
-
-					</p>
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
 				</div>
-				{{#if activities}}
+				<div class="row">
 
-				<div class="col-md-8" style="margin: 10px">
+					<div class="col-md-3" style="margin: 10px">
 
-					<p class="list-group-item-text">
+						<p class="list-group-item-text">
+						<p align="justify">{{description}}</p>
+						<br />Start Date :
+						<div class="startDate">{{startDate}}</div>
+						<br />End Date :
+						<div class="endDate">{{endDate}}</div>
 
-						<b>Up coming activities</b>
-					<table class="table">
-						<thead>
-							<th>name</th>
-							<th>description</th>
-							<th>venue</th>
-							<th>Date</th>
-						</thead>
-						<tbody>
+						</p>
+					</div>
+					{{#if activities}}
 
-							{{#each activities}}
-							<tr>
-								<td>{{name}}</td>
-								<td>{{description}}</td>
-								<td>{{venue}}</td>
-								<td><div class="date">{{datetime}}</div></td>
-							</tr>
-							{{/each}}
+					<div class="col-md-8" style="margin: 10px">
 
-						</tbody>
-					</table>
+						<p class="list-group-item-text">
 
-					</p>
+							<b>Up coming activities</b>
+						<table class="table">
+							<thead>
+								<th>name</th>
+								<th>description</th>
+								<th>venue</th>
+								<th>Date</th>
+							</thead>
+							<tbody>
+
+								{{#each activities}}
+								<tr>
+									<td>{{name}}</td>
+									<td>{{description}}</td>
+									<td>{{venue}}</td>
+									<td><div class="date">{{datetime}}</div></td>
+								</tr>
+								{{/each}}
+
+							</tbody>
+						</table>
+
+						</p>
+					</div>
+					{{/if}}
 				</div>
-				{{/if}}
 			</div>
+
+		</a>
+		<div>
+			<br />
 		</div>
+		{{/each}} {{/if}}
 
-	</a>
-	<div>
-		<br />
 	</div>
-	{{/each}} {{/if}}
-
-</div>
 </div>
 
 
