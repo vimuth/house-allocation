@@ -13,7 +13,7 @@ log.info("got here : "+verb);
 
 	var username=session.get('username');
 
-	if(username==null){
+	if(username!="admin"){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}

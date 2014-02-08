@@ -65,12 +65,12 @@
 
 				</div>
 
-				{{#if isAdmin}}
+				
 				<div>
 					<button class="btn btn-warning btn-xs pull-right"
 						onclick="editEvent($(this))">Edit Basic Info</button>
 				</div>
-				{{/if}}
+				
 
 			</div>
 
@@ -78,10 +78,10 @@
 				<div class="panel">
 					<div class="panel-heading">
 						<h3 class="panel-title">
-							Results {{#if isAdmin}} <span>
+							Results <span>
 								<button class="btn btn-warning btn-xs pull-right"
 									onclick="setRank($(this))">Set Results</button>
-							</span> {{/if}}
+							</span> 
 						</h3>
 					</div>
 					<div id="rankPanel" style="display:" class="panel-body">
@@ -100,7 +100,7 @@
 
 						</table>
 					</div>
-					{{#if isAdmin}}
+					
 					<div id="rankInputForm" style="display: none" class="panel-body">
 
 						<ul class="list-group">
@@ -144,7 +144,7 @@
 						</ul>
 
 					</div>
-					{{/if}}
+					
 
 				</div>
 
@@ -189,11 +189,7 @@
 
 
 					</div>
-					<div class="col-md-5">
-					
-					
-						{{#if ../isAdmin}}
-						
+					<div class="col-md-5">				
 						
 							<table id="winnerButtons" class="pull-right">
 								<tr>
@@ -288,7 +284,7 @@
 						{{/if}}
 							
 							
-						{{/if}}
+						
 
 
 
@@ -323,7 +319,7 @@
 
 
 					</div>
-				</div> {{#if ../isAdmin}}
+				</div> 
 				<div class="row">
 					<div class="btn-group" style="margin-left: 10px">
 						<button type="button" onclick='editActivity($(this),"{{id}}")'
@@ -331,7 +327,7 @@
 						<button type="button" onclick='deleteActivity($(this),"{{id}}")'
 							class="btn btn-danger btn-xs">Delete</button>
 					</div>
-				</div> {{/if}}
+				</div>
 			</li> {{/each}}
 		</ul>
 
@@ -412,7 +408,7 @@
 						</form>
 						{{/if}}
 
-						{{#if ../isAdmin}} {{#if_eq ../type "I"}}
+						{{#if_eq ../type "I"}}
 						<form style="display: none"
 							onsubmit="addAwardWinnerIndividual($(this)); return false;"
 							id="winnerForm" name="actInfoForm" class="pull-right">
@@ -445,38 +441,32 @@
 
 						</form>
 						{{/if_eq}}
-
+						
 						<table id="winnerButtons" class="pull-right">
-							<tr>
-								<td>
-									<button id="setWinnerButton" type="button"
+								<tr>
+									<td>
+										<button id="setWinnerButton" type="button"
 										class="btn btn-warning btn-xs pull-right"
 										onclick='$(this).parents().eq(4).find("#winnerForm").css("display",""); $(this).parents().eq(3).css("display","none"); $(this).css("display","none")'>Add
 										Winner</button>
-								</td>
-							</tr>
-							{{#if winner}}
-							<tr>
-								<td>
-									<button id="setWinnerButton" type="button"
+									</td>
+									{{#if winner}}
+							
+									<td>
+										<button id="setWinnerButton" type="button"
 										class="btn btn-danger btn-xs pull-right"
 										onclick='$(this).parents().eq(4).find("#deleteAwardWinnerForm").css("display",""); $(this).parents().eq(3).css("display","none");$(this).parents().eq(4).find("#winnerlist").css("display","none");'>Remove
 										Winner</button>
-								</td>
-							</tr>
-							{{/if}}
+									</td>
+								
+									{{/if}}
+								</tr>
 						</table>
-						{{/if}} {{#unless winner}} {{#if_eq isVote "true"}}
-						{{#isVotingPeriod vote_startDate vote_endDate}}
 
-
-						<button id="voteButton" type="button"
-							class="btn btn-success btn-xs pull-right"
-							onclick='window.location.href="/TestApp2/votes/{{id}}"'{{#if ../../../../isAdmin}}disabled{{/if}} >Vote
-							for your pick</button>
-
-
-						{{/isVotingPeriod}} {{/if_eq}} {{/unless}} {{#if winner}}
+						
+						
+						
+						{{#if winner}}
 						<div id="winnerlist">
 						 {{#if_eq
 						../type "G"}} {{#each winner}} <img class="pull-right"
@@ -498,7 +488,7 @@
 						</div>
 						 {{/if}}
 					</div>
-				</div> {{#if ../isAdmin}}
+				</div> 
 				<div style="display:" id="awdAdminButtons" class="row">
 					<div class="btn-group" style="margin-left: 10px">
 						<button type="button"
@@ -507,13 +497,13 @@
 						<button type="button" onclick="deleteAward($(this),{{id}})"
 							class="btn btn-danger btn-xs">Delete</button>
 					</div>
-				</div> {{/if}}
+				</div> 
 			</li> {{/each}}
 		</ul>
 	</div>
 </div>
 
-{{#if isAdmin}}
+
 <script>
 	$(document).ready(
 
@@ -934,4 +924,3 @@
 	
 	
 </script>
-{{/if}}

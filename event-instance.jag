@@ -6,33 +6,63 @@ var log = new Log();
 var dataService = require('modules/dataservice.jag');
 var verb = request.getMethod();
 
-(function () {
-
-	var username=session.get('username');
-
-	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
-		return;
+Handlebars = require('handlebars');
+var moment = require('modules/moment-with-langs.js').moment;
+Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+	if (a == b)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
+Handlebars.Handlebars.registerHelper("formatDate", function(datetime) {
+	if (moment) {
+		return moment(datetime).format('YYYY-MM-DD HH:mm');
 	}
+	else {
+		return datetime;
+	}
+});
+Handlebars.Handlebars.registerHelper("isVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.fn(this);
+	}
+	else {
+		return options.inverse(this);
+	}
+});
+Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.inverse(this);
+	}
+	else {
+		return options.fn(this);
+	}
+});
 
-	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/event-instance/{id}')) {
-		if(verb=='GET'){
+	(function () {
 
-			var id = uriMatcher.elements().id;
-			var data = dataService.getEventInstance(id);
-			
-			log.info(data);
+		var username=session.get('username');
 
-			caramel = require('caramel');
-			Handlebars = require('handlebars');
+		if(username==null){
+			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+			return;
+		}
+		
+		var isAdmin = session.get('role')=='admin';
 
-			Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
-				if (a == b)
-					return options.fn(this);
-				else
-					return options.inverse(this);
-			});
+		var uriMatcher = new URIMatcher(request.getRequestURI());
+		if(uriMatcher.match('/TestApp2/event-instance/{id}')) {
+			if(verb=='GET'){
+
+				var id = uriMatcher.elements().id;
+				var data = dataService.getEventInstance(id);
+				
+				data.isAdmin = isAdmin;
+				
+				log.info(data);
+
+				caramel = require('caramel');
+					
 
 				caramel.render({
 					'header':{
@@ -47,13 +77,13 @@ var verb = request.getMethod();
 				// 				log.error(e);
 				// 				response.sendRedirect("/TestApp2/error.jag");
 				// 			}
+			}
 		}
-	}
-	else{
-		response.sendRedirect("/TestApp2/event-list.jag");
-		return;
-	}
+		else{
+			response.sendRedirect("/TestApp2/event-list.jag");
+			return;
+		}
 
-}());
-%>
+	}());
+	%>
 
