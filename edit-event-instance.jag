@@ -44,10 +44,11 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 		var username=session.get('username');
 
-		if(username==null){
+		if(username!=null){
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 			return;
 		}
+		
 
 		var isAdmin = session.get('role')=='admin';
 

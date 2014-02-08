@@ -15,7 +15,7 @@ function sss()
 
 	var username=session.get('username');
 
-	if(username!="admin"){
+	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
