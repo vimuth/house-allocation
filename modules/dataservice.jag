@@ -133,7 +133,7 @@ function addEventInstance(data){
 					var result = post(newURl+"add_award_instance", awardInstance, optionalHeaders, "json");
 					log.info("added event award instance: "+awardInstance);
 			}
-
+			log.info("exiting addEventInstace of dataService");
 			return event_instance_id;
 }
 

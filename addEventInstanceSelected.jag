@@ -23,6 +23,8 @@ var verb = request.getMethod();
 			var data = request.getContent();
  			log.info(data);
 			var id = dataService.addEventInstance(data);
+
+			log.info('Received event instance id:'+id);	
 			response.contentType = 'application/json';
 
 			response.content = {

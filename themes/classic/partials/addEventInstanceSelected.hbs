@@ -61,10 +61,22 @@
 			</tr>
 
 			<tr>
-				<td>Start Date <input type="datetime" name=startDate
-					id="startDate" value="dd-mm-yyyyThh:mm:ss"></td>
-				<td>End Date <input type="datetime" name=endDate id="endDate"
-					value="dd-mm-yyyyThh:mm:ss"></td>
+				<!-- <td>Start Date <input type="datetime" name=startDate
+					id="startDate" value="dd-mm-yyyyThh:mm:ss"></td> -->
+					<td><label for="inputDate">Start Date : </label>
+								<div class='inputDate input-group date' id='startDateSet'>
+									<input type='text' class="form-control" id='startDate'
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div></td>
+				<td><label for="inputDate">End Date : </label>
+								<div class='inputDate input-group date' id='endDateSet'>
+									<input type='text' class="form-control" id='endDate'
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div></td>
 			</tr>
 
 		</tbody>
@@ -88,10 +100,19 @@
 			<tr>
 				<td><input type="checkbox" id="{{name}}act"
 					onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
-				<td style=>{{type}}</td>
+				<td>{{type}}</td>
 				<td>{{description}}</td>
-				<td><input type="datetime" id="{{name}}_act_datetime"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
+
+				<td>
+								<div class='inputDate input-group date' id="{{name}}_act_datetime_set" style="visibility: hidden">
+									<input type='text' class="form-control" id="{{name}}_act_datetime"
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+									<span class="input-group-addon" ><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div></td>
+
+				<!-- <td><input type="datetime" id="{{name}}_act_datetime"
+					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td> -->
 				<td><input type="text" id="{{name}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
 				<td><textarea id="{{name}}_act_description" rows="4"
@@ -123,16 +144,35 @@
 				<td>{{description}}</td>
 				<td>{{type}}</td>
 				<td>{{isVote}}</td>
-				<td><input type="datetime" id="{{name}}_awd_start"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
-				<td><input type="datetime" id="{{name}}_awd_end"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
 
+				<td>
+								<div class='inputDate input-group date' id="{{name}}_awd_start_set" style="visibility: hidden">
+									<input type='text' class="form-control" id="{{name}}_awd_start"
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div></td>
+
+				<!-- <td><input type="datetime" id="{{name}}_awd_start"
+					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td> -->
+
+					<td>
+								<div class='inputDate input-group date' id="{{name}}_awd_end_set" style="visibility: hidden">
+									<input type='text' class="form-control" id="{{name}}_awd_end"
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div></td>
+
+
+				<!-- <td><input type="datetime" id="{{name}}_awd_end"
+					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
+ -->
 				<script type="text/javascript">
-						if ('{{isVote}}'!='false'){
-							document.getElementById('{{name}}_awd_start').style.display = "none";
+						if ('{{isVote}}'=='false'){
+							document.getElementById('{{name}}_awd_start_set').style.display = "none";
 							document.getElementById('{{name}}_awd_start').value="2000-01-01T00:00:00"		
-							document.getElementById('{{name}}_awd_end').style.display = "none";
+							document.getElementById('{{name}}_awd_end_set').style.display = "none";
 							document.getElementById('{{name}}_awd_end').value="2000-01-01T00:00:00"	
 						}
 				</script>
@@ -186,14 +226,14 @@
     }
 
     function activitySelectionChanged(value){
-    	changeVisibility(value+"_act_datetime");
+    	changeVisibility(value+"_act_datetime_set");
     	changeVisibility(value+"_act_venue");
     	changeDisplay(value+"_act_description");
     }
 
     function awardSelectionChanged(value){
-    	changeVisibility(value+"_awd_start");
-    	changeVisibility(value+"_awd_end");   	
+    	changeVisibility(value+"_awd_start_set");
+    	changeVisibility(value+"_awd_end_set");   	
     }
 
     var actInst = [];
@@ -286,6 +326,12 @@
 
     $(document).ready(function() {
 
+ 
+		$('.inputDate').datetimepicker();
+	
+
+	
+
         $('#addButton').click(function() {
 
         	addEventInstance();
@@ -294,7 +340,6 @@
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
 			var eventInstStartDate = document.getElementById('startDate').value;
 			var eventInstEndDate = document.getElementById('endDate').value;
-
                $.ajax({
               type: "POST",
               contentType: "application/json",
