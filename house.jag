@@ -23,6 +23,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 	(function () {
 
 		var username=session.get('username');
+		var admin= session.get('role')=='admin';
 
 		if(username==null){
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
@@ -41,7 +42,8 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 
 			caramel.render({
 				'header':{
-				'username': username
+				'username': username,
+				'role': admin,
 			},
 			'title': {
 			text :dataService.HOUSES[id-1]},

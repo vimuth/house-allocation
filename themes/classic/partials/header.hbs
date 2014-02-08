@@ -5,7 +5,18 @@
 		<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 		<span class="icon-bar"></span> <span class="icon-bar"></span>
 	</button>
+	
 	<a class="navbar-brand" href="/TestApp2/index.jag">House Manager</a>
+	<a class="navbar-brand" href="{{url "/events/"}}"><font size="2">Events</font></a>
+	<a class="navbar-brand" href="{{url "/award-list.jag"}}"><font size="2">Current Elections</font></a>
+	<a class="navbar-brand" href="{{url "/history"}}"><font size="2">History</font></a>
+	<a class="navbar-brand" href="{{url "/current-events"}}"><font size="2">Current Events</font></a>
+	<a class="navbar-brand" href="{{url "/house"}}"><font size="2">Members</font></a>
+	{{#if admin}}	
+	<a class="navbar-brand" href="{{url "/addEventInstance2.jag"}}"><font size="2">Add Event</font></a>
+	<a class="navbar-brand" href="{{url "/assign-house.jag"}}"><font size="2">Assign Houses</font></a>
+	<a class="navbar-brand" href="{{url "/change-status"}}"><font size="2">Member Status</font></a>
+	{{/if}}
 </div>
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

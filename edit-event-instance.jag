@@ -51,6 +51,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 		
 
 		var isAdmin = session.get('role')=='admin';
+		var admin= session.get('role')=='admin';
 
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 
@@ -68,7 +69,8 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				caramel.render({
 					'header':{
 					'username': username,
-					'isAdmin':isAdmin
+					'isAdmin':isAdmin,
+					'role': admin,
 				},
 				'title': {
 				text :data.eventInstance.name},
