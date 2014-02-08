@@ -94,8 +94,8 @@ function addEventInstance(data){
 		"Accept":"application/json"};
 		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
-		var eventIdObj = parse(result.data);
-		var eventID = eventIdObj.event_id.event_id.id;
+		//var eventIdObj = parse(result.data);
+		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 		var eventInstDescription = data.eventInstance.description;
 		var eventInstStartDate = data.eventInstance.startDate;
@@ -137,6 +137,13 @@ function addEventInstance(data){
 			return event_instance_id;
 }
 
+function getEventsWithKey(key){
+	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
+		"Accept":"application/json"},"application/json");
+	log.info("received events:"+result.data)
+	return parse(result.data);
+}
+
 function getActivitiesAndAwardsForEvent(data){
 
 	var dataDup = {
@@ -165,6 +172,13 @@ function getAwardsForEventID(id){
 		"Accept":"application/json"},"application/json");
 		log.info("received awards:"+data.data);
 		return parse(data.data);
+
+}
+function getAwardVotes(id){
+	var data = get(votes_url+ id,null,{
+		"Accept":"application/json"},"application/json");
+		var voteData= parse(data.data);
+		return voteData;
 
 }
 

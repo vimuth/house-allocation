@@ -6,6 +6,18 @@
 	
 <div style="padding-top: 10px">
 	<h2>Nominees </h2><br>
+<div class="form-group">
+				<div class="label label-danger" id="voteNameWarning"
+					style="display: none">We are sorry, you have already voted for this award.</div>
+			</div>
+
+
+
+<div class="form-group">
+				<select id="voteType" class="form-control">
+					<option value="H">House Nomination</option>
+					<option value="I">Individual Nomination</option>
+				</select><br> <br>
 
 
 	<form id="activityForm" name="newActivity"
@@ -40,12 +52,12 @@
 <form id="myform" name="newEvent">
 	<div class="form-group">
 		<label for="eventName">Add Nominee</label> <input type="text"
-			class="form-control" id="eventName" placeholder="Enter Nominee Name    eg: someone@wso2."
+			class="form-control" id="eventName" placeholder="Enter Nominee Name  eg: someone@wso2 or House Name"
 			required><br>
 	</div>
 	<div class="form-group">
 				<div class="label label-danger" id="activityNameWarning"
-					style="display: none">Please enter a valid name</div>
+					style="display: none">Please enter a valid name.</div>
 			</div>
 	
 </form>
@@ -88,10 +100,13 @@ var nominee;
 											function() {
 												if (validateNominee()){
 
+													if(validateVoter()){
+														var award = "{{voter.eventId}}"
+
 												var eventName = document
 														.getElementById('eventName').value;
 												
-
+														
 												$
 														.ajax({
 															type : "POST",
@@ -102,6 +117,7 @@ var nominee;
 																	.stringify({
 																		"Nominee" : {
 																			"name" : eventName,
+																			"award" : award,
 																			
 																		}
 																		
@@ -116,6 +132,7 @@ var nominee;
 														});
 
 													}
+													}
 
 											});
 
@@ -123,7 +140,14 @@ var nominee;
 
 
 function validateNominee() {
+var x = document.getElementById("voteType").selectedIndex;
+var value=document.getElementsByTagName("option")[x].value
+
+if(value == "I"){
+
 	var corrext=0;
+
+
 
 			{{#each people}}
 			//corrext==0;
@@ -152,6 +176,78 @@ var warningLabel = document
 	return false;
 
 }
+
+}
+
+else{
+if(value == "H"){
+
+	var corrext=0;
+
+
+
+			
+			//corrext==0;
+			
+var nomineeName = document.getElementById('eventName').value;
+if( nomineeName == "Cloud Bots" || nomineeName == "Titans" || nomineeName == "Legion" || nomineeName == "WildBoars"){
+
+	corrext=1;
+}
+
+
+
+if(corrext==1) {
+	return true;
+
+}
+else{
+
+var warningLabel = document
+						.getElementById("activityNameWarning");
+				warningLabel.style.display = "inline";
+
+
+
+
+	return false;
+
+}
+}
+}
+}
+
+function validateVoter() {
+	var corrext=0;
+	var voter= "{{voter.voterId}}";
+
+			{{#each votes}}
+			//corrext==0;
+			var id= "{{voter_id}}";
+
+if(voter == id){
+
+	corrext=1;
+}
+
+{{/each}}
+
+if(corrext==0) {
+	return true;
+
+}
+else{
+
+var warningLabel = document
+						.getElementById("voteNameWarning");
+				warningLabel.style.display = "inline";
+
+
+
+
+	return false;
+
+}
 }
 
 
@@ -166,15 +262,17 @@ var warningLabel = document
 
 
 
-
 		function addNominee() {
-			{{#each names}}
+			if (validateVoter()){
+
+			var award = "{{voter.eventId}}"
+			{{#each nominees}}
 
 			var name = "{{name}}";
 		 
     		if ((document.getElementById(name+"Nominee_name")).checked){
     		
-												
+											
 
 			$.ajax({
 				type : "POST",
@@ -185,6 +283,7 @@ var warningLabel = document
 						.stringify({
 							"Nominee" : {
 								"name" : name,
+								"award" : award,
 										}
 																		
 																		
@@ -198,7 +297,7 @@ var warningLabel = document
 			});
 		}
 {{/each}}
-		}
+		}}
 
 
 

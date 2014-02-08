@@ -1,16 +1,7 @@
 <%
 var caramel;
 var log = new Log();
-
 var verb = request.getMethod();
-
-function sss()
-{
-    alert('alert');
-}
-
-
-
 (function () {
 
 	var username=session.get('username');
@@ -20,91 +11,45 @@ function sss()
 		return;
 	}
 
-	if( verb=='POST'){
+
+
+	if( verb=='POST')
+	{
 		var dataService = require('modules/dataservice.jag');
 		try {
 			var id=0;
 			var data = request.getContent();
 			log.info(data);
-
-			
 			var pp = dataService.getId();
-
-
-
 			log.info(pp);
 			for (var i=0 ;i< pp.people.length;i++)
 			{
-
-
 				//log.info(pp);
-          		if(pp.people[i].name == data.Nominee.name)
-          		{
-          			//g.info(pp);
-          		id = pp.people[i].id
-                   log.info(id);
-
-          		}
-
-          		
-          		
-
-       		}
-       		var awardId ;
-       		var uriMatcher = new URIMatcher(request.getRequestURI());
-	       if(uriMatcher.match('/TestApp2/votes/{id}')) {
-		
-
-				awardId = uriMatcher.elements().id;
-		}
+				if(pp.people[i].name == data.Nominee.name)
+				{
+					//g.info(pp);
+					id = pp.people[i].id
+					log.info(id);
+				}
+			}
+			 
 			var vote = new Object();
 			// voter_id to be taken from session
-				vote.voter_id = 3;
-				vote.nominee_id = id;
-                awardId=77;
+			vote.voter_id = 70;
+			vote.nominee_id = id;
+			vote.event_award_instance_id =data.Nominee.award;
+			//vote.event_award_instance_id = awardId;
+			log.info(data);
 
-			 //vote.event_award_instance_id =3242;
-				vote.event_award_instance_id = awardId;
-
-
-
-			var voteData = dataService.getVotes();//  event id to be taken from session
-       
-        log.info(vote);
-       var exist=1;
-
-		for (var i=0 ;i< voteData.votesCollection.votes.length;i++)
+			if(dataService.addNominee(vote));
 			{
-          		if (vote.voter_id ==voteData.votesCollection.votes[i].voter_id)
-          		{
-
-          			exist =0;
-
-          		}
-			}
-
-
-       if (exist == 1){
-       	
-           if(dataService.addNominee(vote));
-           {
-           log.info(exist);
-		    response.contentType = 'application/json';
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/voteSuccess.jag'} ;
+				response.contentType = 'application/json';
+				response.content = {
+					'redirect':true, 'url':'/TestApp2/award-list.jag'} ;
 			}
 
 		}
-    		else
-           {
-    			
-			response.contentType = 'application/json';
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/voteError.jag'} ;
-			} 
-
-//
-		} catch (e) {
+		catch (e) {
 			log.error(e.toString());
 			response.sendRedirect("/TestApp2/error.jag");
 		}
@@ -112,110 +57,163 @@ function sss()
 	}
 	else{
 		if (verb=='GET'){
-			try{ 
-		var dataService = require('modules/dataservice.jag');
-
-		var data = dataService.getNominees(77);//  event id to be taken from session
-       var nominees = [nominees];
-       var peopleNames = [peopleNames];
-
-
-       if(data.votesCollection == ""){
-
-
-var pp = dataService.getId();
+			try{
+				var dataService = require('modules/dataservice.jag');
+				var nominees = [nominees];
+				var peopleNames = [peopleNames];
+				var voter_id=70;
+				var award_id ;
+				var uriMatcher = new URIMatcher(request.getRequestURI());
 
 
 
-			//log.info(pp);
 
 
 
-var employees = { "details" : pp};
+				if(uriMatcher.match('/TestApp2/votes/{id}'))
+				{
+					award_id = uriMatcher.elements().id;
+				}
+
+				var data = dataService.getNominees(award_id);//  event id to be taken from session
+				var voteData = dataService.getAwardVotes(award_id);
+				var voter= new Object();
+				voter.voterId= voter_id;
+				voter.eventId= award_id;
+
+				//log.info(data.votesCollection.votes.length);
+
+				if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
+
+				{
+
+					nominee= data.votesCollection.votes.nominee_id;
+
+					log.info(nominee);
+					peopleNames[0]= dataService.getNames(nominee);
+
+					 
+					var people = {
+						"names" : peopleNames };
+						log.info(people.names);
+						var pp = dataService.getId();
+						caramel = require('caramel');
+						caramel.render({
+							'header':{
+							'username': username
+						},
+						'title': {
+						text :'Votes'
+						},
+						//
+						'vote': {
+							'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+						});
+						log.info(voter);
+
+
+				}
+
+				if(data.votesCollection == "")
+				{
+					var pp = dataService.getId();
+					caramel = require('caramel');
+					caramel.render({
+						'header':{
+						'username': username
+					},
+					'title': {
+					text :'Votes'
+					},
+						
+					'vote': {
+						'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+					});
 
 
 
-caramel = require('caramel');
-
-		
-//log.info(pp.name);
-		caramel.render({
-			'header':{
-				'username': username
-			},
-			'title': {
-				text :'Votes'
-			},
-			
-			'vote': { 'people':pp.people}
-		})
+				}
 
 
 
-		;
 
 
-       	
-       }
-        log.info(data);
 
-		for (var i=0 ;i< data.votesCollection.votes.length;i++)
+
+
+
+
+				if((data.votesCollection.votes instanceof Array) )
+				{
+
+
+
+
+
+					for (var i=0 ;i< data.votesCollection.votes.length;i++)
+					{
+						nominees[i] = data.votesCollection.votes[i].nominee_id;
+						peopleNames[i] = dataService.getNames(nominees[i]);
+					}
+
+					var people = {
+						"names" : peopleNames };
+						//log.info(people.names);
+						var pp = dataService.getId();
+
+						log.info(data.votesCollection.votes.length);
+
+						var people = {
+							"names" : peopleNames };
+							var results = [];
+							var idsSeen = {
+							}, idSeenValue = {
+							};
+							for (var i = 0, len = people.names.length, name; i < len; ++i)
+							{
+								name= people.names[i].name;
+								if (idsSeen[name] !== idSeenValue)
+								{
+									results.push(people.names[i]);
+									idsSeen[name] = idSeenValue;
+								}
+							}
+
+							//log.info(results);
+							var pp = dataService.getId();
+							//log.info(voteData.votesCollection.votes);
+							people = {
+								"names" : results };
+
+
+
+
+
+
+
+								//log.info(people.names);
+
+								caramel = require('caramel');
+								caramel.render({
+									'header':{
+									'username': username
+								},
+								'title': {
+								text :'Votes'
+								},
+									
+								'vote': {
+									'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+								});
+
+
+										
+				}
+			}
+			catch(e)
 			{
-          	nominees[i] = data.votesCollection.votes[i].nominee_id;
-          	peopleNames[i] = dataService.getNames(nominees[i]);
-
-
-       		}
-        
- log.info(nominees);
-
- var people = { "names" : peopleNames };
-
-var results = [];
-var idsSeen = {}, idSeenValue = {};
-for (var i = 0, len = people.names.length, name; i < len; ++i) {
-    name= people.names[i].name;
-   if (idsSeen[name] !== idSeenValue) {
-       results.push(people.names[i]);
-      idsSeen[name] = idSeenValue;
-  }
-}
-
-log.info(results);
-var pp = dataService.getId();
-
-
-
-			//log.info(pp);
-
-people = { "names" : results };
-
-var employees = { "details" : pp};
-
-log.info(people.names);
-
-caramel = require('caramel');
-
-		
-//log.info(pp.name);
-		caramel.render({
-			'header':{
-				'username': username
-			},
-			'title': {
-				text :'Votes'
-			},
-			
-			'vote': {'nominees':people.names , 'people':pp.people}
-		})
-
-
-
-		;
-	}
-	catch(e){
-		//response.sendRedirect("/TestApp2/error.jag");
-	}
+				//response.sendRedirect("/TestApp2/error.jag");
+			}
 
 		}
 	}

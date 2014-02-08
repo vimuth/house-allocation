@@ -1,0 +1,100 @@
+<div>
+	<h3 style="margin-top: 0px">{{title}}</h3>
+	<div class="list-group">
+		<!-- {{#each event_instance}} <a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+			style="clear: both;" />
+			-->
+<!--
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
+				</div>
+
+				<div style="width: 65%; float: left">
+					<div style="width: 10%; float: left"></div>
+					<div style="width: 90%; float: right">
+						<p align="justify" class="list-group-item-text">
+
+							<br />{{description}}<br /> <br />
+
+						</p>
+					</div>
+				</div>
+
+				<div style="width: 25%; float: right">
+					<div style="width: 100%; float: left">
+						<p class="list-group-item-text">
+							<br /> <b>First Place Winner </b><br /> <br />
+						</p>
+					</div>
+					<div style="width: 90%; float: right">
+						<img src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+							alt="Smiley face" height="80" width="80">
+					</div>
+
+				</div>
+				<br style="clear: both;" />
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{/each}} -->
+		{{#each event_instance}} 
+		<a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
+			style="clear: both;" />
+			-->
+
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
+				</div>
+				<div class="row">
+
+					<div class="col-md-11" style="margin: 10px">
+
+						<p class="list-group-item-text" align="justify">
+
+							{{description}} <br /><br />Start Date :
+						<div class="startDate">{{startDate}}</div>
+						<br />End Date :
+						<div class="endDate">{{endDate}}</div>
+
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{/each}}
+
+	</div>
+</div>
+
+
+<script>
+	$(".date").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+
+	$(".startDate").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+
+	$(".endDate").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+</script>
