@@ -72,9 +72,9 @@
 								</div></td>
 				<td><label for="inputDate">End Date : </label>
 								<div class='inputDate input-group date' id='endDateSet'>
-									<input type='text' class="form-control" id='endDate'
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-									<span class="input-group-addon"><span
+									<input type='datetime' class="form-control" id='endDate'
+										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" onchange="compareDates('startDate','endDate')" />
+									<span class="input-group-addon" onchange="compareDates('startDate','endDate')"><span
 										class="glyphicon glyphicon-calendar"></span> </span>
 								</div></td>
 			</tr>
@@ -202,6 +202,12 @@
         theDiv.style.display = "";
     }
 
+    function compareDates(sDate,eDate){
+    		alert("Invalid end date");
+    	
+    }
+    
+
     function cancel(){
     	document.location.href = '{{url "/addEventInstance2.jag"}}';
     }
@@ -215,6 +221,8 @@
 			}
 		
     }
+
+
 
     function changeDisplay(id){
     	var theDiv = document.getElementById(id);
@@ -257,17 +265,29 @@
     var awardInst = [];
 
     function addAwards(){
+    	var fault=false;
     	{{#each awards}}
     		var awardName = "{{name}}";
     		if (document.getElementById(awardName+"award").checked){
-				var awardInstance = new Object();
-    			awardInstance.awardName = awardName;
-    			awardInstance.awardID = "{{id}}";
-    			awardInstance.awardInstStart = document.getElementById(awardName+"_awd_start").value;
-    			awardInstance.awardInstEnd = document.getElementById(awardName+"_awd_end").value;
-    			awardInst.push(awardInstance);	
+
+	        	if (new Date(document.getElementById(awardName+"_awd_start").value) > new Date(document.getElementById(awardName+"_awd_end").value)){
+	        		alert("Incompatible End Date and Start Date for award "+ awardName);
+	        		fault=true;
+	        		return false;
+	        	}
+	        	else{
+					var awardInstance = new Object();
+	    			awardInstance.awardName = awardName;
+	    			awardInstance.awardID = "{{id}}";
+	    			awardInstance.awardInstStart = document.getElementById(awardName+"_awd_start").value;
+	    			awardInstance.awardInstEnd = document.getElementById(awardName+"_awd_end").value;
+	    			awardInst.push(awardInstance);	
+				}
 			}
     	{{/each}}
+    	if (fault==false){
+    		return true;
+    	}
     }
 
 /*	function getActivitiesAndAwards() {
@@ -277,7 +297,7 @@
     function addEventInstance(){
 
     	this.addActivities();
-    	this.addAwards();
+    	return this.addAwards();
     /*		var eventInstName = document.getElementById('eventInstanceName');
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
@@ -328,28 +348,30 @@
 
  
 		$('.inputDate').datetimepicker();
-	
-
-	
 
         $('#addButton').click(function() {
 
-        	addEventInstance();
-       		var eventInstName = document.getElementById('eventInstanceName').value;
-			var eventName = "{{evName}}";
-			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-			var eventInstStartDate = document.getElementById('startDate').value;
-			var eventInstEndDate = document.getElementById('endDate').value;
-               $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: "{{url "/addEventInstanceSelected.jag"}}",
-              
-              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
-              success: function(msg) {
-              }
-           });
-
+        	if (new Date(document.getElementById('startDate').value) > new Date(document.getElementById('endDate').value)){
+        		alert("Incompatible End Date and Start Date for the event");
+        	}
+        	else{
+	        	if (addEventInstance()){
+		       		var eventInstName = document.getElementById('eventInstanceName').value;
+					var eventName = "{{evName}}";
+					var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+					var eventInstStartDate = document.getElementById('startDate').value;
+					var eventInstEndDate = document.getElementById('endDate').value;
+		               $.ajax({
+		              type: "POST",
+		              contentType: "application/json",
+		              url: "{{url "/addEventInstanceSelected.jag"}}",
+		              
+		              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
+		              success: function(msg) {
+		              }
+		           });
+	           }
+           }
         });
 
         /*$('select[name="events"]').change(function() {
