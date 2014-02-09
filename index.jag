@@ -12,6 +12,7 @@ var log = new Log();
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
+//	log.info(admin+admin+admin);
 	caramel = require('caramel');
 	caramel.render({
 		'header':{
