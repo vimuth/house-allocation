@@ -45,6 +45,16 @@
 	
 	function search(){
 		var key = document.getElementById('searchText').value;
-		document.location.href = '{{url "/search/"}}' + key;
+		if (key == " "){
+			if(confirm("Search for events with a space in the name?")){
+				document.location.href = '{{url "/search/"}}' + key;
+			}
+		}
+		else if(key == ""){
+			if(confirm("Search for all the events?")){
+				document.location.href = '{{url "/search/"}}' + key;
+			}
+		}
+		
 	}
 </script>
