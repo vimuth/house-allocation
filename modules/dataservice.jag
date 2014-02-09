@@ -140,7 +140,7 @@ function addEventInstance(data){
 function getEventsWithKey(key){
 	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
 		"Accept":"application/json"},"application/json");
-	log.info("received events:"+result.data)
+	log.info("received events:"+parse(result.data));
 	return parse(result.data);
 }
 

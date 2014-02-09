@@ -22,13 +22,30 @@ var verb = request.getMethod();
 			if(uriMatcher.match('/TestApp2/search/{name}')) {
 				
 				//log.info(uriMatcher.elements().name);
-				
+				log.info("dgfhjgfj");
 				try{
 					var eventName = uriMatcher.elements().name;
-		 			//log.info(eventList.event_nameCollection);
 		 			var data = {"eventName":eventName};
-					//var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
-					//log.info(actAndAwards);
+					var eventInstances = dataService.getEventsWithKey(data);
+					log.info("received matched events : "+eventInstances);
+					caramel = require('caramel');
+					caramel.render({
+						'header':{
+						'username': username,
+						'role': admin,
+					},
+					'title': {
+					text :'Matched Events'
+					},
+					'eventInstances':eventInstances.event_instanceCollection});
+				}
+				catch(e){
+					log.error(e);
+				}
+			}
+			else if(uriMatcher.match('/TestApp2/search/')) {
+				try{
+		 			var data = {"eventName":" "};
 					var eventInstances = dataService.getEventsWithKey(data);
 					log.info("received matched events : "+eventInstances);
 					caramel = require('caramel');
