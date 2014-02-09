@@ -247,10 +247,17 @@
     var actInst = [];
     
     function addActivities(){
+    	var fault=false;
     	{{#each activities}}
 
     	var activityName = "{{name}}";
+    	var actInstDate = new Date(document.getElementById(activityName+"_act_datetime").value);
     		if ((document.getElementById(activityName+"act")).checked){
+    			if ( (actInstDate < instStart) || (actInstDate > instEnd)){
+	        		alert("Activity "+ activityName + " should be held between the event start and end!!!");
+	        		fault=true;
+	        		return false;
+	        	}
 				var activityInstance = new Object();
     			activityInstance.activityName = activityName;
     			activityInstance.activityID= "{{id}}";
@@ -260,6 +267,9 @@
     			actInst.push(activityInstance);	
 			}
     	{{/each}}
+    	if(fault==false){
+    		return true;
+    	}
     }
 
     var awardInst = [];
@@ -296,8 +306,14 @@
 */
     function addEventInstance(){
 
-    	this.addActivities();
-    	return this.addAwards();
+    	if (this.addActivities() && this.addAwards()){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    	/*this.addActivities();
+    	return this.addAwards();*/
     /*		var eventInstName = document.getElementById('eventInstanceName');
 			var eventName = document.getElementById('events').value;
 			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
@@ -343,15 +359,18 @@
      });
 */
 
-
+	var instStart;
+	var instEnd;
     $(document).ready(function() {
 
  
 		$('.inputDate').datetimepicker();
 
         $('#addButton').click(function() {
+        	instStart = new Date(document.getElementById('startDate').value);
+        	instEnd = new Date(document.getElementById('endDate').value);
 
-        	if (new Date(document.getElementById('startDate').value) > new Date(document.getElementById('endDate').value)){
+        	if (instStart > instEnd){
         		alert("Incompatible End Date and Start Date for the event");
         	}
         	else{
