@@ -63,7 +63,8 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		else{
 			caramel.render({
 				'header':{
-				'username': username
+				'username': username,
+				'role': admin
 			},
 			'title': {
 			text :"Houses"},
