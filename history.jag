@@ -14,35 +14,37 @@ var log = new Log();
 	}
 	var dataService = require('modules/dataservice.jag');
 
-// 	var uriMatcher = new URIMatcher(request.getRequestURI());
+	// 	var uriMatcher = new URIMatcher(request.getRequestURI());
 
 	//if the URL is for the history
-// 	if(uriMatcher.match('/TestApp2/history')){
-		var data = dataService.getPastEvents();
+	// 	if(uriMatcher.match('/TestApp2/history')){
+	var data = dataService.getPastEvents();
 
-		log.info(data);
+	log.info(data);
 
-		caramel = require('caramel');
-		Handlebars = require('handlebars');
+	caramel = require('caramel');
+	Handlebars = require('handlebars');
 
-		Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
-			if (a == b)
-				return options.fn(this);
-			else
-				return options.inverse(this);
+	Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+		if (a == b)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	});
+
+		caramel.render({
+			'header':{
+			'username': username,
+			'role': admin},
+
+			'title': {
+			text :'History'},
+			'main' : {
+			'title':'History Of Events',
+			'role': admin, 'events': data},
+			'sidenav' :{
+				'admin': admin}
 		});
-
-			caramel.render({
-				'header':{
-				'username': username,
-				'role': admin},
-
-				'title': {
-				text :'History'},
-				'main' : {
-				'title':'History Of Events',
-				'role': admin, 'events': data}
-			});
-// 	}
-}());
-%>
+		// 	}
+	}());
+	%>

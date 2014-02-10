@@ -17,11 +17,11 @@ var verb = request.getMethod();
 	if( verb=='POST'){
 		var dataService = require('modules/dataservice.jag');
 		try {
-			
+				
 			var data = request.getContent();
 			log.info(data);
 			var id = dataService.addEvent(data);
-				
+
 			response.contentType = 'application/json';
 
 			response.content = {
@@ -42,7 +42,9 @@ var verb = request.getMethod();
 				'role': admin,
 			},
 			'title': {
-			text :'Add Event'}
+			text :'Add Event'},
+			'sidenav' :{
+				'admin': admin}
 			});
 		}
 	}

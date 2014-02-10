@@ -20,11 +20,11 @@ var verb = request.getMethod();
 
 	if( verb=='POST'){
 		try {
-			
-			var data = request.getContent();
-// 			log.info(data);
-			var id = dataService.addEventInstance(data);
 				
+			var data = request.getContent();
+			// 			log.info(data);
+			var id = dataService.addEventInstance(data);
+
 			response.contentType = 'application/json';
 
 			response.content = {
@@ -49,7 +49,9 @@ var verb = request.getMethod();
 			'title': {
 			text :'Add Event Instance'
 			},
-			'events':eventList.event_nameCollection
+			'events':eventList.event_nameCollection,
+			'sidenav' :{
+				'admin': admin}
 			});
 		}
 	}

@@ -92,7 +92,7 @@ function addEventInstance(data){
 	log.info("Received event instance"+data.eventInstance);
 	var optionalHeaders ={
 		"Accept":"application/json"};
-/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
+		/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
 		//var eventIdObj = parse(result.data);*/
 		var eventID = this.getEventIDFromName(data);
@@ -140,8 +140,8 @@ function addEventInstance(data){
 function getEventsWithKey(key){
 	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
 		"Accept":"application/json"},"application/json");
-	log.info("received events:"+parse(result.data));
-	return parse(result.data);
+		log.info("received events:"+parse(result.data));
+		return parse(result.data);
 }
 
 function getActivitiesAndAwardsForEvent(data){
@@ -764,6 +764,13 @@ function updateAwardInstance(data){
 }
 
 function getIDFromName(name){
+
+	var re = /\\*@wso2.com$/
+
+	if (!re.test(name)) {
+		name = name+"@wso2.com";
+	}
+
 	var people = parse(get(url+ 'people/id',{
 		'name':name},{
 		"Accept":"application/json"},"application/json").data);
@@ -831,14 +838,22 @@ function deleteAwardWinnerGroup(data){
 		}
 }
 
+//This function is used to add an activity ranking if the activity is a group activity
 function addActivityWinnerHouse(data){
 	try{
 		var headers = {
 			"Accept": "application/json"};
 			var result = post(url+'add-activity-winner-house',{
-				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json', function(data,xhr){
-				});
-				return {'success':true};
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json');
+
+
+				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+					return {'success':true};
+				}
+				else{
+					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
+				}
+
 	}
 	catch(e){
 		return {'success':false, 'error' : "Internal Error"};
@@ -846,21 +861,31 @@ function addActivityWinnerHouse(data){
 
 }
 
+//This function is used to add an activity ranking if the activity is a individual activity
 function addActivityWinner(data){
+
+	log.info(data);
 	try{
 		var id = getIDFromName(data.winner);
 
+		log.info(id);
+
 		if(id.Entries==""){
+
 			return {'success':false, 'error' : "name not found in the database"};
 		}
 
-		
+
 		var headers = {
 			"Accept": "application/json"};
 			var result = post(url+'add-activity-winner',{
-				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json', function(data,xhr){
-				});
-				return {'success':true};
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json');
+				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+					return {'success':true};
+				}
+				else{
+					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this person is already added to rankings"};
+				}
 	}
 	catch(e){
 		return {'success':false, 'error' : "Internal Error"};

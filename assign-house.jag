@@ -20,7 +20,10 @@ var log = new Log();
 	},
 	'title': {
 	text :'Assign House'},
-	'body': {}
+	'body': {
+	},
+	'sidenav' :{
+		'admin': admin}
 	});
 }());
 %>

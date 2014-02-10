@@ -17,29 +17,7 @@
 					<h4>Description :</h4>
 					<div id="desc">{{eventInstance.description}}</div>
 
-					<table style="margin: 0px" class="table table-condensed">
-						<!-- <thead>
-					<tr>
-						<th></th><th></th>
-					</tr>
-					</thead> -->
-						<tbody>
-							<tr style="margin: 0px; padding: 0px">
-								<td style="margin: 0px; padding: 0px; border: none">
-									<h4>From</h4>
-								</td>
-								<td style="border: none" id="sDate">{{formatDate
-									eventInstance.startDate}}</td>
-							</tr>
-							<tr style="margin: 0px; padding: 0px">
-								<td style="margin: 0px; padding: 0px; border: none">
-									<h4>To</h4>
-								</td>
-								<td style="border: none" id="eDate">{{formatDate
-									eventInstance.endDate}}</td>
-							</tr>
-						</tbody>
-					</table>
+					<h4 id="duration">From : {{formatDate eventInstance.startDate "YYYY-MM-DD"}} To {{formatDate eventInstance.endDate "YYYY-MM-DD"}}</h4>
 				</div>
 				<div id="infoInput" style="display: none">
 					<form id="myform" name="newEvent">
@@ -50,17 +28,26 @@
 								rows="3">{{eventInstance.description}}</textarea>
 						</div>
 
-						<div id="nameInput" class="form-group">
-							<label for="sdatepicker">Start Date</label> <input type="text"
-								class="dateInput form-control" id="sdatepicker"
-								value={{eventInstance.startDate}} />
-						</div>
+						<div class="form-group">
+								<label for="inputDate">Start Date : </label>
+								<div class='inputDate input-group date' id='inputDate'>
+									<input type='text' class="form-control" id='sdatepicker'
+										data-format="YYYY-MM-DD" value="{{formatDate daeventInstance.startDatetetime "YYYY-MM-DD"}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div>
+							</div>
+							
+						<div class="form-group">
+								<label for="inputDate">Start Date : </label>
+								<div class='inputDate input-group date' id='inputDate'>
+									<input type='text' class="form-control" id='edatepicker'
+										data-format="YYYY-MM-DD" value="{{formatDate eventInstance.endDate "YYYY-MM-DD"}}" />
+									<span class="input-group-addon"><span
+										class="glyphicon glyphicon-calendar"></span> </span>
+								</div>
+							</div>
 
-						<div id="nameInput" class="form-group">
-							<label for="edatepicker">Start Date</label> <input type="text"
-								class="dateInput form-control" id="edatepicker"
-								value={{eventInstance.endDate}} />
-						</div>
 					</form>
 
 				</div>
@@ -165,7 +152,7 @@
 						<div style="display:" id="actInfoDisplay">
 							<p id='description'>{{description}}</p>
 							<p id='venue'>At : {{venue}}</p>
-							<p id='datetime'>On :{{formatDate datetime}}</p>
+							<p id='datetime'>On : {{formatDate datetime "YYYY-MM-DD"}} at {{formatDate datetime "hh:mm a"}}</p>
 						</div>
 						<form style="display: none" id="actInfoForm" name="actInfoForm">
 							<div class="form-group">
@@ -180,7 +167,7 @@
 								<label for="inputDate">Date/Time : </label>
 								<div class='inputDate input-group date' id='inputDate'>
 									<input type='text' class="form-control" id='actDateInput'
-										data-format="YYYY-MM-DD HH:mm" value="{{formatDate datetime}}" />
+										data-format="YYYY-MM-DD HH:mm" value="{{formatDate datetime "YYYY-MM-DD HH:mm"}}" />
 									<span class="input-group-addon"><span
 										class="glyphicon glyphicon-calendar"></span> </span>
 								</div>
@@ -253,8 +240,8 @@
 							{{/if_eq}}
 							
 							<input id="isIndividual" value="{{#if_eq
-									../type "I"}}true{{/if_eq}}" hidden/>
-							<input id="id" value="{{../id}}" hidden />
+									type "I"}}true{{/if_eq}}" hidden/>
+							<input id="id" value="{{id}}" hidden />
 							<button type="submit" class="btn btn-success btn-xs">submit</button>
 							<button type="button" class="btn btn-warning btn-xs" onclick="$(this).parent().css('display','none');$(this).parents().eq(1).find('#winnerButtons').css('display',''); return false;">Cancel</button>
 						</form>
@@ -344,9 +331,8 @@
 
 						<div style="display:" id="awdInfoDisplay">
 							{{#if_eq isVote "true"}}{{#unless winner}}
-							<p id='voteStart'>Voting Starts On :{{formatDate
-								vote_startDate}}</p>
-							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate}}</p>
+							<p id='voteStart'>Voting Starts On : {{formatDate vote_startDate "YYYY-MM-DD \at hh:mm a"}}</p>
+							<p id='voteEnd'>Voting Ends On : {{formatDate vote_endDate "YYYY-MM-DD \at hh:mm a"}}</p>
 							{{/unless}}{{/if_eq}}
 						</div>
 
@@ -408,7 +394,7 @@
 						</form>
 						{{/if}}
 
-						{{#if_eq ../type "I"}}
+						{{#if_eq type "I"}}
 						<form style="display: none"
 							onsubmit="addAwardWinnerIndividual($(this)); return false;"
 							id="winnerForm" name="actInfoForm" class="pull-right">
@@ -418,9 +404,10 @@
 									class="form-control" id="nameInput" required>
 							</div>
 							<button type="submit" class="btn btn-success btn-xs">Submit</button>
+							<button type="button" onclick="$(this).parent().css('display','none'); $(this).parents().eq(1).find('#winnerButtons').css('display','')" class="btn btn-warning btn-xs">cancel</button>
 							<input id="id" value="{{../id}}" hidden />
 						</form>
-						{{/if_eq}} {{#if_eq ../type "G"}}
+						{{/if_eq}} {{#if_eq type "G"}}
 						<form style="display: none"
 							onsubmit="addAwardWinnerGroup($(this)); return false;"
 							id="winnerForm" name="awdWinnerForm" class="pull-right">
@@ -438,16 +425,17 @@
 							</div>
 							<input id="id" value="{{../id}}" hidden />
 							<button type="submit" class="btn btn-success btn-xs">Submit</button>
-
+							<button type="button" onclick="$(this).parent().css('display','none'); $(this).parents().eq(1).find('#winnerButtons').css('display','')" class="btn btn-warning btn-xs">cancel</button>
 						</form>
 						{{/if_eq}}
 						
+						<!-- Button to display the forms for adding and deleting Winners -->
 						<table id="winnerButtons" class="pull-right">
 								<tr>
 									<td>
 										<button id="setWinnerButton" type="button"
 										class="btn btn-warning btn-xs pull-right"
-										onclick='$(this).parents().eq(4).find("#winnerForm").css("display",""); $(this).parents().eq(3).css("display","none"); $(this).css("display","none")'>Add
+										onclick=' $(this).parents().eq(3).css("display","none");$(this).parents().eq(4).find("#winnerForm").css("display","");'>Add
 										Winner</button>
 									</td>
 									{{#if winner}}
@@ -609,8 +597,7 @@
 
 					$('#nameTag').html($('#eventName').val());
 					$('#desc').html($('#eventDescriptionInput').val());
-					$('#sDate').html($('#sdatepicker').val());
-					$('#eDate').html($('#edatepicker').val());
+					$('#duration').html("From : "+ $('#sdatepicker').val() + " To " + $('#edatepicker').val());
 
 				} else {
 					alert("Error");
@@ -696,7 +683,7 @@
 			data : JSON.stringify({
 				'id' : id,
 				'description' : description,
-				'datetime' : date.format('YYYY-MM-DD HH:mm'),
+				'datetime' : date.format("YYYY-MM-DD HH:mm"),
 				'venue' : venue,
 			}),
 			success : function(msg) {
@@ -704,7 +691,7 @@
 
 					button.parent().parent().parent().find('#description').html(description);
 					button.parent().parent().parent().find('#venue').html("At : "+venue);
-					button.parent().parent().parent().find('#datetime').html("On : "+date.toString());
+					button.parent().parent().parent().find('#datetime').html("On : "+date.format("YYYY-MM-DD")+" at "+date.format("hh:mm a"));
 					
 					cancelEditActivity(button,id);
 
@@ -770,8 +757,8 @@
 				url : '{{url "/edit-event-instance/"}}' + '?operation=updateAward',
 				data : JSON.stringify({
 					'id' : id,
-					'vote_start_date' : startDate.format('YYYY-MM-DD HH:mm'),
-					'vote_end_date' : endDate.format('YYYY-MM-DD HH:mm')
+					'vote_start_date' : startDate.format("YYYY-MM-DD HH:mm"),
+					'vote_end_date' : endDate.format("YYYY-MM-DD HH:mm")
 				}),
 				success : function(msg) {
 					if (msg.success) {

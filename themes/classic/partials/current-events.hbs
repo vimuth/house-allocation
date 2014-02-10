@@ -1,33 +1,31 @@
 <div>
 	<h3 style="margin-top: 0px">{{title}} :</h3>
 	<div class="list-group">
-		{{#each events}} <a style="margin: 0px; padding: 0px"
+		{{#each events}} <a style="margin: 0px; padding: 0px; border-width:0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
-			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
 
-			style="clear: both;" />
-			-->
-
-			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+			<div  class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{name}}</h3>
 				</div>
-				<div class="row">
+				<div style="margin:10px" class="row">
+					<div class="col-md-12">{{description}}</div>
+				</div>
+				<div style="margin: 0px; padding: 0px" class="row">
 
-					<div class="col-md-3" style="margin: 10px">
+					<div style="margin: 10px;" class="col-md-3">
 
-						<p class="list-group-item-text">
-						<p align="justify">{{description}}</p>
-						<br />Start Date :
+						
+						<b>Start Date :</b>
 						<div class="startDate">{{startDate}}</div>
-						<br />End Date :
+						<b>End Date :</b>
 						<div class="endDate">{{endDate}}</div>
 
-						</p>
+						
 					</div>
 					{{#if activities}}
 
-					<div class="col-md-8" style="margin: 10px">
+					<div class="col-md-8">
 
 						<p class="list-group-item-text">
 
@@ -63,7 +61,7 @@
 		<div>
 			<br />
 		</div>
-		{{/each}} 
+		{{/each}}
 
 	</div>
 </div>
