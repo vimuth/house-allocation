@@ -238,14 +238,6 @@ function getEvents(){
 		log.info(data.eventCollection);
 }
 
-function getAwards(){
-	var data = get(url+'awards_instance',null,{
-		"Accept":"application/json"},"application/json");
-		return parse(data.data);
-}
-
-
-
 function getEventNames(){
 	var data = get(newURl+'event_names',null,{
 		"Accept":"application/json"},"application/json");
