@@ -45,7 +45,7 @@ var log = new Log();
 		'title': {
 		text :'All Upcoming Events and activities'},
 		'main' : {
-		'title':'All upcomming Events and activities',
+		'title':'All upcoming Events and activities',
 		'role': admin, 'events': data, 'all':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2},
 		'sidenav' :{
 			'admin': admin}
