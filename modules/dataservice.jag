@@ -416,7 +416,7 @@ function getFutureEvents(){
 
 		return events;
 }
-function getCurrentEvents(){
+function getCurrentFutureEvents(){
 	var data = parse(get(url+'current-future-events',null,{
 		"Accept":"application/json"},"application/json").data);
 
