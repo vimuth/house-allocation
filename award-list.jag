@@ -17,9 +17,9 @@ var log = new Log();
 
 		caramel = require('caramel');
 
-		log.info(data.Entries);
+	//	log.info(data.Entries);
 		 
-		log.info(data.Entries+"iiiiiiiiiiiiii");
+		//log.info(data.Entries+"iiiiiiiiiiiiii");
 		caramel.render({
 			'header':{
 			'username': username,

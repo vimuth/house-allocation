@@ -30,6 +30,10 @@ var log = new Log();
 		else
 			return options.inverse(this);
 	});
+	var btn1="Show all Events";
+	var link1="current-future-events.jag";
+	btn2="Show Future Events";
+	var link2="future-events.jag";
 
 		caramel.render({
 			'header':{
@@ -40,7 +44,7 @@ var log = new Log();
 		text :'Current Events'},
 		'main' : {
 		'title':'Current Events and activities',
-		'role': admin, 'events': data, 'current':true},
+		'role': admin, 'events': data, 'current':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2},
 		'sidenav' :{
 			'admin': admin}
 		});
