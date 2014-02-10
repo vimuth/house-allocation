@@ -786,14 +786,22 @@ function deleteAwardWinnerGroup(data){
 		}
 }
 
+//This function is used to add an activity ranking if the activity is a group activity
 function addActivityWinnerHouse(data){
 	try{
 		var headers = {
 			"Accept": "application/json"};
 			var result = post(url+'add-activity-winner-house',{
-				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json', function(data,xhr){
-				});
-				return {'success':true};
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json');
+
+
+				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+					return {'success':true};
+				}
+				else{
+					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
+				}
+
 	}
 	catch(e){
 		return {'success':false, 'error' : "Internal Error"};
@@ -801,11 +809,17 @@ function addActivityWinnerHouse(data){
 
 }
 
+//This function is used to add an activity ranking if the activity is a individual activity
 function addActivityWinner(data){
+
+	log.info(data);
 	try{
 		var id = getIDFromName(data.winner);
 
+		log.info(id);
+
 		if(id.Entries==""){
+
 			return {'success':false, 'error' : "name not found in the database"};
 		}
 
@@ -813,9 +827,13 @@ function addActivityWinner(data){
 		var headers = {
 			"Accept": "application/json"};
 			var result = post(url+'add-activity-winner',{
-				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json', function(data,xhr){
-				});
-				return {'success':true};
+				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'people_id':id.Entries.Entry.id},headers,'json');
+				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+					return {'success':true};
+				}
+				else{
+					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this person is already added to rankings"};
+				}
 	}
 	catch(e){
 		return {'success':false, 'error' : "Internal Error"};

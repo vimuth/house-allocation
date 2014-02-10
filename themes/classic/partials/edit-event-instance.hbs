@@ -240,8 +240,8 @@
 							{{/if_eq}}
 							
 							<input id="isIndividual" value="{{#if_eq
-									../type "I"}}true{{/if_eq}}" hidden/>
-							<input id="id" value="{{../id}}" hidden />
+									type "I"}}true{{/if_eq}}" hidden/>
+							<input id="id" value="{{id}}" hidden />
 							<button type="submit" class="btn btn-success btn-xs">submit</button>
 							<button type="button" class="btn btn-warning btn-xs" onclick="$(this).parent().css('display','none');$(this).parents().eq(1).find('#winnerButtons').css('display',''); return false;">Cancel</button>
 						</form>
