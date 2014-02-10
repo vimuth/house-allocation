@@ -22,9 +22,9 @@
 			<!--
 			<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">  -->
 			<tr>
-				<td rowspan="2"><b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">Description:{{awardDescription}}</p>
+				<td rowspan="2"><b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
 				</td>
-				<td rowspan="2"><b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">Description:{{eventDescription}}</p>
+				<td rowspan="2"><b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
 				</td>
 				<td rowspan="2"><button
 						onclick="vote('{{event_award_instance_id}}');return false;"
