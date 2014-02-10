@@ -1,5 +1,4 @@
 <%
-
 var caramel;
 var Handlebars;
 var log = new Log();
@@ -44,7 +43,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 		var username=session.get('username');
 
-		if(username!=admin){
+		if(username!='admin'){
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 			return;
 		}
@@ -63,6 +62,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				log.info(data);
 
 				data.isAdmin = isAdmin;
+				data.admin=admin;
 
 				caramel = require('caramel');
 
