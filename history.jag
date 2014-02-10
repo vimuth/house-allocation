@@ -14,10 +14,10 @@ var log = new Log();
 	}
 	var dataService = require('modules/dataservice.jag');
 
-	var uriMatcher = new URIMatcher(request.getRequestURI());
+// 	var uriMatcher = new URIMatcher(request.getRequestURI());
 
 	//if the URL is for the history
-	if(uriMatcher.match('/TestApp2/history')){
+// 	if(uriMatcher.match('/TestApp2/history')){
 		var data = dataService.getPastEvents();
 
 		log.info(data);
@@ -41,37 +41,8 @@ var log = new Log();
 				text :'History'},
 				'main' : {
 				'title':'History Of Events',
-				'role': admin, 'events': data, 'past':true}
+				'role': admin, 'events': data}
 			});
-	}
-
-	//if the URL is for current events
-	if(uriMatcher.match('/TestApp2/current-events')){
-		var data = dataService.getCurrentEvents();
-
-		log.info(data);
-
-		caramel = require('caramel');
-		Handlebars = require('handlebars');
-
-		Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
-			if (a == b)
-				return options.fn(this);
-			else
-				return options.inverse(this);
-		});
-
-			caramel.render({
-				'header':{
-				'username': username,
-				'role': admin
-			},
-			'title': {
-			text :'Current Events'},
-			'main' : {
-			'title':'Current Events and activities',
-			'role': admin, 'events': data, 'current':true}
-			});
-	}
+// 	}
 }());
 %>
