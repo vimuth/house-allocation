@@ -19,6 +19,7 @@ var verb = request.getMethod();
 	if(verb=='POST'){
 		var username=request.getParameter("username");
 		var password=request.getParameter("password");
+		var admin= session.get('role')=='admin';
 
 // 		var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
 // 		var ldapAuthentication = new ldapAuth();

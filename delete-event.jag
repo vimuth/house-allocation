@@ -12,6 +12,7 @@ log.info("got here : "+verb);
 (function () {
 
 	var username=session.get('username');
+	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
@@ -41,7 +42,8 @@ log.info("got here : "+verb);
 
 					caramel.render({
 						'header':{
-						'username': username
+						'username': username,
+						'role': admin,
 					},
 					'title': {
 					text :"Confirm Delete"},

@@ -1,5 +1,5 @@
 var render = function(theme, data, meta, require) {
-	theme('simple', {
+	theme('indexs_simple', {
 		header : [ {
 			partial : 'header',
 			context : data.header
@@ -9,7 +9,7 @@ var render = function(theme, data, meta, require) {
 			context : data.title
 		}],
 		main : [ {
-			partial : 'body',
+			partial : 'index',
 			context : data.body
 		} ]
 	});

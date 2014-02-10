@@ -4,6 +4,7 @@ var log = new Log();
 
 (function () {
 	var body = "Welcome";
+	var admin= session.get('role')=='admin';
 
 	var username=session.get('username');
 
@@ -11,11 +12,12 @@ var log = new Log();
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
-
+//	log.info(admin+admin+admin);
 	caramel = require('caramel');
 	caramel.render({
 		'header':{
-		'username': username
+		'username': username,
+		'role': admin
 	},
 	'title': {
 	text :'WSO2 House Competition'},

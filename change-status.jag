@@ -7,6 +7,7 @@ var verb = request.getMethod();
 (function () {
 
 	var username=session.get('username');
+	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
@@ -17,7 +18,8 @@ var verb = request.getMethod();
 		caramel = require('caramel');
 		caramel.render({
 			'header':{
-			'username': username
+			'username': username,
+			'role': admin,
 		},
 		'title': {
 		text :'Change status'},

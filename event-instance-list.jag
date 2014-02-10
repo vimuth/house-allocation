@@ -15,7 +15,7 @@ var log = new Log();
 	var dataService = require('modules/dataservice.jag');
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
-	
+
 	//if the URL is for the history
 	if(uriMatcher.match('/TestApp2/history')){
 		var data = dataService.getPastEvents();
@@ -34,14 +34,17 @@ var log = new Log();
 
 			caramel.render({
 				'header':{
-				'username': username},
+				'username': username,
+				'role': admin},
+
 				'title': {
 				text :'History'},
-				'main' : {'title':'History Of Events',
+				'main' : {
+				'title':'History Of Events',
 				'role': admin, 'events': data, 'past':true}
 			});
 	}
-	
+
 	//if the URL is for current events
 	if(uriMatcher.match('/TestApp2/current-events')){
 		var data = dataService.getCurrentEvents();
@@ -60,11 +63,14 @@ var log = new Log();
 
 			caramel.render({
 				'header':{
-				'username': username},
-				'title': {
-				text :'Current Events'},
-				'main' : {'title':'Current Events and activities',
-				'role': admin, 'events': data, 'current':true}
+				'username': username,
+				'role': admin
+			},
+			'title': {
+			text :'Current Events'},
+			'main' : {
+			'title':'Current Events and activities',
+			'role': admin, 'events': data, 'current':true}
 			});
 	}
 }());

@@ -4,6 +4,7 @@ var log = new Log();
 
 (function () {
 	var username=session.get('username');
+	var admin= session.get('role')=='admin';
 
 	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag")
@@ -21,7 +22,8 @@ var log = new Log();
 			log.info(data.Entries+"iiiiiiiiiiiiii");
 		caramel.render({
 			'header':{
-			'username': username
+			'username': username,
+			'role': admin,
 		},
 		'title': {
 		text :'Awards'},

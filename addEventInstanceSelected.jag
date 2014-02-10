@@ -8,6 +8,7 @@ var verb = request.getMethod();
 (function () {
 
 	var username=session.get('username');
+	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
 		response.sendRedirect("/TestApp2/login.jag");
@@ -23,6 +24,8 @@ var verb = request.getMethod();
 			var data = request.getContent();
  			log.info(data);
 			var id = dataService.addEventInstance(data);
+
+			log.info('Received event instance id:'+id);	
 			response.contentType = 'application/json';
 
 			response.content = {
@@ -52,7 +55,8 @@ var verb = request.getMethod();
 					caramel = require('caramel');
 					caramel.render({
 						'header':{
-						'username': username
+						'username': username,
+						'role': admin,
 					},
 					'title': {
 					text :'Add Event Instance'

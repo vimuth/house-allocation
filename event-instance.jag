@@ -42,6 +42,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 	(function () {
 
 		var username=session.get('username');
+		var admin= session.get('role')=='admin';
 
 		if(username==null){
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
@@ -66,7 +67,8 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 				caramel.render({
 					'header':{
-					'username': username
+					'username': username,
+					'role': admin,
 				},
 				'title': {
 				text :data.eventInstance.name},

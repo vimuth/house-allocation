@@ -32,7 +32,8 @@ var log = new Log();
 
 		caramel.render({
 			'header':{
-			'username': username},
+			'username': username,
+		'role': admin,},
 			'title': {
 			text :'Events'},
 			'main' : {
