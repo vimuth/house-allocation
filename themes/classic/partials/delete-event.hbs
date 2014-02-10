@@ -25,32 +25,30 @@
 
 			<div class="panel">Activities :</div>
 
-			<div class="list-group">
-				{{#each event.activities.activity}} <a href="#" class="list-group-item">
+			<ul class="list-group">
+				{{#each event.activities.activity}} <li class="list-group-item">
 					{{name}} : {{description}} <span
 					class="label label-default pull-right">{{#if_eq type
 						"G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span>
-				</a> {{/each}}
-			</div>
+				</li> {{/each}}
+			</ul>
 
 			<div class="panel">Awards :</div>
 
-			<div class="list-group">
-				{{#each event.awards}} <a href="#" class="list-group-item"> {{name}} :
+			<ul class="list-group">
+				{{#each event.awards}} <li href="#" class="list-group-item"> {{name}} :
 					{{description}}<span class="label label-default pull-right">{{#if_eq
 						type "G"}}Group{{/if_eq}}{{#if_eq type "I"}}Individual{{/if_eq}}</span> <span
 					class="label label-primary pull-right" id="voteLabel">{{#if_eq
 						isVote "true"}}Vote{{/if_eq}}</span>
-				</a> {{/each}}
-			</div>
+				</li> {{/each}}
+			</ul>
 		</div>
 	</div>
 	
 	<div style="margin-bottom: 50px" class="btn-group pull-right">
-		<button type="button" onclick="document.location.href='{{url "
-			/events/"}}'" class="btn btn-info">Cancel</button>
-		<button type="button" onclick="document.location.href='{{url "
-			/edit-event/"}}{{id}}'" class="btn btn-warning">Edit Event</button>
+		<button type="button" onclick='window.location.href="/TestApp2/events"' class="btn btn-info">Cancel</button>
+		<button type="button" onclick='window.location.href="{{url "/edit-event/"}}{{id}}"' class="btn btn-warning">Edit Event</button>
 		<button type="button" onclick="deleteEvent({{id}});"
 			class="btn btn-danger">Delete Event</button>
 	</div>
