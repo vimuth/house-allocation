@@ -92,7 +92,7 @@ function addEventInstance(data){
 	log.info("Received event instance"+data.eventInstance);
 	var optionalHeaders ={
 		"Accept":"application/json"};
-/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
+		/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
 
 		//var eventIdObj = parse(result.data);*/
 		var eventID = this.getEventIDFromName(data);
@@ -140,8 +140,8 @@ function addEventInstance(data){
 function getEventsWithKey(key){
 	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
 		"Accept":"application/json"},"application/json");
-	log.info("received events:"+parse(result.data));
-	return parse(result.data);
+		log.info("received events:"+parse(result.data));
+		return parse(result.data);
 }
 
 function getActivitiesAndAwardsForEvent(data){
@@ -712,6 +712,13 @@ function updateAwardInstance(data){
 }
 
 function getIDFromName(name){
+
+	var re = /\\*@wso2.com$/
+
+	if (!re.test(name)) {
+		name = name+"@wso2.com";
+	}
+
 	var people = parse(get(url+ 'people/id',{
 		'name':name},{
 		"Accept":"application/json"},"application/json").data);
@@ -802,7 +809,7 @@ function addActivityWinner(data){
 			return {'success':false, 'error' : "name not found in the database"};
 		}
 
-		
+
 		var headers = {
 			"Accept": "application/json"};
 			var result = post(url+'add-activity-winner',{

@@ -15,9 +15,10 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 	else
 		return options.inverse(this);
 });
-Handlebars.Handlebars.registerHelper("formatDate", function(datetime) {
+Handlebars.Handlebars.registerHelper("formatDate", function(datetime,format_str, options) {
+// 	format_str = new String(format_str);
 	if (moment) {
-		return moment(datetime).format('YYYY-MM-DD HH:mm');
+		return moment(datetime).format(format_str);
 	}
 	else {
 		return datetime;
@@ -44,7 +45,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 		var username=session.get('username');
 
-		if(username!=admin){
+		if(username!='admin'){
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 			return;
 		}
