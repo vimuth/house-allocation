@@ -24,19 +24,21 @@ var verb = request.getMethod();
 		'title': {
 		text :'Change status'},
 		'body': {
-		}
+		},
+		'sidenav' :{
+			'admin': admin}
 		});
-		
+
 	}
 	if(verb=="POST"){
 			
 		var name = request.getParameter('name');
-		
+
 		response.contentType = 'application/json';
-		
+
 		log.info(dataService.searchPeople(name));
 		response.content = dataService.searchPeople(name);
-		
+
 		return;
 
 	}

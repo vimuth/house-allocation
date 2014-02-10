@@ -21,22 +21,22 @@ var verb = request.getMethod();
 		try {
 
 			var data = request.getContent();
-			
+				
 			log.info(data);
-			
+				
 			dataService.updateEvent(data);
-			
-			
+				
+				
 			response.contentType = 'application/json';
 			response.content = {
 				'redirect':true, 'url':'/TestApp2/events/'+data.event.id} ;
-				
+
 
 		} catch (e) {
 			log.error(e.toString());
 			response.sendRedirect("/TestApp2/error.jag");
 		}
-		
+
 	}
 	else{
 		if (verb=='GET'){
@@ -48,7 +48,7 @@ var verb = request.getMethod();
 
 					var id = uriMatcher.elements().id;
 					var data = dataService.getEvent(id);
-					
+						
 					caramel = require('caramel');
 					Handlebars = require('handlebars');
 
@@ -66,7 +66,9 @@ var verb = request.getMethod();
 						},
 						'title': {
 						text :"Edit : "+ data.event.name},
-						'body': data
+						'body': data,
+						'sidenav' :{
+							'admin': admin}
 						});
 				}
 				catch(e){

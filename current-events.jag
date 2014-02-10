@@ -16,32 +16,34 @@ var log = new Log();
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	//if the URL is for current events
-// 	if(uriMatcher.match('/TestApp2/current-events')){
-		var data = dataService.getCurrentEvents();
+	// 	if(uriMatcher.match('/TestApp2/current-events')){
+	var data = dataService.getCurrentEvents();
 
-		log.info(data);
+	log.info(data);
 
-		caramel = require('caramel');
-		Handlebars = require('handlebars');
+	caramel = require('caramel');
+	Handlebars = require('handlebars');
 
-		Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
-			if (a == b)
-				return options.fn(this);
-			else
-				return options.inverse(this);
+	Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+		if (a == b)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	});
+
+		caramel.render({
+			'header':{
+			'username': username,
+			'role': admin
+		},
+		'title': {
+		text :'Current Events'},
+		'main' : {
+		'title':'Current Events and activities',
+		'role': admin, 'events': data, 'current':true},
+		'sidenav' :{
+			'admin': admin}
 		});
-
-			caramel.render({
-				'header':{
-				'username': username,
-				'role': admin
-			},
-			'title': {
-			text :'Current Events'},
-			'main' : {
-			'title':'Current Events and activities',
-			'role': admin, 'events': data, 'current':true}
-			});
-// 	}
-}());
-%>
+		// 	}
+	}());
+	%>

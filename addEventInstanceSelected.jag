@@ -20,12 +20,12 @@ var verb = request.getMethod();
 
 	if( verb=='POST'){
 		try {
-			
+				
 			var data = request.getContent();
- 			log.info(data);
+			log.info(data);
 			var id = dataService.addEventInstance(data);
 
-			log.info('Received event instance id:'+id);	
+			log.info('Received event instance id:'+id);
 			response.contentType = 'application/json';
 
 			response.content = {
@@ -43,25 +43,30 @@ var verb = request.getMethod();
 			var uriMatcher = new URIMatcher(request.getRequestURI());
 			//log.info(request.getRequestURI);
 			if(uriMatcher.match('/TestApp2/addEventInstanceSelected/{name}')) {
-				
+
 				log.info(uriMatcher.elements().name);
-				
+
 				try{
 					var eventName = uriMatcher.elements().name;
-		 			log.info(eventList.event_nameCollection);
-		 			var data = {"eventName":eventName};
-					var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
-					//log.info(actAndAwards);
-					caramel = require('caramel');
-					caramel.render({
-						'header':{
-						'username': username,
-						'role': admin,
-					},
-					'title': {
-					text :'Add Event Instance'
-					},
-					'eventDetails':{'evName':eventName,'events':eventList.event_nameCollection,'activities':actAndAwards.activities,'awards':actAndAwards.awards}});
+					log.info(eventList.event_nameCollection);
+					var data = {
+						"eventName":eventName};
+						var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
+						//log.info(actAndAwards);
+						caramel = require('caramel');
+						caramel.render({
+							'header':{
+							'username': username,
+							'role': admin,
+						},
+						'title': {
+						text :'Add Event Instance'
+						},
+						'sidenav' :{
+							'admin': admin},
+							'eventDetails':{
+								'evName':eventName,'events':eventList.event_nameCollection,'activities':actAndAwards.activities,'awards':actAndAwards.awards}
+						});
 				}
 				catch(e){
 					log.error(e);

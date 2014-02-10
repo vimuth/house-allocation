@@ -1,10 +1,10 @@
+{{#unless admin}}
 <div class="col-md-3" id="sidebar">
 	<div class="bs-sidebar hidden-print" role="complementary">
 		<ul class="nav bs-sidenav">
 			<div>
 				<div class="list-group">
 					<a class="list-group-item" href="{{url "/events/"}}">View Events</a>
-					<a class="list-group-item" href="{{url "/addEventInstance2.jag"}}">Add Event Instance</a>
 					<a class="list-group-item" href="{{url "/award-list.jag"}}">View Current Elections</a>
 					<a class="list-group-item" href="{{url "/house"}}">View House Members</a>
 					<a class="list-group-item" href="{{url "/assign-house.jag"}}">Assign Houses</a>
@@ -16,3 +16,24 @@
 		</ul>
 	</div>
 </div>
+
+{{/unless}}
+
+{{#if admin}}
+<div class="col-md-3" id="sidebar">
+	<div class="bs-sidebar hidden-print" role="complementary">
+		<ul class="nav bs-sidenav">
+				<div class="list-group">
+					<a class="list-group-item" href="{{url "/events/"}}">View Events</a>
+					<a class="list-group-item" href="{{url "/addEventInstance2.jag"}}">Add Event Instance</a>
+					<a class="list-group-item" href="{{url "/award-list.jag"}}">View Current Elections</a>
+					<a class="list-group-item" href="{{url "/house"}}">View House Members</a>
+					<a class="list-group-item" href="{{url "/assign-house.jag"}}">Assign Houses</a>
+					<a class="list-group-item" href="{{url "/change-status"}}">Change Member Status</a>
+					<a class="list-group-item" href="{{url "/history"}}">History</a>
+					<a class="list-group-item" href="{{url "/current-events"}}">Current Events</a>
+				</div>
+		</ul>
+	</div>
+</div>
+{{/if}}

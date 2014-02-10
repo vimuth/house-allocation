@@ -16,7 +16,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		return options.inverse(this);
 });
 Handlebars.Handlebars.registerHelper("formatDate", function(datetime,format_str, options) {
-// 	format_str = new String(format_str);
+	// 	format_str = new String(format_str);
 	if (moment) {
 		return moment(datetime).format(format_str);
 	}
@@ -49,7 +49,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 			return;
 		}
-		
+
 
 		var isAdmin = session.get('role')=='admin';
 		var admin= session.get('role')=='admin';
@@ -75,7 +75,9 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				},
 				'title': {
 				text :data.eventInstance.name},
-				'body': data
+				'body': data,
+				'sidenav' :{
+					'admin': admin}
 				});
 				// 			}
 				// 			catch(e){
@@ -233,8 +235,8 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				}
 
 			}
+
 				
-			
 			if(operation=="removeActivityWinners"){
 				response.contentType = 'application/json';
 

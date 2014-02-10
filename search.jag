@@ -17,15 +17,16 @@ var verb = request.getMethod();
 
 	if (verb=='GET'){
 
-			var uriMatcher = new URIMatcher(request.getRequestURI());
-			log.info(request.getRequestURI);
-			if(uriMatcher.match('/TestApp2/search/{name}')) {
-				
-				//log.info(uriMatcher.elements().name);
-				log.info("dgfhjgfj");
-				try{
-					var eventName = uriMatcher.elements().name;
-		 			var data = {"eventName":eventName};
+		var uriMatcher = new URIMatcher(request.getRequestURI());
+		log.info(request.getRequestURI);
+		if(uriMatcher.match('/TestApp2/search/{name}')) {
+
+			//log.info(uriMatcher.elements().name);
+			log.info("dgfhjgfj");
+			try{
+				var eventName = uriMatcher.elements().name;
+				var data = {
+					"eventName":eventName};
 					var eventInstances = dataService.getEventsWithKey(data);
 					log.info("received matched events : "+eventInstances);
 					caramel = require('caramel');
@@ -37,15 +38,19 @@ var verb = request.getMethod();
 					'title': {
 					text :'Matched Events'
 					},
-					'eventInstances':eventInstances.event_instanceCollection});
-				}
-				catch(e){
-					log.error(e);
-				}
+					'eventInstances':eventInstances.event_instanceCollection,
+					'sidenav' :{
+					'admin': admin}
+					});
 			}
-			else if(uriMatcher.match('/TestApp2/search/')) {
-				try{
-		 			var data = {"eventName":" "};
+			catch(e){
+				log.error(e);
+			}
+		}
+		else if(uriMatcher.match('/TestApp2/search/')) {
+			try{
+				var data = {
+					"eventName":" "};
 					var eventInstances = dataService.getEventsWithKey(data);
 					log.info("received matched events : "+eventInstances);
 					caramel = require('caramel');
@@ -57,14 +62,17 @@ var verb = request.getMethod();
 					'title': {
 					text :'Matched Events'
 					},
-					'eventInstances':eventInstances.event_instanceCollection});
-				}
-				catch(e){
-					log.error(e);
-				}
+					'eventInstances':eventInstances.event_instanceCollection,
+					'sidenav' :{
+					'admin': admin}
+					});
 			}
+			catch(e){
+				log.error(e);
+			}
+		}
 	}
-	
+
 }());
 %>
 

@@ -17,9 +17,9 @@ var log = new Log();
 
 		caramel = require('caramel');
 
-			log.info(data.Entries);
-			    
-			log.info(data.Entries+"iiiiiiiiiiiiii");
+		log.info(data.Entries);
+		 
+		log.info(data.Entries+"iiiiiiiiiiiiii");
 		caramel.render({
 			'header':{
 			'username': username,
@@ -27,7 +27,9 @@ var log = new Log();
 		},
 		'title': {
 		text :'Awards'},
-		'current_elections': data.Entries
+		'current_elections': data.Entries,
+		'sidenav' :{
+			'admin': admin}
 		});
 	}
 	catch(e){

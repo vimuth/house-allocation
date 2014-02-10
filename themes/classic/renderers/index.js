@@ -4,13 +4,17 @@ var render = function(theme, data, meta, require) {
 			partial : 'header',
 			context : data.header
 		} ],
-		title :[{
+		title : [ {
 			partial : 'title',
 			context : data.title
-		}],
+		} ],
+		sidenav : [ {
+			partial : 'sidenav',
+			context : data.sidenav
+		} ],
 		main : [ {
 			partial : 'index',
 			context : data.body
-		} ]
+		} ],
 	});
 };
