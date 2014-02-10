@@ -4,36 +4,91 @@
 		<ul class="nav bs-sidenav">
 			<div>
 				<div class="list-group">
-					<a class="list-group-item" href="{{url "/events/"}}">View Events</a>
-					<a class="list-group-item" href="{{url "/award-list.jag"}}">View Current Elections</a>
-					<a class="list-group-item" href="{{url "/house"}}">View House Members</a>
-					<a class="list-group-item" href="{{url "/assign-house.jag"}}">Assign Houses</a>
-					<a class="list-group-item" href="{{url "/change-status"}}">Change Member Status</a>
+					<a class="list-group-item" href="{{url "/current-events"}}">Current	Events</a>
+					<a class="list-group-item" href="{{url "/award-list.jag"}}">Current Elections</a>  
+					<a class="list-group-item" href="{{url "/house"}}">House Members</a>
 					<a class="list-group-item" href="{{url "/history"}}">History</a>
-					<a class="list-group-item" href="{{url "/current-events"}}">Current Events</a>
 				</div>
 			</div>
 		</ul>
 	</div>
 </div>
 
-{{/unless}}
-
-{{#if admin}}
+{{/unless}} {{#if admin}}
 <div class="col-md-3" id="sidebar">
 	<div class="bs-sidebar hidden-print" role="complementary">
-		<ul class="nav bs-sidenav">
-				<div class="list-group">
-					<a class="list-group-item" href="{{url "/events/"}}">View Events</a>
-					<a class="list-group-item" href="{{url "/addEventInstance2.jag"}}">Add Event Instance</a>
-					<a class="list-group-item" href="{{url "/award-list.jag"}}">View Current Elections</a>
-					<a class="list-group-item" href="{{url "/house"}}">View House Members</a>
-					<a class="list-group-item" href="{{url "/assign-house.jag"}}">Assign Houses</a>
-					<a class="list-group-item" href="{{url "/change-status"}}">Change Member Status</a>
-					<a class="list-group-item" href="{{url "/history"}}">History</a>
-					<a class="list-group-item" href="{{url "/current-events"}}">Current Events</a>
+		<div class="nav bs-sidenav">
+
+			<div class="panel-group" id="accordion">
+				<div style="margin: 0px; padding: 0px; border-radius: 0px"
+					class="panel panel-primary">
+					<div style="border-radius: 0px" class="panel-heading"
+						data-toggle="collapse" data-target="#collapseOne">
+						<h4 class="panel-title">
+							Event Templates<span
+								class="glyphicon glyphicon-chevron-down pull-right"></span>
+						</h4>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div style="margin: 0px; padding: 0px" class="panel-body">
+							<ul style="margin: 0px; padding: 0px; border-width: 0px;"
+								class="list-group">
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/events/"}}">View Templates</a>
+								<a style="border-width: 0px;" class="list-group-item"
+									href="/TestApp2/addEvent.jag">Add Template</a>
+							</ul>
+						</div>
+					</div>
 				</div>
-		</ul>
+				<div
+					style="margin: 0px; padding: 0px; border-top-width: 0px; border-radius: 0px"
+					class="panel panel-primary">
+					<div style="border-radius: 0px" class="panel-heading"
+						data-toggle="collapse" data-target="#collapseTwo">
+						<h4 class="panel-title">
+							Events<span class="glyphicon glyphicon-chevron-down pull-right"></span>
+						</h4>
+					</div>
+					<div id="collapseTwo" class="panel-collapse collapse in">
+						<div style="margin: 0px; padding: 0px" class="panel-body">
+							<ul style="margin: 0px; padding: 0px; border-width: 0px;"
+								class="list-group">
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/current-events"}}">Current Events</a>
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/history"}}">Past Events</a>
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/addEventInstance2.jag"}}">Add Event</a>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div
+					style="margin: 0px; padding: 0px; border-top-width: 0px; border-radius: 0px"
+					class="panel panel-primary">
+					<div style="border-radius: 0px" class="panel-heading"
+						data-toggle="collapse" data-target="#collapseThree">
+						<h4 class="panel-title">
+							People<span class="glyphicon glyphicon-chevron-down pull-right"></span>
+						</h4>
+					</div>
+					<div id="collapseThree" class="panel-collapse collapse in">
+						<div style="margin: 0px; padding: 0px" class="panel-body">
+							<ul style="margin: 0px; padding: 0px; border-width: 0px;"
+								class="list-group">
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/house/"}}">View Members</a>
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/assign-house.jag/"}}">Assign House</a>
+								<a style="border-width: 0px;" class="list-group-item"
+									href="{{url "/change-status"}}">Change Status</a>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 {{/if}}

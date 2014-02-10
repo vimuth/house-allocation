@@ -42,10 +42,10 @@ var verb = request.getMethod();
 				'role': admin,
 			},
 			'title': {
-			text :'Add Event'}
-			},
+			text :'Add Event'},
 			'sidenav' :{
-				'admin': admin});
+				'admin': admin}
+			});
 		}
 	}
 }());
