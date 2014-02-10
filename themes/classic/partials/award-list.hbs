@@ -8,9 +8,9 @@
 		<thead>
 			<tr>
 
-				<th><h4 style="color: blue">Award name</h4></th>
-				<th><h4 style="color: blue">Event instance name</h4></th>
-				<th><h4 style="color: blue"></h4></th>
+				<th rowspan="2" style="width: 15%;"><h4 style="color: blue">Award name</h4></th><th></th>
+				<th rowspan="2" ><h4 style="color: blue">Event instance name</h4></th>
+				<th rowspan="2" ><h4 style="color: blue"></h4></th>
 
 			</tr>
 		</thead>
@@ -22,14 +22,14 @@
 			<!--
 			<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">  -->
 			<tr>
-				<td rowspan="2"><b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
+				<td rowspan="2" style="width: 18%;" ><b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
+				</td><td></td>
+				<td rowspan="2" ><b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
 				</td>
-				<td rowspan="2"><b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
-				</td>
-				<td rowspan="2"><button
+				<td rowspan="2" style="width: 10%;"><button
 						onclick="vote('{{event_award_instance_id}}');return false;"
-						type="button" class="btn btn-warning btn-xs pull-left">Vote
-						for this election</button>
+						type="button" class="btn btn-warning btn-xs pull-left" style="width: 100px; height:25px"><font size="3">Vote</font>
+						</button>
 					<br /></td>
 
 			</tr>
