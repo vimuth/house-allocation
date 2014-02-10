@@ -1,27 +1,42 @@
 <div>
-	<h3 style="margin-top: 0px">{{title}} :</h3>
+	<h3 style="margin-top: 0px">
+		{{title}} :
+		<div style="width: 30%; float: right">
+			<br />
+			<button onclick="link('{{link1}}');return false;" type="button"
+				class="btn btn-warning btn-xs pull-left" style="width: 120px; height: 25px">{{btn1}}</button>
+			<div style="width: 50%; float: right">
+				<button onclick="link('{{link2}}');return false;" type="button"
+					class="btn btn-warning btn-xs pull-left" style="width: 120px; height: 25px">{{btn2}}</button>
+			</div>
+		</div>
+
+		<br /> <br />
+	</h3>
+
 	<div class="list-group">
-		{{#each events}} <a style="margin: 0px; padding: 0px; border-width:0px"
+		{{#each events}} <a
+			style="margin: 0px; padding: 0px; border-width: 0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
 
-			<div  class="panel panel-primary">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{name}}</h3>
 				</div>
-				<div style="margin:10px" class="row">
+				<div style="margin: 10px" class="row">
 					<div class="col-md-12">{{description}}</div>
 				</div>
 				<div style="margin: 0px; padding: 0px" class="row">
 
 					<div style="margin: 10px;" class="col-md-3">
 
-						
+
 						<b>Start Date :</b>
 						<div class="startDate">{{startDate}}</div>
 						<b>End Date :</b>
 						<div class="endDate">{{endDate}}</div>
 
-						
+
 					</div>
 					{{#if activities}}
 
@@ -65,7 +80,12 @@
 
 	</div>
 </div>
+<script>
+	function link(link) {
+		document.location.href = '{{url "/"}}'+link;
 
+	}
+</script>
 
 <script>
 	$(".date").each(function() {
