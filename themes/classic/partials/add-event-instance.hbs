@@ -197,8 +197,15 @@
     	{{#each activities}}
 
     	var activityName = "{{name}}";
-    	var actInstDate = new Date(document.getElementById(activityName+"_act_datetime").value);
     		if ((document.getElementById(activityName+"act")).checked){
+    			var actInstDateVal = document.getElementById(activityName+"_act_datetime").value;
+    			if (actInstDateVal == ""){
+    				alert("Please enter a date for the activity " +activityName);
+	        		fault=true;
+	        		return false;
+    			}
+    			else{
+    			var actInstDate = new Date(actInstDateVal);
     			if ( (actInstDate < instStart) || (actInstDate > instEnd)){
 	        		alert("Activity "+ activityName + " should be held between the event start and end!!!");
 	        		fault=true;
@@ -211,6 +218,7 @@
     			activityInstance.activityInstVenue = document.getElementById(activityName+"_act_venue").value;
     			activityInstance.activityInstDesc = document.getElementById(activityName+"_act_description").value;
     			actInst.push(activityInstance);	
+    		}
 			}
     	{{/each}}
     	if(fault==false){
@@ -225,13 +233,20 @@
     	{{#each awards}}
     		var awardName = "{{name}}";
     		if (document.getElementById(awardName+"award").checked){
-
-	        	if (new Date(document.getElementById(awardName+"_awd_start").value) > new Date(document.getElementById(awardName+"_awd_end").value)){
+    			awdStartVal = document.getElementById(awardName+"_awd_start").value;
+    			awdEndVal = document.getElementById(awardName+"_awd_end").value;
+    			if (awdStartVal == "" || awdEndVal == ""){
+	        		alert("Enter dates for voting for award "+awardName);
+	        	}
+	        	else{
+    			var awdStart = new Date(awdStartVal);
+    			var awdEnd = new Date(awdEndVal);
+	        	if (awdStart > awdEnd){
 	        		alert("Incompatible End Date and Start Date for award "+ awardName);
 	        		fault=true;
 	        		return false;
 	        	}
-	        	else{
+	        	
 					var awardInstance = new Object();
 	    			awardInstance.awardName = awardName;
 	    			awardInstance.awardID = "{{id}}";
@@ -264,34 +279,42 @@
 		$('.inputDate').datetimepicker();
 
         $('#addButton').click(function() {
-        	instStart = new Date(document.getElementById('startDate').value);
-        	instEnd = new Date(document.getElementById('endDate').value);
-
-        	if (instStart > instEnd){
-        		alert("Incompatible End Date and Start Date for the event");
+        	instStartVal = document.getElementById('startDate').value;
+        	instEndVal = document.getElementById('endDate').value;
+        	if(instStartVal=="" || instEndVal==""){
+        		alert("Please enter dates for the event");
         	}
         	else{
-	        	if (addEventInstance()){
-		       		var eventInstName = document.getElementById('eventInstanceName').value;
-					var eventName = "{{evName}}";
-					var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-					var eventInstStartDate = document.getElementById('startDate').value;
-					var eventInstEndDate = document.getElementById('endDate').value;
-		               $.ajax({
-		              type: "POST",
-		              contentType: "application/json",
-		              url: '{{url "/add-event-instance.jag"}}',
-		              
-		              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
-		              success : function(
-								msg) {
-							if(msg.redirect){
-								window.location = msg.url;
-							};
-						}
-		           });
-	           }
-           }
+	        	instStart = new Date(instStartVal);
+	        	instEnd = new Date(instEndVal);
+
+	        	if (instStart > instEnd){
+	        		alert("Incompatible End Date and Start Date for the event");
+	        	}
+	        	
+	        	else{
+		        	if (addEventInstance()){
+			       		var eventInstName = document.getElementById('eventInstanceName').value;
+						var eventName = "{{evName}}";
+						var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+						var eventInstStartDate = document.getElementById('startDate').value;
+						var eventInstEndDate = document.getElementById('endDate').value;
+			               $.ajax({
+			              type: "POST",
+			              contentType: "application/json",
+			              url: '{{url "/add-event-instance.jag"}}',
+			              
+			              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
+			              success : function(
+									msg) {
+								if(msg.redirect){
+									window.location = msg.url;
+								};
+							}
+			           });
+		           }
+	       		}
+       		}
         });
      });
 

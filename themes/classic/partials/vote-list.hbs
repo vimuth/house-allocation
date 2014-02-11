@@ -14,10 +14,7 @@
 
 
 <div class="form-group">
-				<select id="voteType" class="form-control">
-					<option value="H">House Nomination</option>
-					<option value="I">Individual Nomination</option>
-				</select><br> <br>
+				
 
 
 	<form id="activityForm" name="newActivity"
@@ -140,10 +137,9 @@ var nominee;
 
 
 function validateNominee() {
-var x = document.getElementById("voteType").selectedIndex;
-var value=document.getElementsByTagName("option")[x].value
 
-if(value == "I"){
+
+if("{{voter.type}}" == "I"){
 
 	var corrext=0;
 
@@ -180,7 +176,7 @@ var warningLabel = document
 }
 
 else{
-if(value == "H"){
+if("{{voter.type}}" == "G"){
 
 	var corrext=0;
 
@@ -190,7 +186,7 @@ if(value == "H"){
 			//corrext==0;
 			
 var nomineeName = document.getElementById('eventName').value;
-if( nomineeName == "Cloud Bots" || nomineeName == "Titans" || nomineeName == "Legion" || nomineeName == "WildBoars"){
+if( nomineeName == "Cloud Bots" || nomineeName == "Titans" || nomineeName == "Legion" || nomineeName == "Wild Boars"){
 
 	corrext=1;
 }

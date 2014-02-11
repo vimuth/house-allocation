@@ -11,20 +11,41 @@ var verb = request.getMethod();
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
-
-
+   //var dataService = require('modules/dataservice.jag');
+   //var voter_id = dataService.getIDFromName(username);
 
 	if( verb=='POST')
 	{
-		var dataService = require('modules/dataservice.jag');
+		
 		try {
 			var id=0;
 			var data = request.getContent();
 			log.info(data);
 			var pp = dataService.getId();
 			log.info(pp);
-			for (var i=0 ;i< pp.people.length;i++)
-			{
+if( data.Nominee.name == "Cloud Bots" || data.Nominee.name == "Titans" || data.Nominee.name == "Legion" || data.Nominee.name == "Wild Boars"){
+                  if(data.Nominee.name == "Cloud Bots"){
+                  	id= 1;
+                  }
+                  if(data.Nominee.name == "Legion"){
+                  	id= 2;
+                  }
+                  if(data.Nominee.name == "Titans"){
+                  	id= 3;
+                  }
+                  if(data.Nominee.name == "Wild Boars"){
+                  	id= 4;
+                  }
+
+
+}
+
+else {		for (var i=0 ;i< pp.people.length;i++)
+			{    
+                
+
+
+
 				//log.info(pp);
 				if(pp.people[i].name == data.Nominee.name)
 				{
@@ -33,10 +54,10 @@ var verb = request.getMethod();
 					log.info(id);
 				}
 			}
-
+}
 			var vote = new Object();
 			// voter_id to be taken from session
-			vote.voter_id = 70;
+			vote.voter_id = 71;
 			vote.nominee_id = id;
 			vote.event_award_instance_id =data.Nominee.award;
 			//vote.event_award_instance_id = awardId;
@@ -62,7 +83,7 @@ var verb = request.getMethod();
 				var dataService = require('modules/dataservice.jag');
 				var nominees = [nominees];
 				var peopleNames = [peopleNames];
-				var voter_id=70;
+				var voter_id=71;
 				var award_id ;
 				var uriMatcher = new URIMatcher(request.getRequestURI());
 
@@ -78,21 +99,50 @@ var verb = request.getMethod();
 
 				var data = dataService.getNominees(award_id);//  event id to be taken from session
 				var voteData = dataService.getAwardVotes(award_id);
-				var voter= new Object();
+				
+
+
+
+
+
+				var EventAwardData=dataService.getEventAwardId(award_id);
+
+               // log.info(EventAwardData);
+
+                var eventAwardId=EventAwardData.event_award_instanceCollection.event_award_instance.event_award_id;
+
+                
+               var EventAwardType=dataService.getEventAwardType(eventAwardId);
+               var type = EventAwardType.event_awardCollection.event_award.type;
+               var voter= new Object();
 				voter.voterId= voter_id;
 				voter.eventId= award_id;
+				voter.type = type;
+
+
+				log.info(voter);
+               
 
 				//log.info(data.votesCollection.votes.length);
 
 				if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
 
-				{
+				{  
 
 					nominee= data.votesCollection.votes.nominee_id;
 
-					log.info(nominee);
-					peopleNames[0]= dataService.getNames(nominee);
+				 if(type == "G"){
+				 		
+						peopleNames[0]= dataService.getHouse(nominee);
 
+					}
+
+					else{
+						
+					
+					    log.info(nominee);
+					  peopleNames[0]= dataService.getNames(nominee);
+				     }
 
 					var people = {
 						"names" : peopleNames };
@@ -156,16 +206,33 @@ var verb = request.getMethod();
 				if((data.votesCollection.votes instanceof Array) )
 				{
 
+                  if(type == "G"){
+                  	
+				 		
+					for (var i=0 ;i< data.votesCollection.votes.length;i++)
+					{
+						
+					nominees[i] = data.votesCollection.votes[i].nominee_id;
+					log.info(nominees[i]);
+					peopleNames[i] = dataService.getHouse(nominees[i]);
 
+
+					}
+
+					}
+
+					else{
+						
 
 
 
 					for (var i=0 ;i< data.votesCollection.votes.length;i++)
 					{
 						nominees[i] = data.votesCollection.votes[i].nominee_id;
+						log.info(nominees[i]);
 						peopleNames[i] = dataService.getNames(nominees[i]);
 					}
-
+				}
 					var people = {
 						"names" : peopleNames };
 						//log.info(people.names);
