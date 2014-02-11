@@ -3,54 +3,17 @@
 	<table id="eventInstance" class="styledLeft">
 		<thead>
 			<tr>
-				<th colspan="2">New Event Instance</th>
+				<th colspan="2">New Event</th>
 			</tr>
 		</thead>
 		<tbody>
-			<td>Event Name:</td>
-			<td>{{evName}}</td>
-			<!-- <td><select name="events" id="events"  onchange="getActivitiesAndAwards()">
-							<option value="select an event">Select an Event</option>
-						<script type="text/javascript">
-						var evName = "{evName}}";
-						 var sel = document.getElementById('events');  
-						 	{{#each events.event_name}}
-						 		if (evName == "{name}}"){
-							 		var opt = document.createElement('option');
-							 	    opt.innerHTML = "{{name}}";
-							 	    opt.value = "{{name}}";
-							 	    opt.select="true";
-							 	    sel.appendChild(opt);
-						 		}
-						 	{{/each}}
-
-/*
-
-							var cuisines = [];
-							cuisines = ["Xccb","sdgdfh"];     
-							var sel = document.getElementById('events');
-							for(var i = 0; i < cuisines.length; i++) {
-							    var opt = document.createElement('option');
-							    opt.innerHTML = cuisines[i];
-							    opt.value = cuisines[i];
-							    sel.appendChild(opt);
-							}
-
-
-*/
-							</script>
-<!-- 								<option value="volvo">e1</option>
-								<option value="saab">e2</option> 
-								
-								<option value="dgcgbgc">dgcgbgc</option>  -->
-			<!-- 							</select>
-							<a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New Event?</a>
-
-							</td> -->
-			</tr>
+		<tr>
+			<td>Event Template Name:</td>
+			<td>{{evName}}<a href="{{url "/add-event-instance-front.jag"}} " style="margin-left: 5px;">A Different Event?</a></td>
+		</tr>
 
 			<tr>
-				<td>Event Instance Name</td>
+				<td>Event Name:</td>
 				<td><input type="text" name="eventInstanceName"
 					id="eventInstanceName"></td>
 			</tr>
@@ -61,22 +24,19 @@
 			</tr>
 
 			<tr>
-				<!-- <td>Start Date <input type="datetime" name=startDate
-					id="startDate" value="dd-mm-yyyyThh:mm:ss"></td> -->
-					<td><label for="inputDate">Start Date : </label>
-								<div class='inputDate input-group date' id='startDateSet'>
-									<input type='text' class="form-control" id='startDate'
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-									<span class="input-group-addon"><span
-										class="glyphicon glyphicon-calendar"></span> </span>
-								</div></td>
+				<td><label for="inputDate">Start Date : </label>
+					<div class='inputDate input-group date' id='startDateSet'>
+						<input type='text' class="form-control" id='startDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
 				<td><label for="inputDate">End Date : </label>
-								<div class='inputDate input-group date' id='endDateSet'>
-									<input type='datetime' class="form-control" id='endDate'
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" onchange="compareDates('startDate','endDate')" />
-									<span class="input-group-addon" onchange="compareDates('startDate','endDate')"><span
-										class="glyphicon glyphicon-calendar"></span> </span>
-								</div></td>
+					<div class='inputDate input-group date' id='endDateSet'>
+						<input type='datetime' class="form-control" id='endDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" onchange="compareDates('startDate','endDate')" />
+						<span class="input-group-addon" onchange="compareDates('startDate','endDate')"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
 			</tr>
 
 		</tbody>
@@ -104,15 +64,13 @@
 				<td>{{description}}</td>
 
 				<td>
-								<div class='inputDate input-group date' id="{{name}}_act_datetime_set" style="visibility: hidden">
-									<input type='text' class="form-control" id="{{name}}_act_datetime"
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-									<span class="input-group-addon" ><span
-										class="glyphicon glyphicon-calendar"></span> </span>
-								</div></td>
+					<div class='inputDate input-group date' id="{{name}}_act_datetime_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_act_datetime"
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon" ><span  class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
 
-				<!-- <td><input type="datetime" id="{{name}}_act_datetime"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td> -->
 				<td><input type="text" id="{{name}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
 				<td><textarea id="{{name}}_act_description" rows="4"
@@ -146,28 +104,17 @@
 				<td>{{isVote}}</td>
 
 				<td>
-								<div class='inputDate input-group date' id="{{name}}_awd_start_set" style="visibility: hidden">
-									<input type='text' class="form-control" id="{{name}}_awd_start"
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-									<span class="input-group-addon"><span
-										class="glyphicon glyphicon-calendar"></span> </span>
-								</div></td>
-
-				<!-- <td><input type="datetime" id="{{name}}_awd_start"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td> -->
-
-					<td>
-								<div class='inputDate input-group date' id="{{name}}_awd_end_set" style="visibility: hidden">
-									<input type='text' class="form-control" id="{{name}}_awd_end"
-										data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-									<span class="input-group-addon"><span
-										class="glyphicon glyphicon-calendar"></span> </span>
-								</div></td>
-
-
-				<!-- <td><input type="datetime" id="{{name}}_awd_end"
-					style="visibility: hidden" value="yyyy-mm-ddThh:mm:ss"></td>
- -->
+					<div class='inputDate input-group date' id="{{name}}_awd_start_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_awd_start" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+				<td>
+					<div class='inputDate input-group date' id="{{name}}_awd_end_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_awd_end" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
 				<script type="text/javascript">
 						if ('{{isVote}}'=='false'){
 							document.getElementById('{{name}}_awd_start_set').style.display = "none";
@@ -193,7 +140,6 @@
 <script type="text/javascript"> 
 	
 	var eventInstList = [];
-	// var awardList = [];
 	
 	function showHideCommon() {
         var theDiv = document.getElementById('activitySection');
@@ -299,65 +245,16 @@
     		return true;
     	}
     }
-
-/*	function getActivitiesAndAwards() {
-		document.location.href = '{{url "/addEventInstanceSelected/"}}' + document.getElementById('events').value;
-	}
-*/
     function addEventInstance(){
-
+    	actInst = [];
+    	awardInstance = [];
     	if (this.addActivities() && this.addAwards()){
     		return true;
     	}
     	else{
     		return false;
     	}
-    	/*this.addActivities();
-    	return this.addAwards();*/
-    /*		var eventInstName = document.getElementById('eventInstanceName');
-			var eventName = document.getElementById('events').value;
-			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-			var eventInstStartDate = document.getElementById('startDate').value;
-			var eventInstEndDate = document.getElementById('endDate').value;
-
-			$('#eventInstanceTable > tbody:last').append('<tr><td>'+
-					eventName+'</td><td>'+eventInstDescription+'</td></tr>');
-			
-			var eventInstance = new Object();
-			eventInstance.name = eventInstName;
-			eventInstance.eventId = 1;
-			eventInstance.description = eventInstDescription;
-			eventInstance.startDate=eventInstStartDate;
-			eventInstance.endDate=eventInstEndDate;
-
-			eventInstList.push(eventInstance);
-*/
     }
-
-   /* $(document).ready(function() {
-
-        $('#addButton').click(function() {
-
-        var eventInstName = document.getElementById('eventInstanceName').value;
-			var eventName = document.getElementById('events').value;
-			var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-			var eventInstStartDate = document.getElementById('startDate').value;
-			var eventInstEndDate = document.getElementById('endDate').value;
-
-               $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: "{{url "/addEventInstance2.jag"}}",
-              
-              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate}}),
-              success: function(msg) {
-              }
-           });
-
-        });
-
-     });
-*/
 
 	var instStart;
 	var instEnd;
@@ -383,7 +280,7 @@
 		               $.ajax({
 		              type: "POST",
 		              contentType: "application/json",
-		              url: "{{url "/addEventInstanceSelected.jag"}}",
+		              url: '{{url "/add-event-instance.jag"}}',
 		              
 		              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
 		              success: function(msg) {
@@ -392,25 +289,6 @@
 	           }
            }
         });
-
-        /*$('select[name="events"]').change(function() {
-        	var eventName = document.getElementById('events').value;
-			$.ajax({
-				type : "GET",
-				contentType : "application/json",
-				url : "{{url "/addEventInstanceSelected.jag"}}",
-
-				data : JSON.stringify({"eventName" : eventName}),
-				success : function(msg) {
-				if(msg.redirect){
-					window.location = msg.url;
-				};
-				}
-			});
-
-        });*/
-
-
      });
 
 

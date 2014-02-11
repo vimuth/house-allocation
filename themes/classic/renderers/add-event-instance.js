@@ -13,7 +13,7 @@ var render = function(theme, data, meta, require) {
 			context : data.sidenav
 		} ],
 		main : [ {
-			partial : 'addEventInstanceSelected',
+			partial : 'add-event-instance',
 			context : data.eventDetails
 		} ]
 	});

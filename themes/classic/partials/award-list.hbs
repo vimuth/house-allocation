@@ -1,39 +1,35 @@
 <div>
-	<h3>
+	<h3 style="margin:0px">
 		<b>Current Elections</b>
 	</h3>
-	<!-- <table class="table" id="activityTable" border="2">-->
 
 	<table class="table">
 		<thead>
 			<tr>
-
-				<th><h4 >Award name</h4></th>
-				<th><h4 >Event instance name</h4></th>
-				<th><h4 ></h4></th>
-
+				<th><h4>Award name</h4></th>
+				<th><h4>Event instance name</h4></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 
 
 			{{#each Entry}}
-
-			<!--
-			<tr onclick="document.location = {{url "/awards.jag/"}}{{event_award_id}}">  -->
 			<tr>
-				<td rowspan="2"><b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
+				<td style="width:15%">
+					<b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
 				</td>
-				<td rowspan="2"><b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
+				<td >
+					<b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
 				</td>
-				<td rowspan="2"><button
+				<td ><button
 						onclick="vote('{{event_award_instance_id}}');return false;"
-						type="button" class="btn btn-warning btn-xs pull-left">Vote
-						for this election</button>
-					<br /></td>
+						type="button" class="btn btn-warning btn-xs" style="width: 80px;"><font size="2">Vote</font>
+						</button>
+				</td>
 
 			</tr>
-			<tr></tr>
+			
 
 			{{/each}}
 

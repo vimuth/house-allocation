@@ -28,8 +28,10 @@ var verb = request.getMethod();
 			log.info('Received event instance id:'+id);
 			response.contentType = 'application/json';
 
-			response.content = {
-				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;
+			response.sendRedirect('/TestApp2/event-instance/'+id);
+
+			/*response.content = {
+				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;*/
 
 		} catch (e) {
 			log.error(e.toString());
