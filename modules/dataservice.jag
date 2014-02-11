@@ -169,7 +169,7 @@ function getActivitiesForEventID(id){
 		return parse(data.data);
 }
 
-//get awards for a given event_id
+//get votes for a given event award based on the event award id
 function getAwardsForEventID(id){
 	var data = get(newURl+'awards_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json");
@@ -178,7 +178,7 @@ function getAwardsForEventID(id){
 
 }
 
-
+// getting the vote based on event award id
 function getAwardVotes(id){
 	var data = get(votes_url+ id,null,{
 		"Accept":"application/json"},"application/json");
@@ -344,7 +344,7 @@ function deactivatePerson(name){
 	}
 }
 
-
+// getting the ID of the nominees from the table wso2_hm_votes
 function getNominees(id){
 	var data = get(votesNominee_url+ id,null,{
 		"Accept":"application/json"},"application/json");
@@ -352,6 +352,7 @@ function getNominees(id){
 		return voteData;
 
 }
+// getting the name of a person based on the Id from the table wso2_hm_people
 
 function getNames(id){
 	var data = get(peopleNames_url+ id,null,{
@@ -613,7 +614,7 @@ function getAwardWinnerHouses(awardID){
 }
 
 
-
+//getting all the names of the people based on the Id from the table wso2_hm_people
 function getId(){
 	var data = get(url+ 'people',null,{
 		"Accept":"application/json"},"application/json");
@@ -623,6 +624,7 @@ function getId(){
 		return people;
 			
 }
+//inserting votes to the table wso2_hm_votesa
 function addNominee(vote){
 	try{
 		var optionalHeaders = {
@@ -640,7 +642,7 @@ function addNominee(vote){
 
 
 }
-
+// getting all the votes from the data service from the table wso2_hm_votes
 function getVotes(){
 	var data = get(url+'votes',null,{
 		"Accept":"application/json"},"application/json");
@@ -960,6 +962,8 @@ function deleteActivityWinnerGroup(data){
 			log.info(" not deleted activity winner group datails");
 		}
 }
+
+// getting event award Id from the event award instance id from the table wso2_hm_event_award
 function getEventAwardId(id){
 
 	var data = get(award_instance_url+ id,null,{
@@ -976,7 +980,7 @@ function getEventAwardId(id){
 
 
 }
-
+// getting the type of the award from the awar id from the table wso2_hm_event_award_model
 function getEventAwardType(id){
 
 	var data = get(award_type_url+ id,null,{
@@ -989,7 +993,7 @@ function getEventAwardType(id){
 		return voteData;
 
 }
-
+// getting house name from the id from the table wso2_hm_house
 function getHouse(id){
 
 	var data = get(house_url+ id,null,{
