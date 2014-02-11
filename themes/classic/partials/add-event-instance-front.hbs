@@ -1,14 +1,9 @@
 
 <form id="myform" name="newEventInstance">
-	<font size="5">New Event Instance</font>
-	<br/><br/>
-	<table id="eventInstance" class="styledLeft">
-		<thead>
-
-
-		</thead>
-		<tbody>
-			
+	<font size="5">New Event Instance</font> <br /> <br />
+	<!-- 
+	<table id="eventInstance" class="styledLeft">		
+		<tbody>			
 			<tr>
 				<td style="width: 150px;">Event Template :</td>
 				<td></td>
@@ -36,7 +31,50 @@
 
 
 		</tbody>
-	</table>
+	</table> -->
+	<!-- -->
+	<div class="row" style="height: 30px;">
+		<div class="col-md-10" style="width: 200px;">
+			<strong>Select from existing event template :</strong>
+		</div>
+		<div class="col-md-6">
+			<select name="events" id="events" onchange="getActivitiesAndAwards()">
+				<option value="select an event template" style="width: 320px;">Select
+					an Event Template</option>
+			</select>
+
+			<script type="text/javascript">
+
+						 var sel = document.getElementById('events');  
+						 	{{#each event_name}}
+						 		var opt = document.createElement('option');
+						 	    opt.innerHTML = "{{name}}";
+						 	    opt.value = "{{name}}";
+						 	    sel.appendChild(opt);
+						 	{{/each}}
+						 		var opt = document.createElement('option');
+						 	    opt.innerHTML = "create new event";
+						 	    opt.value = "create new event";
+						 	    sel.appendChild(opt);
+						 	   
+							</script>
+
+
+		</div>
+	</div>
+	<div class="row" style="height: 20px;"></div>
+	<div class="row" style="height: 30px;">
+		<div>
+			<div class="col-md-10" style="width: 200px;"></div>
+
+			<div class="col-md-6">
+				<a href="{{url " /addEvent.jag"}}" style="margin-left: 5px;">
+					Add New event template? </a>
+			</div>
+
+		</div>
+	</div>
+	<!-- -->
 </form>
 
 <div style="padding-top: 10px; display: none;" id="activitySection">
@@ -74,26 +112,30 @@
 	</table>
 </div>
 
-<script type="text/javascript"> 
-	
+<script type="text/javascript">
 	var eventInstList = [];
-	
-	function showHideCommon() {
-        var theDiv = document.getElementById('activitySection');
-        theDiv.style.display = "";
-        theDiv = document.getElementById('awardSection');
-        theDiv.style.display = "";
-    }
 
-	function getActivitiesAndAwards() {
-		document.location.href = '{{url "/addEventInstanceSelected/"}}' + document.getElementById('events').value;
+	function showHideCommon() {
+		var theDiv = document.getElementById('activitySection');
+		theDiv.style.display = "";
+		theDiv = document.getElementById('awardSection');
+		theDiv.style.display = "";
 	}
 
-	function cancel(){
-    	document.location.href = '{{url "/"}}';
-    }
-    
-    </script>
+	function getActivitiesAndAwards() {
+		if(document.getElementById('events').value=="create new event"){
+			document.location.href="{{url " /addEvent.jag"}}";
+		}
+		else{
+			document.location.href = '{{url "/addEventInstanceSelected/"}}'
+				+ document.getElementById('events').value;
+		}
+	}
+
+	function cancel() {
+		document.location.href = '{{url "/"}}';
+	}
+</script>
 
 
 
