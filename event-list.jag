@@ -33,15 +33,17 @@ var log = new Log();
 		caramel.render({
 			'header':{
 			'username': username,
-		'role': admin,},
+			'role': admin,},
 			'title': {
 			text :'Events'},
 			'main' : {
-			'role': admin, 'events': data.eventCollection}
+			'role': admin, 'events': data.eventCollection},
+			'sidenav' :{
+				'admin': admin}
 		});
 		// 	}
 		// 	catch(e){
 		// 		response.sendRedirect("/TestApp2/error.jag");
 		// 	}
-		}());
-		%>
+}());
+%>

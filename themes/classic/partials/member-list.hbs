@@ -6,13 +6,15 @@
 			<button onclick="viewEmailList();return false;" type="button"
 				style="" class="btn btn-warning btn-xs pull-right">View as
 				a Email List</button>
+				<button onclick="tableToExcel('exportTable', 'name', 'member.xls');return false;" type="button"
+				style="" class="btn btn-warning btn-xs pull-right">Download to Excel</button>
 		</h4>
 		{{#each Member}}
 		<li class="list-group-item">{{name}}</li> {{/each}}
 	</ul>
 </div>
 
-<div id="emailList">
+<div style="display: none" id="emailList">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -25,6 +27,21 @@
 	<textarea class="form-control" id="eventDescription" rows="15">{{emailString}}</textarea>
 </div>
 
+<table style="display: none" id="exportTable">
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each Member}}
+		<tr>
+			<td>{{name}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+<a id="dlink"  style="display:none;"></a>
 <script>
 	function viewEmailList() {
 		$('#htmlList').hide();
@@ -35,6 +52,22 @@
 		$('#emailList').hide();
 		$('#htmlList').show();
 	}
+
+	var tableToExcel = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+        , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name, filename) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+			
+            document.getElementById("dlink").href = uri + base64(format(template, ctx));
+            document.getElementById("dlink").download = filename;
+            document.getElementById("dlink").click();
+
+        }
+	})()
 </script>
 
 

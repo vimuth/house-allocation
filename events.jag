@@ -23,8 +23,8 @@ var verb = request.getMethod();
 
 				var id = uriMatcher.elements().id;
 				var data = dataService.getEvent(id);
-				
-				
+
+
 					
 				caramel = require('caramel');
 				Handlebars = require('handlebars');
@@ -43,7 +43,9 @@ var verb = request.getMethod();
 					},
 					'title': {
 					text :data.event.name},
-					'body': data
+					'body': data,
+					'sidenav' :{
+						'admin': admin}
 					});
 			}
 			catch(e){

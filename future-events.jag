@@ -1,0 +1,55 @@
+<%
+var caramel;
+var log = new Log();
+
+(function () {
+	var username=session.get('username');
+	var admin= session.get('role')=='admin';
+
+	log.info(admin);
+
+	if(username==null){
+		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		return;
+	}
+	var dataService = require('modules/dataservice.jag');
+
+	var uriMatcher = new URIMatcher(request.getRequestURI());
+	//if the URL is for current events
+	// 	if(uriMatcher.match('/TestApp2/current-events')){
+	var data = dataService.getFutureEvents();
+
+	log.info(data);
+
+
+	caramel = require('caramel');
+	Handlebars = require('handlebars');
+
+	Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+		if (a == b)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	});
+
+		var btn1="Show all Events";
+		var link1="current-future-events.jag";
+		var btn2="Show Current Events";
+		var link2="current-events.jag";
+
+		caramel.render({
+			'header':{
+			'username': username,
+			'role': admin
+		},
+		'title': {
+		text :'Future Events'},
+		'main' : {
+		'title':'Future Events and activities',
+		'role': admin, 'events': data, 'future':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2},
+		'sidenav' :{
+			'admin': admin}
+		});
+		// 	}
+	}());
+	%>

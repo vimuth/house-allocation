@@ -9,7 +9,11 @@
 
 		<div class="row">
 			<div class="col-md-8">Description :
-				{{eventInstance.description}}</div>
+				{{eventInstance.description}}
+				
+				<h4 >From : {{formatDate eventInstance.startDate "YYYY-MM-DD"}} To {{formatDate eventInstance.endDate "YYYY-MM-DD"}}</h4>
+						
+			</div>
 
 			<div class="col-md-3">
 				<div class="panel">
@@ -41,19 +45,7 @@
 		</div>
 
 
-		<table style="margin: 0px" class="table table-condensed">
-
-			<tr style="margin: 0px; padding: 0px">
-				<td style="margin: 0px; padding: 0px; border: none">
-					<h4>From : {{eventInstance.startDate}}</h4>
-				</td>
-			</tr>
-			<tr style="margin: 0px; padding: 0px">
-				<td style="margin: 0px; padding: 0px; border: none">
-					<h4>To : {{eventInstance.endDate}}</h4>
-				</td>
-			</tr>
-		</table>
+		
 
 		<h4 class="panel">Activities :</h4>
 
@@ -68,7 +60,7 @@
 						<h4 class="list-group-item-heading">{{name}}</h4>
 						<p>{{description}}</p>
 						<p>At : {{venue}}</p>
-						<p>On : {{datetime}}</p>
+						<p>On : {{formatDate datetime "YYYY-MM-DD"}} at {{formatDate datetime "hh:mm a"}}</p>
 					</div>
 					<div class="col-md-5">
 						{{#unless winner}} <span class="label label-default pull-right">
@@ -110,8 +102,8 @@
 						<div style="display:" id="awdInfoDisplay">
 							{{#if_eq isVote "true"}}{{#unless winner}}
 							<p id='voteStart'>Voting Starts On :{{formatDate
-								vote_startDate}}</p>
-							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate}}</p>
+								vote_startDate "YYYY-MM-DD \at hh:mm a"}}</p>
+							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate "YYYY-MM-DD \at hh:mm a"}}</p>
 							{{/unless}}{{/if_eq}}
 						</div>
 
@@ -121,12 +113,12 @@
 						{{#if_eq isVote "true"}} {{#isVotingPeriod vote_startDate
 						vote_endDate}}
 
-
+						{{#unless winner}}
 						<button id="voteButton" type="button"
 							class="btn btn-success btn-xs pull-right"
 							onclick='window.location.href="/TestApp2/votes/{{id}}"'>Vote
 							for your pick</button>
-
+						{{/unless}}
 
 						{{/isVotingPeriod}} {{/if_eq}} {{#if winner}}
 						<div id="winnerlist">

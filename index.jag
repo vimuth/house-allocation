@@ -6,12 +6,15 @@ var log = new Log();
 	var body = "Welcome";
 	var admin= session.get('role')=='admin';
 
+	log.info(admin);
+	
 	var username=session.get('username');
 
 	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
+//	log.info(admin+admin+admin);
 	caramel = require('caramel');
 	caramel.render({
 		'header':{
@@ -21,7 +24,9 @@ var log = new Log();
 	'title': {
 	text :'WSO2 House Competition'},
 	'body': {
-	text:body}
+	text:body},
+	'sidenav' :{'admin': admin}
+	
 	});
 }());
 %>

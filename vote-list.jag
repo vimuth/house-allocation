@@ -33,7 +33,7 @@ var verb = request.getMethod();
 					log.info(id);
 				}
 			}
-			 
+
 			var vote = new Object();
 			// voter_id to be taken from session
 			vote.voter_id = 70;
@@ -93,7 +93,7 @@ var verb = request.getMethod();
 					log.info(nominee);
 					peopleNames[0]= dataService.getNames(nominee);
 
-					 
+
 					var people = {
 						"names" : peopleNames };
 						log.info(people.names);
@@ -109,7 +109,11 @@ var verb = request.getMethod();
 						},
 						//
 						'vote': {
-							'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+						'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes},
+						'sidenav' :{
+						'admin': admin},
+						'sidenav' :{
+						'admin': admin}
 						});
 						log.info(voter);
 
@@ -127,9 +131,13 @@ var verb = request.getMethod();
 					'title': {
 					text :'Votes'
 					},
-						
+
 					'vote': {
-						'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+					'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes},
+					'sidenav' :{
+					'admin': admin},
+					'sidenav' :{
+					'admin': admin}
 					});
 
 
@@ -205,11 +213,13 @@ var verb = request.getMethod();
 								},
 									
 								'vote': {
-									'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes}
+								'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes},
+								'sidenav' :{
+								'admin': admin}
 								});
 
 
-										
+
 				}
 			}
 			catch(e)

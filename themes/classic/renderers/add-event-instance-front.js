@@ -8,6 +8,10 @@ var render = function(theme, data, meta, require) {
 			partial : 'title',
 			context : data.title
 		}],
+		sidenav : [ {
+			partial : 'sidenav',
+			context : data.sidenav
+		} ],
 		main : [ {
 			partial : 'add-event-instance-front',
 			context : data.events

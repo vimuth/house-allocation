@@ -8,9 +8,13 @@ var render = function(theme, data, meta, require) {
 			partial : 'title',
 			context : data.title
 		}],
+		sidenav : [ {
+			partial : 'sidenav',
+			context : data.sidenav
+		} ],
 		main : [ {
-			partial : 'member-list',
-			context : data.body
+			partial : 'current-events',
+			context : data.main
 		} ]
 	});
 };
