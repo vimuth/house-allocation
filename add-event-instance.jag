@@ -16,7 +16,7 @@ var verb = request.getMethod();
 	}
 
 
-
+log.info(verb);
 
 	if( verb=='POST'){
 		try {
@@ -27,11 +27,12 @@ var verb = request.getMethod();
 
 			log.info('Received event instance id:'+id);
 
-			response.sendRedirect('/TestApp2/index.jag');
-			return;
+			response.contentType = 'application/json';
 
-			/*response.content = {
-				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;*/
+			response.content = {
+				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;
+				
+			return;
 
 		} catch (e) {
 			log.error(e.toString());

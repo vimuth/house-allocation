@@ -283,8 +283,12 @@
 		              url: '{{url "/add-event-instance.jag"}}',
 		              
 		              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
-		              success: function(msg) {
-		              }
+		              success : function(
+								msg) {
+							if(msg.redirect){
+								window.location = msg.url;
+							};
+						}
 		           });
 	           }
            }
