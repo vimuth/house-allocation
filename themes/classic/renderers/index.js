@@ -1,5 +1,5 @@
 var render = function(theme, data, meta, require) {
-	theme('indexs_simple', {
+	theme('simple', {
 		header : [ {
 			partial : 'header',
 			context : data.header

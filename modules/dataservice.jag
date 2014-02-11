@@ -1,20 +1,20 @@
 <%
 
-newURl = 'http://localhost:9763/services/housAllocation/';
-var url = 'http://localhost:9763/services/housAllocation/';
+newURl = 'http://localhost:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/house_allocation/';
 
-var events_url = 'http://localhost:9763/services/housAllocation/events/';
-var activities_url = 'http://localhost:9763/services/housAllocation/activities/';
-var awards_url = 'http://localhost:9763/services/housAllocation/awards/';
-var awards_instance_url = 'http://localhost:9763/services/housAllocation/awards_instance/';
-var event_instance_url='http://localhost:9763/services/housAllocation/event_instance';
-var votes_url = 'http://localhost:9763/services/housAllocation/votes/';
-var votesNominee_url = 'http://localhost:9763/services/housAllocation/votes_nominee/';
-var peopleNames_url = 'http://localhost:9763/services/housAllocation/people_names/';
-var current_elections_url = 'http://localhost:9763/services/housAllocation/current-elections/';
-var award_instance_url="http://localhost:9763/services/housAllocation/eventAwardId/"
-var award_type_url="http://localhost:9763/services/housAllocation/event_award_type/"
-var house_url = 'http://localhost:9763/services/housAllocation/house/';
+var events_url = 'http://localhost:9763/services/house_allocation/events/';
+var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
+var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
+var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
+var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
+var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
+var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
+var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
+var current_elections_url = 'http://localhost:9763/services/house_allocation/current-elections/';
+var award_instance_url="http://localhost:9763/services/house_allocation/eventAwardId/"
+var award_type_url="http://localhost:9763/services/house_allocation/event_award_type/"
+var house_url = 'http://localhost:9763/services/house_allocation/house/';
 
 
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
