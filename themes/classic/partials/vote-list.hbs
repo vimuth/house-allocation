@@ -99,6 +99,7 @@ var nominee;
 
 													if(validateVoter()){
 														var award = "{{voter.eventId}}"
+														var type= "{{voter.type}}"
 
 												var eventName = document
 														.getElementById('eventName').value;
@@ -115,6 +116,7 @@ var nominee;
 																		"Nominee" : {
 																			"name" : eventName,
 																			"award" : award,
+																			"type" : type,
 																			
 																		}
 																		
@@ -181,17 +183,17 @@ if("{{voter.type}}" == "G"){
 	var corrext=0;
 
 
-
+{{#each houses}}
 			
-			//corrext==0;
+	var name = "{{name}}";		//corrext==0;
 			
 var nomineeName = document.getElementById('eventName').value;
-if( nomineeName == "Cloud Bots" || nomineeName == "Titans" || nomineeName == "Legion" || nomineeName == "Wild Boars"){
+if( nomineeName == name){
 
 	corrext=1;
 }
 
-
+{{/each}}
 
 if(corrext==1) {
 	return true;
@@ -218,23 +220,23 @@ function validateVoter() {
 	var voter= "{{voter.voterId}}";
 
 			{{#each votes}}
-			//corrext==0;
+			corrext==0;
 			var id= "{{voter_id}}";
 
-if(voter == id){
+			if(voter == id){
 
-	corrext=1;
-}
+			corrext=1;
+			}
 
-{{/each}}
+			{{/each}}
 
-if(corrext==0) {
-	return true;
+			if(corrext==0) {
+			return true;
 
-}
-else{
+			}
+			else{
 
-var warningLabel = document
+			var warningLabel = document
 						.getElementById("voteNameWarning");
 				warningLabel.style.display = "inline";
 

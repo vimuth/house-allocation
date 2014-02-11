@@ -1007,5 +1007,17 @@ function getHouse(id){
 		return houses;
 
 }
+function getHouseList(){
 
+	var data = get(url+ 'houses',null,{
+		"Accept":"application/json"},"application/json");
+
+		var houseData= parse(data.data);
+		var houses= houseData.houseCollection.house;
+		if(data!=null){
+			log.info("received houses data ");
+		}
+		return houses;
+
+}
 %>

@@ -3,10 +3,12 @@ var caramel;
 var log = new Log();
 
 (function () {
+	var data = request.getContent();
+	log.info (data );
 	var body = "Welcome";
 	var admin= session.get('role')=='admin';
 
-	log.info(admin);
+	//log.info(admin);
 	
 	var username=session.get('username');
 
