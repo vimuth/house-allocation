@@ -41,39 +41,39 @@ function getEvent(id){
 				return {'event':eventData.eventCollection.event,'activities':activityData.activityCollection,'awards':awardData.awardCollection.award};
 }
 
+// add data to wso2_hm_event_model table
 function addEvent(data){
 	var optionalHeaders = {
 		"Accept":"application/json" };
 
 		var result = post(events_url, data.event, optionalHeaders, "json");
 
-		// 		log.info(result);
-
 		event_id = result.data.GeneratedKeys.Entry.ID
-
+		log.info("Received event model id :"+event_id+" upon addition");
+		//get the activities passed by the data and add each activity to wso2_hm_activity_model one after the other
 		var activities = data.activities;
 		for(var i=0;i<activities.length;i++){
 			var activity = {
 				"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
 				var result = post(activities_url, activity, optionalHeaders, "json");
-
+			log.info("added activity model "+activity);
 		}
 
+		//get the awards passed by the data and add each award to wso2_hm_event_award_model one after the other
 		var awards = data.awards;
 		for(var i=0;i<awards.length;i++){
 			var award = {
 				"event_id":event_id,"name":awards[i].name,"description":awards[i].description,"type":awards[i].type,"isVote":awards[i].isVote};
 				var result = post(awards_url, award, optionalHeaders, "json");
-
-				// 				log.info(result);
+				log.info("added award model"+award);
 		}
 
+		//return the generated key when the event is added to the database
 		return event_id;
 }
 
+//return the event id in the database given the event name
 function getEventIDFromName(data){
-
-
 	var optionalHeaders = {
 		"Accept":"application/json" };
 		var result = get(newURl+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
@@ -81,22 +81,19 @@ function getEventIDFromName(data){
 			log.info(result);
 			var eventIdObj = parse(result.data);
 			var eventID = eventIdObj.event_id.event_id.id;
-
+			log.info("Rceived event id :"+eventID+" for name: "+data.eventInstance.eventName);
 			return eventID;
 
 }
 
+// add data to wso2_hm_event table
 function addEventInstance(data){
 
 	log.info("received data:"+data);
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
-	log.info("Received event instance"+data.eventInstance);
 	var optionalHeaders ={
 		"Accept":"application/json"};
-		/*		var result = get(newURl+'event_id_from_name/'+data.eventInstance.eventName,null,optionalHeaders,"application/json");
-
-		//var eventIdObj = parse(result.data);*/
 		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 		var eventInstDescription = data.eventInstance.description;
@@ -237,13 +234,13 @@ function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
-		log.info(data.eventCollection);
+		//log.info(data.eventCollection);
 }
 
 function getEventNames(){
 	var data = get(newURl+'event_names',null,{
 		"Accept":"application/json"},"application/json");
-		log.info(data.data);
+		//log.info(data.data);
 		return parse(data.data);
 }
 
@@ -357,7 +354,7 @@ function getNames(id){
 		return names;
 			
 }
-
+//getting the data of currentevents startDate<SYSDATE()<endDate from events instance table and relevant activities
 function getCurrentEvents(){
 	var data = parse(get(url+'current-events',null,{
 		"Accept":"application/json"},"application/json").data);
@@ -368,6 +365,7 @@ function getCurrentEvents(){
 
 		var events = data.Entries.Entry;
 
+		log.info("receiving activities for the current event");
 		for(var i=0;i<events.length;i++){
 			var activities = parse(get(url+'event-instance/next-activity/'+events[i].id,null,{
 				"Accept":"application/json"},"application/json").data);
@@ -384,12 +382,14 @@ function getCurrentEvents(){
 
 		return events;
 }
+//getting the data of currentevents startDate>SYSDATE() from events instance table and relevant activities
 function getFutureEvents(){
 	var data = parse(get(url+'future-events',null,{
 		"Accept":"application/json"},"application/json").data);
 
 		if(!(data.Entries == null)){
 			data.Entries = {'Entry':[]};
+			log.info("received data is null");
 		}
 
 		if(!(data.Entries.Entry instanceof Array)){
@@ -398,6 +398,7 @@ function getFutureEvents(){
 
 		var events = data.Entries.Entry;
 
+		log.info("receiving activities for the future event");
 		for(var i=0;i<events.length;i++){
 			var activities = parse(get(url+'event-instance/next-activity/'+events[i].id,null,{
 				"Accept":"application/json"},"application/json").data);
@@ -414,6 +415,8 @@ function getFutureEvents(){
 
 		return events;
 }
+
+//getting the data of currentevents SYSDATE()<endDate from events instance table and relevant activities
 function getCurrentFutureEvents(){
 	var data = parse(get(url+'current-future-events',null,{
 		"Accept":"application/json"},"application/json").data);
@@ -423,7 +426,7 @@ function getCurrentFutureEvents(){
 		}
 
 		var events = data.Entries.Entry;
-
+		log.info("receiving activities for the current-future event");
 		for(var i=0;i<events.length;i++){
 			var activities = parse(get(url+'event-instance/next-activity/'+events[i].id,null,{
 				"Accept":"application/json"},"application/json").data);
@@ -452,10 +455,12 @@ function getEventActivities(id){
 
 }
 
+//getting the data of currentevents SYSDATE()>endDate from events instance table and relevant activities
+//referred from history.jag
 function getPastEvents(){
 	var data = parse(get(url+'past-events',null,{
 		"Accept":"application/json"},"application/json").data);
-
+		log.info("receiving events for the history")
 		if(!(data.Entries.Entry instanceof Array)){
 			data.Entries.Entry = [data.Entries.Entry];
 		}
@@ -463,6 +468,9 @@ function getPastEvents(){
 
 }
 
+
+//getting the awards details award instance name, description, event instance name, description
+//referred from awards-list.jag 
 function getAwards(){
 	var data = parse(get(url+'current-elections',null,{
 		"Accept":"application/json"},"application/json").data);
@@ -904,6 +912,7 @@ function deleteActivityWinnerIndividual(data){
 
 		}
 }
+
 function deleteActivityWinnerGroup(data){
 	log.info(data);
 	var headers = {
