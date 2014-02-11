@@ -8,7 +8,9 @@
 					class="icon-bar"></span>
 			</button>
 			
-			<a class="navbar-brand" href="/TestApp2/index.jag"><font size="3">House Manager</font></a>
+			<a  style="padding-top:11px" class="navbar-brand" href="/TestApp2/index.jag">
+			<img style="padding:0px;margin:0px" src="/TestApp2/themes/classic/images/header-logo.jpg" >
+			<font size="3">House Manager</font></a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -25,7 +27,7 @@
 		          <ul class="dropdown-menu">
 		            <li><a href="{{url "/events"}}">View</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/addEvent.jag"}}">Add</a></li>
+		            <li><a href="{{url "/add-event"}}">Add</a></li>
 		          </ul>
 		        </li>
 		        <li class="dropdown">
@@ -78,15 +80,13 @@
 <script type="text/javascript">
 	function search() {
 		var key = document.getElementById('searchText').value;
-		if (key == " ") {
-			if (confirm("Search for events with a space in the name?")) {
-				document.location.href = '{{url "/search/"}}' + key;
-			}
-		} else if (key == "") {
+		if (key == " " || key =="") {
 			if (confirm("Search for all the events?")) {
 				document.location.href = '{{url "/search/"}}' + key;
 			}
 		}
-
+		else{
+			document.location.href = '{{url "/search/"}}' + key;
+		}
 	}
 </script>

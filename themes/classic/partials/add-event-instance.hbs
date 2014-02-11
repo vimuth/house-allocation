@@ -1,0 +1,331 @@
+
+<form id="myform" name="newEventInstance">
+	<table id="eventInstance" class="styledLeft">
+		<thead>
+			<tr>
+				<th colspan="2">New Event</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>Event Template Name:</td>
+			<td>{{evName}}<a href="{{url "/add-event-instance-front.jag"}} " style="margin-left: 5px;">A Different Event?</a></td>
+		</tr>
+
+			<tr>
+				<td>Event Name:</td>
+				<td><input type="text" name="eventInstanceName"
+					id="eventInstanceName"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><textarea name="eventInstanceDescription"
+						id="eventInstanceDescription" rows="4" cols="40"></textarea></td>
+			</tr>
+
+			<tr>
+				<td><label for="inputDate">Start Date : </label>
+					<div class='inputDate input-group date' id='startDateSet'>
+						<input type='text' class="form-control" id='startDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+				<td><label for="inputDate">End Date : </label>
+					<div class='inputDate input-group date' id='endDateSet'>
+						<input type='datetime' class="form-control" id='endDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" onchange="compareDates('startDate','endDate')" />
+						<span class="input-group-addon" onchange="compareDates('startDate','endDate')"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+</form>
+<div style="padding-top: 10px;" id="activitySection">
+	Activities :
+	<table class="table" id="activityTable">
+		<thead>
+			<tr>
+				<th>Name</th>				
+				<th>Group/Individual</th>
+				<th>Description</th>
+				<th>Activity Date</th>
+				<th>Venue</th>
+				<th>Additional info</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each activities}}
+			<tr>
+				<td><input type="checkbox" id="{{name}}act"
+					onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
+				<td>{{type}}</td>
+				<td>{{description}}</td>
+
+				<td>
+					<div class='inputDate input-group date' id="{{name}}_act_datetime_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_act_datetime"
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon" ><span  class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+
+				<td><input type="text" id="{{name}}_act_venue"
+					style="visibility: hidden" value="venue"></td>
+				<td><textarea id="{{name}}_act_description" rows="4"
+						style="display:none" cols="40">{{description}}. Add more...</textarea></td>
+			</tr>
+			{{/each}}
+		</tbody>
+
+	</table>
+</div>
+<div style="padding-top: 10px;" id="awardSection">
+	Awards :
+	<table class="table" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Group/Individual</th>
+				<th>Is Votable?</th>
+				<th>Voting Start Date</th>
+				<th>Voting End Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each awards}}
+			<tr>
+				<td><input type="checkbox" id="{{name}}award"
+					onchange="awardSelectionChanged('{{name}}')">{{name}}</td>
+				<td>{{description}}</td>
+				<td>{{type}}</td>
+				<td>{{isVote}}</td>
+
+				<td>
+					<div class='inputDate input-group date' id="{{name}}_awd_start_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_awd_start" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+				<td>
+					<div class='inputDate input-group date' id="{{name}}_awd_end_set" style="visibility: hidden">
+						<input type='text' class="form-control" id="{{name}}_awd_end" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</td>
+				<script type="text/javascript">
+						if ('{{isVote}}'=='false'){
+							document.getElementById('{{name}}_awd_start_set').style.display = "none";
+							document.getElementById('{{name}}_awd_start').value="2000-01-01T00:00:00"		
+							document.getElementById('{{name}}_awd_end_set').style.display = "none";
+							document.getElementById('{{name}}_awd_end').value="2000-01-01T00:00:00"	
+						}
+				</script>
+			</tr>
+			{{/each}}
+
+		</tbody>
+
+	</table>
+</div>
+<div style="padding-top: 10px;" id="addCancelSection">
+	<input type="button" id="addButton" class="button" value="Add"
+		onclick="addEventInstance();" /> <input style="margin-left: 5px;"
+		type="button" class="button" value="Cancel"
+		onclick="cancel();" />
+</div>
+
+<script type="text/javascript"> 
+	
+	var eventInstList = [];
+	
+	function showHideCommon() {
+        var theDiv = document.getElementById('activitySection');
+        theDiv.style.display = "";
+        theDiv = document.getElementById('awardSection');
+        theDiv.style.display = "";
+    }
+
+    function compareDates(sDate,eDate){
+    		alert("Invalid end date");
+    	
+    }
+    
+
+    function cancel(){
+    	document.location.href = '{{url "/addEventInstance2.jag"}}';
+    }
+
+    function changeVisibility(id){
+    	var theDiv = document.getElementById(id);
+			if (theDiv.style.visibility == "hidden") {
+				theDiv.style.visibility = "";
+			} else {
+				theDiv.style.visibility = "hidden";
+			}
+		
+    }
+
+
+
+    function changeDisplay(id){
+    	var theDiv = document.getElementById(id);
+			if (theDiv.style.display=="none") {
+				theDiv.style.display="";
+			} else {
+				theDiv.style.display="none";
+			}
+    }
+
+    function activitySelectionChanged(value){
+    	changeVisibility(value+"_act_datetime_set");
+    	changeVisibility(value+"_act_venue");
+    	changeDisplay(value+"_act_description");
+    }
+
+    function awardSelectionChanged(value){
+    	changeVisibility(value+"_awd_start_set");
+    	changeVisibility(value+"_awd_end_set");   	
+    }
+
+    var actInst = [];
+    
+    function addActivities(){
+    	var fault=false;
+    	{{#each activities}}
+
+    	var activityName = "{{name}}";
+    		if ((document.getElementById(activityName+"act")).checked){
+    			var actInstDateVal = document.getElementById(activityName+"_act_datetime").value;
+    			if (actInstDateVal == ""){
+    				alert("Please enter a date for the activity " +activityName);
+	        		fault=true;
+	        		return false;
+    			}
+    			else{
+    			var actInstDate = new Date(actInstDateVal);
+    			if ( (actInstDate < instStart) || (actInstDate > instEnd)){
+	        		alert("Activity "+ activityName + " should be held between the event start and end!!!");
+	        		fault=true;
+	        		return false;
+	        	}
+				var activityInstance = new Object();
+    			activityInstance.activityName = activityName;
+    			activityInstance.activityID= "{{id}}";
+    			activityInstance.activityInstDate = document.getElementById(activityName+"_act_datetime").value;
+    			activityInstance.activityInstVenue = document.getElementById(activityName+"_act_venue").value;
+    			activityInstance.activityInstDesc = document.getElementById(activityName+"_act_description").value;
+    			actInst.push(activityInstance);	
+    		}
+			}
+    	{{/each}}
+    	if(fault==false){
+    		return true;
+    	}
+    }
+
+    var awardInst = [];
+
+    function addAwards(){
+    	var fault=false;
+    	{{#each awards}}
+    		var awardName = "{{name}}";
+    		if (document.getElementById(awardName+"award").checked){
+    			awdStartVal = document.getElementById(awardName+"_awd_start").value;
+    			awdEndVal = document.getElementById(awardName+"_awd_end").value;
+    			if (awdStartVal == "" || awdEndVal == ""){
+	        		alert("Enter dates for voting for award "+awardName);
+	        	}
+	        	else{
+    			var awdStart = new Date(awdStartVal);
+    			var awdEnd = new Date(awdEndVal);
+	        	if (awdStart > awdEnd){
+	        		alert("Incompatible End Date and Start Date for award "+ awardName);
+	        		fault=true;
+	        		return false;
+	        	}
+	        	
+					var awardInstance = new Object();
+	    			awardInstance.awardName = awardName;
+	    			awardInstance.awardID = "{{id}}";
+	    			awardInstance.awardInstStart = document.getElementById(awardName+"_awd_start").value;
+	    			awardInstance.awardInstEnd = document.getElementById(awardName+"_awd_end").value;
+	    			awardInst.push(awardInstance);	
+				}
+			}
+    	{{/each}}
+    	if (fault==false){
+    		return true;
+    	}
+    }
+    function addEventInstance(){
+    	actInst = [];
+    	awardInstance = [];
+    	if (this.addActivities() && this.addAwards()){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
+
+	var instStart;
+	var instEnd;
+    $(document).ready(function() {
+
+ 
+		$('.inputDate').datetimepicker();
+
+        $('#addButton').click(function() {
+        	instStartVal = document.getElementById('startDate').value;
+        	instEndVal = document.getElementById('endDate').value;
+        	if(instStartVal=="" || instEndVal==""){
+        		alert("Please enter dates for the event");
+        	}
+        	else{
+	        	instStart = new Date(instStartVal);
+	        	instEnd = new Date(instEndVal);
+
+	        	if (instStart > instEnd){
+	        		alert("Incompatible End Date and Start Date for the event");
+	        	}
+	        	
+	        	else{
+		        	if (addEventInstance()){
+			       		var eventInstName = document.getElementById('eventInstanceName').value;
+						var eventName = "{{evName}}";
+						var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+						var eventInstStartDate = document.getElementById('startDate').value;
+						var eventInstEndDate = document.getElementById('endDate').value;
+			               $.ajax({
+			              type: "POST",
+			              contentType: "application/json",
+			              url: '{{url "/add-event-instance.jag"}}',
+			              
+			              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
+			              success : function(
+									msg) {
+								if(msg.redirect){
+									window.location = msg.url;
+								};
+							}
+			           });
+		           }
+	       		}
+       		}
+        });
+     });
+
+
+
+    
+    </script>
+
+
+
+
+
+
+

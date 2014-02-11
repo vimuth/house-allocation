@@ -1,17 +1,11 @@
 <div>
 	<h3 style="margin-top: 0px">
 		{{title}} :
-		<div style="width: 30%; float: right">
-			<br />
 			<button onclick="link('{{link1}}');return false;" type="button"
-				class="btn btn-warning btn-xs pull-left" style="width: 120px; height: 25px">{{btn1}}</button>
-			<div style="width: 50%; float: right">
+				class="btn btn-warning btn-xs pull-right" style="width: 125px; height: 25px">{{btn1}}</button>
+			
 				<button onclick="link('{{link2}}');return false;" type="button"
-					class="btn btn-warning btn-xs pull-left" style="width: 120px; height: 25px">{{btn2}}</button>
-			</div>
-		</div>
-
-		<br /> <br />
+					class="btn btn-warning btn-xs pull-right" style="width: 125px; height: 25px">{{btn2}}</button>
 	</h3>
 
 	<div class="list-group">
@@ -19,7 +13,7 @@
 			style="margin: 0px; padding: 0px; border-width: 0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
 
-			<div class="panel panel-primary">
+			<div class="panel panel-custom">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{name}}</h3>
 				</div>

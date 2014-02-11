@@ -13,8 +13,8 @@ var render = function(theme, data, meta, require) {
 			context : data.sidenav
 		} ],
 		main : [ {
-			partial : 'current-events',
-			context : data.main
+			partial : 'add-event-instance-front',
+			context : data.events
 		} ]
 	});
 };

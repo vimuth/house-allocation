@@ -4,9 +4,13 @@
 		<ul class="nav bs-sidenav">
 			<div>
 				<div class="list-group">
+					<a class="list-group-item" href="{{url "/events/"}}">View Events</a>
+					<a class="list-group-item" href="{{url "/add-event-instance-front.jag"}}">Add Event Instance</a>
+					<a class="list-group-item" href="{{url "/award-list.jag"}}">View Current Elections</a>
+					<a class="list-group-item" href="{{url "/house"}}">View House Members</a>
+					<a class="list-group-item" href="{{url "/assign-house.jag"}}">Assign Houses</a>
+					<a class="list-group-item" href="{{url "/change-status"}}">Change Member Status</a>
 					<a class="list-group-item" href="{{url "/current-events"}}">Current	Events</a>
-					<a class="list-group-item" href="{{url "/award-list.jag"}}">Current Elections</a>  
-					<a class="list-group-item" href="{{url "/house"}}">House Members</a>
 					<a class="list-group-item" href="{{url "/history"}}">History</a>
 				</div>
 			</div>
@@ -19,9 +23,9 @@
 	<div class="bs-sidebar hidden-print" role="complementary">
 		<div class="nav bs-sidenav">
 
-			<div class="panel-group" id="accordion">
+			<div class="panel-group" style="border-color: #A9A9A9;" id="accordion">
 				<div style="margin: 0px; padding: 0px; border-radius: 0px"
-					class="panel panel-primary">
+					class="panel panel-custom">
 					<div style="border-radius: 0px" class="panel-heading"
 						data-toggle="collapse" data-target="#collapseOne">
 						<h4 class="panel-title">
@@ -34,16 +38,16 @@
 							<ul style="margin: 0px; padding: 0px; border-width: 0px;"
 								class="list-group">
 								<a style="border-width: 0px;" class="list-group-item"
-									href="{{url "/events/"}}">View Templates</a>
+									href="{{url "/events/"}}">View Templates <span class="glyphicon glyphicon-list pull-right"></span></a>
 								<a style="border-width: 0px;" class="list-group-item"
-									href="/TestApp2/addEvent.jag">Add Template</a>
+									href="/TestApp2/add-event">Add Template<span class="glyphicon glyphicon-plus pull-right"></span></a>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div
 					style="margin: 0px; padding: 0px; border-top-width: 0px; border-radius: 0px"
-					class="panel panel-primary">
+					class="panel panel-custom">
 					<div style="border-radius: 0px" class="panel-heading"
 						data-toggle="collapse" data-target="#collapseTwo">
 						<h4 class="panel-title">
@@ -61,14 +65,14 @@
 									<a style="border-width: 0px;" class="list-group-item"
 									href="{{url "/award-list.jag"}}">Current Elections</a>
 								<a style="border-width: 0px;" class="list-group-item"
-									href="{{url "/addEventInstance2.jag"}}">Add Event</a>
+									href="{{url "/add-event-instance-front.jag"}}">Add Event</a>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div
 					style="margin: 0px; padding: 0px; border-top-width: 0px; border-radius: 0px"
-					class="panel panel-primary">
+					class="panel panel-custom">
 					<div style="border-radius: 0px" class="panel-heading"
 						data-toggle="collapse" data-target="#collapseThree">
 						<h4 class="panel-title">

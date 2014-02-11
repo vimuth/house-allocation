@@ -1,0 +1,103 @@
+
+<form id="myform" name="newEventInstance">
+	<font size="5">New Event Instance</font>
+	<br/><br/>
+	<table id="eventInstance" class="styledLeft">
+		<thead>
+
+
+		</thead>
+		<tbody>
+			
+			<tr>
+				<td style="width: 150px;">Event Template :</td>
+				<td></td>
+				<td><select name="events" id="events"
+					onchange="getActivitiesAndAwards()">
+						<option value="select an event template" style="width: 320px;">Select an
+							Event Template</option>
+
+						<script type="text/javascript">
+
+						 var sel = document.getElementById('events');  
+						 	{{#each event_name}}
+						 		var opt = document.createElement('option');
+						 	    opt.innerHTML = "{{name}}";
+						 	    opt.value = "{{name}}";
+						 	    sel.appendChild(opt);
+						 	{{/each}}
+
+
+							</script>
+
+				</select> <a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New
+						Event Template?</a></td>
+			</tr>
+
+
+		</tbody>
+	</table>
+</form>
+
+<div style="padding-top: 10px; display: none;" id="activitySection">
+	Activities :
+	<table class="table" id="activityTable">
+
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+<div style="padding-top: 10px; display: none;" id="awardSection">
+	Awards :
+	<table class="table" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Vote</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+
+<script type="text/javascript"> 
+	
+	var eventInstList = [];
+	
+	function showHideCommon() {
+        var theDiv = document.getElementById('activitySection');
+        theDiv.style.display = "";
+        theDiv = document.getElementById('awardSection');
+        theDiv.style.display = "";
+    }
+
+	function getActivitiesAndAwards() {
+		document.location.href = '{{url "/addEventInstanceSelected/"}}' + document.getElementById('events').value;
+	}
+
+	function cancel(){
+    	document.location.href = '{{url "/"}}';
+    }
+    
+    </script>
+
+
+
+
+
+
+
