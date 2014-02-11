@@ -3,20 +3,37 @@ var caramel;
 var log = new Log();
 
 (function () {
-	var data = request.getContent();
-	log.info (data );
 	var body = "Welcome";
 	var admin= session.get('role')=='admin';
 
-	//log.info(admin);
-	
+	log.info(admin);
+
 	var username=session.get('username');
 
 	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
-//	log.info(admin+admin+admin);
+
+
+	var path = "/images";
+	var file = new File(path);
+
+	var file_list = file.listFiles();
+	var name_list = [];
+
+	for(i=1;i<file_list.length;i++){
+		if(file_list[i].getName() !='.DS_Store'){
+			name_list.push({
+				'name':file_list[i].getName()});
+		}
+	}
+
+
+	file.close();
+
+	log.info(name_list);
+	
 	caramel = require('caramel');
 	caramel.render({
 		'header':{
@@ -26,9 +43,10 @@ var log = new Log();
 	'title': {
 	text :'WSO2 House Competition'},
 	'body': {
-	text:body},
-	'sidenav' :{'admin': admin}
-	
+	text:body,'file':name_list},
+	'sidenav' :{
+	'admin': admin}
+
 	});
 }());
 %>
