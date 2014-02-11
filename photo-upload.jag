@@ -34,26 +34,14 @@ var verb = request.getMethod();
 
 	if (verb=='POST'){
 
-// 		var data = request.getContent();
-		var file = request.getFile("fileupload");
-		
-		log.info(file);
-		log.info(request.getAllFiles());
-		// 		caramel = require('caramel');
-		// 		caramel.render({
-		// 			'header':{
-		// 			'username': username,
-		// 			'role': admin,
-		// 		},
-		// 		'title': {
-		// 		text :'Upload Photo'
-		// 		},
-		// 		'sidenav' :{
-		// 		'admin': admin}
-		// 		});
+		var log = new Log();
+		var file = request.getFile("userfile");
+		file.move("/images/"+file.getName());
 
-		}
+		response.sendRedirect("/TestApp2/");
 
-	}());
-	%>
+	}
+
+}());
+%>
 

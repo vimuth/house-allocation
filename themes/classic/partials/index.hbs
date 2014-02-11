@@ -10,14 +10,19 @@
   
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-    <div class="active item"><img src="/TestApp2/themes/classic/images/1.jpg" alt="HTML5 logo" width="845" height="200" /></div>  
+    <!-- <div class="active item"><img src="/TestApp2/themes/classic/images/1.jpg" alt="HTML5 logo" width="845" height="200" /></div>  
         <div class="item"><img src="/TestApp2/themes/classic/images/2.jpg" alt="JS logo" width="1000" height="600" /></div>  
         <div class="item"><img src="/TestApp2/themes/classic/images/3.jpg" alt="Schema.org logo" width="1000" height="600" /></div>  
-        <div class="item"><img src="/TestApp2/themes/classic/images/4.jpg" alt="JSON logo" width="1000" height="600" /></div>  
+        <div class="item"><img src="/TestApp2/themes/classic/images/4.jpg" alt="JSON logo" width="1000" height="600" /></div>   -->
+        <div class="active item carousalImg"><img src="/TestApp2/images/1.jpg" alt="JS logo"/></div>
+        {{#each file}}
+        	<div class="item carousalImg"><img src="/TestApp2/images/{{ name }}" alt="JS logo"  width="845" height="500" /></div> 
+        {{/each}}
+        
   </div> 
 
   <!-- Controls -->
-  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev" >
     <span class="glyphicon glyphicon-chevron-left"></span>
   </a>
   <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
