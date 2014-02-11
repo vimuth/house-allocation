@@ -2,7 +2,37 @@
 	<h3 style="margin-top: 0px">{{title}}</h3>
 	<div class="list-group">
 		{{#if event_instance}}
+		<a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item" id="first">
+			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{event_instance.name}}</h3>
+				</div>
+				<div class="row">
+
+					<div class="col-md-11" style="margin: 10px">
+
+						<p class="list-group-item-text" align="justify">
+
+							{{event_instance.description}} <br /><br />Start Date :
+						<div class="startDate">{{event_instance.startDate}}</div>
+						<br />End Date :
+						<div class="endDate">{{event_instance.endDate}}</div>
+
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
 		{{#each event_instance}}
+		<script>
+			document.getElementById('first').style.display="none";
+		</script>
 		<a
 			style="margin: 0px; padding: 0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
