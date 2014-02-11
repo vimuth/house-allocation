@@ -20,9 +20,6 @@ var verb = request.getMethod();
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 		log.info(request.getRequestURI);
 		if(uriMatcher.match('/TestApp2/search/{name}')) {
-
-			//log.info(uriMatcher.elements().name);
-			log.info("dgfhjgfj");
 			try{
 				var eventName = uriMatcher.elements().name;
 				var data = {
@@ -50,7 +47,7 @@ var verb = request.getMethod();
 		else if(uriMatcher.match('/TestApp2/search/')) {
 			try{
 				var data = {
-					"eventName":" "};
+					"eventName":""};
 					var eventInstances = dataService.getEventsWithKey(data);
 					log.info("received matched events : "+eventInstances);
 					caramel = require('caramel');

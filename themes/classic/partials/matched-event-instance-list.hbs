@@ -1,20 +1,11 @@
 <div>
 	<h3 style="margin-top: 0px">{{title}}</h3>
 	<div class="list-group">
-		<!-- <div style="margin: 0px; padding: 0px" class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title" id="noResults">Search Produced no Results...!!!</h3>
-				</div>
-			</div> -->
 		{{#if event_instance}}
 		{{#each event_instance}}
 		<a
 			style="margin: 0px; padding: 0px"
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
-			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
-			style="clear: both;" />
-			-->
-
 			<div style="margin: 0px; padding: 0px" class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{name}}</h3>
