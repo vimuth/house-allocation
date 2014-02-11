@@ -13,7 +13,7 @@ var render = function(theme, data, meta, require) {
 			context : data.sidenav
 		} ],
 		main : [ {
-			partial : 'addEvent',
+			partial : 'add-event',
 			context : data.body
 		} ]
 	});

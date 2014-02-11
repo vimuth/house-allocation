@@ -26,9 +26,9 @@ var verb = request.getMethod();
 			var id = dataService.addEventInstance(data);
 
 			log.info('Received event instance id:'+id);
-			response.contentType = 'application/json';
 
-			response.sendRedirect('/TestApp2/event-instance/'+id);
+			response.sendRedirect('/TestApp2/index.jag');
+			return;
 
 			/*response.content = {
 				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;*/
