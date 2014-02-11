@@ -1,9 +1,9 @@
 <div>
 	<div class="list-group">
 		{{#each events.event}} <a href='{{url "/events/"}}{{id}}'
-			class="list-group-item"> {{name}} : {{description}} {{#if
+			class="list-group-item"><b>{{name}}</b>  : {{description}} {{#if
 			../role}}
-			<button onclick="deleteEvent({{id}});return false;" type="button"
+			<button style="min-height: 1px;height:100%" onclick="deleteEvent({{id}});return false;" type="button"
 				class="btn btn-danger btn-xs pull-right">delete</button>
 			<button onclick="editEvent({{id}});return false;" type="button"
 				style="" class="btn btn-warning btn-xs pull-right">edit</button>
