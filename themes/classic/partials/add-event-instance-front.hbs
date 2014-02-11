@@ -1,6 +1,6 @@
 
 <form id="myform" name="newEventInstance">
-	<font size="5">New Event Instance</font> <br /> <br />
+	<font size="5">Add New Event</font> <br /> <br />
 	<!-- 
 	<table id="eventInstance" class="styledLeft">		
 		<tbody>			
@@ -33,8 +33,8 @@
 		</tbody>
 	</table> -->
 	<!-- -->
-	<div class="row" style="height: 30px;">
-		<div class="col-md-10" style="width: 200px;">
+	<div class="row" style="height: 40px;">
+		<div class="col-md-10" style="width: 300px;">
 			<strong>Select from existing event template :</strong>
 		</div>
 		<div class="col-md-6">
@@ -53,8 +53,8 @@
 						 	    sel.appendChild(opt);
 						 	{{/each}}
 						 		var opt = document.createElement('option');
-						 	    opt.innerHTML = "create new event";
-						 	    opt.value = "create new event";
+						 	    opt.innerHTML = "create new event template";
+						 	    opt.value = "create new event template";
 						 	    sel.appendChild(opt);
 						 	   
 							</script>
@@ -62,14 +62,17 @@
 
 		</div>
 	</div>
-	<div class="row" style="height: 20px;"></div>
-	<div class="row" style="height: 30px;">
+	<div class="row" style="height: 40px;" align="justify">
+		<div class="col-md-10" style="width: 300px;"></div>
+		<div class="col-md-6" align="justify">OR</div>
+	</div>
+	<div class="row" style="height: 40px;">
 		<div>
-			<div class="col-md-10" style="width: 200px;"></div>
+			<div class="col-md-10" style="width: 300px;"></div>
 
 			<div class="col-md-6">
-				<a href="{{url "/add-event"}}" style="margin-left: 5px;">
-					Add New event template? </a>
+				<a href="{{url " /add-event"}}" style="margin-left: 5px;"> Add
+					New event template? </a>
 			</div>
 
 		</div>
@@ -123,8 +126,8 @@
 	}
 
 	function getActivitiesAndAwards() {
-		if(document.getElementById('events').value=="create new event"){
-			document.location.href="{{url " /addEvent.jag"}}";
+		if(document.getElementById('events').value=="create new event template"){
+			document.location.href="{{url "/add-event"}}";
 		}
 		else{
 			document.location.href = '{{url "/addEventInstanceSelected/"}}'
