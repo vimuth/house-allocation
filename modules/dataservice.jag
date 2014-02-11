@@ -924,6 +924,8 @@ function deleteActivityWinnerGroup(data){
 
 		}
 }
+
+
 function getEventAwardId(id){
 	
 var data = get(award_instance_url+ id,null,{

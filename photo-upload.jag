@@ -1,0 +1,59 @@
+<%
+var caramel;
+var log = new Log();
+var dataService = require('modules/dataservice.jag');
+//var eventList = dataService.getEventNames();
+var verb = request.getMethod();
+
+(function () {
+
+	var username=session.get('username');
+	var admin= session.get('role')=='admin';
+
+	if(username!="admin"){
+		response.sendRedirect("/TestApp2/login.jag");
+		return;
+	}
+
+	if (verb=='GET'){
+
+		caramel = require('caramel');
+		caramel.render({
+			'header':{
+			'username': username,
+			'role': admin,
+		},
+		'title': {
+		text :'Upload Photo'
+		},
+		'sidenav' :{
+		'admin': admin}
+		});
+
+	}
+
+	if (verb=='POST'){
+
+// 		var data = request.getContent();
+		var file = request.getFile("fileupload");
+		
+		log.info(file);
+		log.info(request.getAllFiles());
+		// 		caramel = require('caramel');
+		// 		caramel.render({
+		// 			'header':{
+		// 			'username': username,
+		// 			'role': admin,
+		// 		},
+		// 		'title': {
+		// 		text :'Upload Photo'
+		// 		},
+		// 		'sidenav' :{
+		// 		'admin': admin}
+		// 		});
+
+		}
+
+	}());
+	%>
+

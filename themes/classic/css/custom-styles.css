@@ -4,6 +4,7 @@
     }
     .navbar-toggle {
         display: block;
+        border-color: white;
     }
     .navbar-collapse.collapse {
         display: none!important;
@@ -22,6 +23,9 @@ ul.nav a:hover { color: #f47a20 !important; }
 	height: 100%;
 }
 
+.icon-bar {
+	background-color: #fff;
+}
 .panel-custom {
 	border-color: #333;
 }
@@ -52,11 +56,13 @@ ul.nav a:hover { color: #f47a20 !important; }
 	margin-left: 10px;
 }
 
-.element { .pull-left ();
-	
+
+.dropdown.open {
+    background: #fff;
 }
 
-.another-element { .pull-right ();
-	
+
+.dropdown.open .dropdown-toggle {
+    color: #000;
 }
 
