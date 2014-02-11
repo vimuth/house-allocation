@@ -56,7 +56,7 @@ function addEvent(data){
 			var activity = {
 				"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
 				var result = post(activities_url, activity, optionalHeaders, "json");
-			log.info("added activity model "+activity);
+				log.info("added activity model "+activity);
 		}
 
 		//get the awards passed by the data and add each award to wso2_hm_event_award_model one after the other
@@ -143,6 +143,8 @@ function getEventsWithKey(key){
 		return parse(result.data);
 }
 
+
+//get the activities and awards lists for a given event
 function getActivitiesAndAwardsForEvent(data){
 
 	var dataDup = {
@@ -157,6 +159,7 @@ function getActivitiesAndAwardsForEvent(data){
 		return eventActivitiesAndAwards;
 }
 
+//get activity for a given event_id
 function getActivitiesForEventID(id){
 	var data = get(newURl+'activities_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json");
@@ -166,6 +169,7 @@ function getActivitiesForEventID(id){
 		return parse(data.data);
 }
 
+//get awards for a given event_id
 function getAwardsForEventID(id){
 	var data = get(newURl+'awards_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json");
@@ -173,6 +177,8 @@ function getAwardsForEventID(id){
 		return parse(data.data);
 
 }
+
+
 function getAwardVotes(id){
 	var data = get(votes_url+ id,null,{
 		"Accept":"application/json"},"application/json");
@@ -181,6 +187,7 @@ function getAwardVotes(id){
 
 }
 
+//
 function updateEvent(event){
 	var headers = {
 		"Accept": "application/json"};
@@ -230,9 +237,11 @@ function updateEvent(event){
 			}
 }
 
+
 function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
+		log.info("received events list");
 		return parse(data.data);
 		//log.info(data.eventCollection);
 }
@@ -388,8 +397,9 @@ function getFutureEvents(){
 		"Accept":"application/json"},"application/json").data);
 
 		if(!(data.Entries == null)){
-			data.Entries = {'Entry':[]};
-			log.info("received data is null");
+			data.Entries = {
+				'Entry':[]};
+				log.info("received data is null");
 		}
 
 		if(!(data.Entries.Entry instanceof Array)){
@@ -470,7 +480,7 @@ function getPastEvents(){
 
 
 //getting the awards details award instance name, description, event instance name, description
-//referred from awards-list.jag 
+//referred from awards-list.jag
 function getAwards(){
 	var data = parse(get(url+'current-elections',null,{
 		"Accept":"application/json"},"application/json").data);
@@ -832,6 +842,11 @@ function deleteAwardWinnerIndividual(data){
 				});
 
 		}
+		if(data!=null){
+							log.info("deleted award winner individual datails ");
+				}else{
+					log.info(" not deleted award winner individual datails");
+				}
 }
 function deleteAwardWinnerGroup(data){
 	var headers = {
@@ -842,10 +857,20 @@ function deleteAwardWinnerGroup(data){
 				});
 
 		}
+		if(data!=null){
+							log.info("deleted award winner group datails ");
+				}else{
+					log.info(" not deleted award winner group datails");
+				}
 }
 
 //This function is used to add an activity ranking if the activity is a group activity
 function addActivityWinnerHouse(data){
+	if(data!=null){
+						log.info("adding activity winner house datails ");
+			}else{
+				log.info(" not adding activity winner housee datails");
+			}
 	try{
 		var headers = {
 			"Accept": "application/json"};
@@ -911,6 +936,12 @@ function deleteActivityWinnerIndividual(data){
 				});
 
 		}
+		if(data!=null){
+			log.info("deleted activity winner individual datails ");
+		}else{
+			log.info(" not deleted activity winner individual datails");
+		}
+
 }
 
 function deleteActivityWinnerGroup(data){
@@ -923,38 +954,52 @@ function deleteActivityWinnerGroup(data){
 				});
 
 		}
+		if(data!=null){
+			log.info("deleted activity winner group datails ");
+		}else{
+			log.info(" not deleted activity winner group datails");
+		}
 }
 function getEventAwardId(id){
-	
-var data = get(award_instance_url+ id,null,{
+
+	var data = get(award_instance_url+ id,null,{
 		"Accept":"application/json"},"application/json");
 		var voteData= parse(data.data);
+		if(data!=null){
+			log.info("received event award id");
+		}else{
+			log.info(" not received event award id");
+		}
 		return voteData;
 
-		
-		
+
+
 
 }
 
 function getEventAwardType(id){
-	
 
-		
-		var data = get(award_type_url+ id,null,{
+	var data = get(award_type_url+ id,null,{
 		"Accept":"application/json"},"application/json");
+
 		var voteData= parse(data.data);
+		if(data!=null){
+			log.info("received event award type :"+data);
+		}
 		return voteData;
 
 }
-function getHouse(id){
-	
 
-		
-		var data = get(house_url+ id,null,{
+function getHouse(id){
+
+	var data = get(house_url+ id,null,{
 		"Accept":"application/json"},"application/json");
+
 		var houseData= parse(data.data);
 		var houses= houseData.houseCollection.house;
-
+		if(data!=null){
+			log.info("received house data :"+data+"for given id :"+id);
+		}
 		return houses;
 
 }
