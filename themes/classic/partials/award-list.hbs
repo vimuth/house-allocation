@@ -23,7 +23,7 @@
 					<b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
 				</td>
 				<td ><button
-						onclick="vote('{{event_award_instance_id}}');return false;"
+						onclick="vote('{{event_award_instance_id}}','{{awardName}}','{{eventName}}');return false;"
 						type="button" class="btn btn-warning btn-xs" style="width: 80px;"><font size="2">Vote</font>
 						</button>
 				</td>
@@ -38,9 +38,9 @@
 </div>
 
 <script>
-	function vote(event_award_instance_id) {
+	function vote(event_award_instance_id,a_name,e_name) {
 		document.location.href = '{{url "/votes/"}}'
-				+ event_award_instance_id;
+				+ event_award_instance_id+"/"+a_name+"/"+e_name;
 
 	}
 </script>
