@@ -65,13 +65,7 @@ ul.nav a:hover {
 	margin-left: 10px;
 }
 
-.dropdown.open {
-	background: #fff;
-}
 
-.dropdown.open .dropdown-toggle {
-	color: #000;
-}
 
 .carousel-inner>.item>img {
 	margin: 0 auto;
@@ -81,10 +75,6 @@ ul.nav a:hover {
 	max-height: 225px;
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
-}
 
 /*----------------------------
     The file upload form

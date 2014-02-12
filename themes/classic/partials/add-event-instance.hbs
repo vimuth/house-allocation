@@ -47,9 +47,8 @@
 	<table class="table" id="activityTable">
 		<thead>
 			<tr>
-				<th>Name</th>				
-				<th>Group/Individual</th>
-				<th>Description</th>
+			<th></th>
+				<th>Acitivity</th>
 				<th>Activity Date</th>
 				<th>Venue</th>
 				<th>Additional info</th>
@@ -58,10 +57,10 @@
 		<tbody>
 			{{#each activities}}
 			<tr>
-				<td><input type="checkbox" id="{{name}}act"
-					onchange="activitySelectionChanged('{{name}}');">{{name}}</td>
-				<td>{{type}}</td>
-				<td>{{description}}</td>
+				<td ><input type="checkbox" id="{{name}}act"
+					onchange="activitySelectionChanged('{{name}}');"></td>
+					
+				<td style="width:30%">{{name}}<br>{{description}}<br>Activity type : {{type}}</td>
 
 				<td>
 					<div class='inputDate input-group date' id="{{name}}_act_datetime_set" style="visibility: hidden">
@@ -74,7 +73,7 @@
 				<td><input type="text" id="{{name}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
 				<td><textarea id="{{name}}_act_description" rows="4"
-						style="display:none" cols="40">{{description}}. Add more...</textarea></td>
+						style="display:none">{{description}}. Add more...</textarea></td>
 			</tr>
 			{{/each}}
 		</tbody>
