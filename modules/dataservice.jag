@@ -1,8 +1,8 @@
 <%
 
-newURl = 'http://192.168.3.11:9764/services/house_allocation/';
-var base_url = 'http://192.168.3.11:9764/services/house_allocation/';
-var url = 'http://192.168.3.11:9764/services/house_allocation/';
+newURl = 'http://localhost:9763/services/house_allocation/';
+var base_url = 'http://localhost:9763/services/house_allocation/';
+var url = 'http://localhost:9763/services/house_allocation/';
 
 var events_url = base_url + 'events/';
 var activities_url = base_url +'activities/';

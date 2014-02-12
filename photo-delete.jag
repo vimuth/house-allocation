@@ -88,7 +88,7 @@ var verb = request.getMethod();
 			file.del();
 		}
 
-		response.sendRedirect('/TestApp2');
+		response.sendRedirect('/TestApp2/delete-photo');
 
 	}
 }());
