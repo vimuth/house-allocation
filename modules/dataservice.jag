@@ -630,7 +630,7 @@ function addNominee(vote){
 		var optionalHeaders = {
 			"Accept":"application/json" };
 
-			var result = post(votes_url, vote, optionalHeaders, "json");
+			post(votes_url, vote, optionalHeaders, "json");
 
 			return true;
 	}

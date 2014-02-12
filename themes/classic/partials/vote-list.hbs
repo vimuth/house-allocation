@@ -262,6 +262,7 @@ function validateVoter() {
 
 		function addNominee() {
 			if (validateVoter()){
+			var type= "{{voter.type}}"
 
 			var award = "{{voter.eventId}}"
 			{{#each nominees}}
@@ -282,6 +283,7 @@ function validateVoter() {
 							"Nominee" : {
 								"name" : name,
 								"award" : award,
+								"type" : type,
 										}
 																		
 																		

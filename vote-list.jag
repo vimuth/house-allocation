@@ -5,8 +5,8 @@ var verb = request.getMethod();
 (function () {
 
 	//var username=session.get('username');
-	var username = "Udeshika"; // has to be removed and upper line should be uncommented once the LDap connection is set.
-	var admin= session.get('role')=='admin';
+	var username = "Vimuth"; // has to be removed and upper line should be uncommented once the LDap connection is set.
+	var admin= session.get('role')=='admin'; 
 
 	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
@@ -252,7 +252,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 			}
 			catch(e)
 			{
-				response.sendRedirect("/TestApp2/error.jag");
+				// response.sendRedirect("/TestApp2/error.jag");
 			}
 
 		}
