@@ -5,6 +5,15 @@ var dataService = require('modules/dataservice.jag');
 var eventList = dataService.getEventNames();
 var verb = request.getMethod();
 
+Handlebars = require('handlebars');
+
+Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+	if (a == b)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
+
 (function () {
 
 	var username=session.get('username');
