@@ -4,7 +4,7 @@
 	}
 	.navbar-toggle {
 		display: block;
-		border-color: white;
+		border-color: #f47a20;
 	}
 	.navbar-collapse.collapse {
 		display: none !important;
@@ -35,7 +35,7 @@ ul.nav a:hover {
 }
 
 .icon-bar {
-	background-color: #fff;
+	background-color: #f47a20;
 }
 
 .panel-custom {
