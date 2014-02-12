@@ -56,13 +56,13 @@
 				{{/if}}	
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><form class="navbar-form" role="search">
+				<li><form class="navbar-form" onsubmit="search(); return false;" role="search">
 						<div class="form-group">
 							<input style="background:#555555;border-color:#f47a20" type="text" id="searchText" class="form-control"
-								placeholder="Search" />
+								placeholder="Search" required />
 
 						</div>
-						<button type="button" style="color:#f47a20;border-color:#f47a20;background-color:black" class="btn btn-default" onclick="search();">Submit</button>
+						<button type="submit" style="color:#f47a20;border-color:#f47a20;background-color:black" class="btn btn-default">Submit</button>
 					</form></li>
 
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

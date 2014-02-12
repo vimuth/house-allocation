@@ -15,8 +15,10 @@ var log = new Log();
 
 	// 	try{
 	var dataService = require('modules/dataservice.jag');
+	
 	var data = dataService.getEvents();
 
+	
 	log.info(data);
 	caramel = require('caramel');
 	Handlebars = require('handlebars');
