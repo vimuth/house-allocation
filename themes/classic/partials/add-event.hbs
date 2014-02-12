@@ -31,29 +31,10 @@
 
 	</table>
 </div>
-<div style="padding-top: 10px">
-	Awards :
-	<table class="table" id="awardTable">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Vote</th>
-				<th>Type</th>
-			</tr>
-		</thead>
-		<tbody>
-
-		</tbody>
-
-	</table>
-</div>
 
 <button id="submitButton" type="submit" class="btn btn-default"
-	onclick="showHideCommon('newActivityPanel')">Add Activity</button>
-<button id="submitButton" type="submit" class="btn btn-default"
-	onclick="showHideCommon('newAwardPanel')">Add Award</button>
-
+	onclick="showHideCommon('newActivityPanel');$('#activityName').focus();">Add Activity</button>
+	
 <div id="newActivityPanel" class="panel panel-default"
 	style="display: none; margin-top: 10px">
 	<div class="panel-heading">Add New Activity</div>
@@ -85,6 +66,31 @@
 
 	</div>
 </div>
+
+
+<div style="padding-top: 10px">
+	Awards :
+	<table class="table" id="awardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Vote</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+
+	</table>
+</div>
+
+
+<button id="submitButton" type="submit" class="btn btn-default"
+	onclick="showHideCommon('newAwardPanel');$('#awardName').focus();">Add Award</button>
+
+
 
 <div id="newAwardPanel" class="panel panel-default"
 	style="display: none; margin-top: 10px">
