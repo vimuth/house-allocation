@@ -4,20 +4,24 @@ var log = new Log();
 var verb = request.getMethod();
 (function () {
 
-	var username=session.get('username');
-	var admin= session.get('role')=='admin';
+	//var username=session.get('username');
+	var username = "Vimuth"; // has to be removed and upper line should be uncommented once the LDap connection is set.
+	var admin= session.get('role')=='admin'; 
 
 	if(username==null){
 		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
 		return;
 	}
    var dataService = require('modules/dataservice.jag');
-   //var voter_id = dataService.getIDFromName(username);
+
 
 	if( verb=='POST')
 	{
 		
 		try {
+			var voter_idData = dataService.getIDFromName(username);
+                
+            var voter_id=voter_idData.Entries.Entry.id;
 			var id=0;
 			var data = request.getContent();
 			//log.info(data);
@@ -60,7 +64,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 }
 			var vote = new Object();
 			// voter_id to be taken from session
-			vote.voter_id = 70;
+			vote.voter_id = voter_id;
 			vote.nominee_id = id;
 			vote.event_award_instance_id =data.Nominee.award;
 			//vote.event_award_instance_id = awardId;
@@ -83,10 +87,15 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 	else{
 		if (verb=='GET'){
 			try{
+				var voter_idData = dataService.getIDFromName(username);
+                
+                var voter_id=voter_idData.Entries.Entry.id;
+               // log.info(voter_id);
+
 				var dataService = require('modules/dataservice.jag');
 				var nominees = [nominees];
 				var peopleNames = [peopleNames];
-				var voter_id=70;
+				//var voter_id=70;
 				var award_id ;
 				var uriMatcher = new URIMatcher(request.getRequestURI());
 
@@ -105,7 +114,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				voter.voterId= voter_id;
 				voter.eventId= award_id;
 				voter.type = type;
-
+				log.info(voter);
 
 				if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
 
@@ -125,8 +134,8 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 						"names" : peopleNames };
 						var pp = dataService.getId();
 						var houses=dataService.getHouseList();
-						log.info(pp.people);
-						log.info(houses);
+						//log.info(pp.people);
+						//log.info(houses);
 						caramel = require('caramel');
 						caramel.render({
 							'header':{
@@ -243,7 +252,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 			}
 			catch(e)
 			{
-				//response.sendRedirect("/TestApp2/error.jag");
+				// response.sendRedirect("/TestApp2/error.jag");
 			}
 
 		}
