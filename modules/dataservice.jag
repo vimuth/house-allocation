@@ -195,6 +195,7 @@ function updateEvent(data){
 	var headers = {
 		"Accept": "application/json"};
 
+	var event_id = data.event.id;
 		var result = post(url+'edit-event',data.event,headers,'json', function(data,xhr){
 			log.info("successfully updated the event");
 		});
@@ -204,7 +205,7 @@ function updateEvent(data){
 			for(var i=0;i<activities.length;i++){
 				var activity = {
 					"eventID":event_id,"name":activities[i].name,"description":activities[i].desc,"type":activities[i].type};
-					var result = post(activities_url, activity, optionalHeaders, "json");
+					var result = post(activities_url, activity, headers, "json");
 
 			}
 
@@ -212,7 +213,7 @@ function updateEvent(data){
 			for(var i=0;i<awards.length;i++){
 				var award = {
 					"event_id":event_id,"name":awards[i].name,"description":awards[i].description,"type":awards[i].type,"isVote":awards[i].isVote};
-					var result = post(awards_url, award, optionalHeaders, "json");
+					var result = post(awards_url, award, headers, "json");
 			}
 
 			var deletedActivities = data.deletedActivities;
@@ -227,14 +228,14 @@ function updateEvent(data){
 
 
 			for(var id in data.editedActivities){
-				var result = post(url+'activity/edit/',data.editedActivities[id] ,optionalHeaders,'json', function(data,xhr){
+				var result = post(url+'activity/edit/',data.editedActivities[id] ,headers,'json', function(data,xhr){
 					log.info("successfully updated the activity");
 				});
 
 			}
 
 			for(var id in data.editedAwards){
-				var result = post(url+'award/edit/',data.editedAwards[id] ,optionalHeaders,'json', function(data,xhr){
+				var result = post(url+'award/edit/',data.editedAwards[id] ,headers,'json', function(data,xhr){
 					log.info("successfully updated the award");
 				});
 			}

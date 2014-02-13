@@ -286,6 +286,28 @@
 
 			return true;
 		}
+		
+		//Delete a newly added award
+		function deleteNewAward(button){
+			
+			
+			var awdName = button.parent().parent().find('#awdName').html();
+			var awdDescription = button.parent().parent().find('#awdDescription').html();
+			var awdType = button.parent().parent().find('#awdType').html();
+			var awdIsVote = button.parent().parent().find('#awdIsVote').html();
+			
+			var index=-1
+			for(var i=0;i<activityList.length;i++){
+				if( awardList[i].name==awdName && awardList[i].description == awdDescription && awardList[i].type==awdType && awardList[i].isVote==isVote){
+					index = i;
+					break;
+				}
+			}
+			
+			button.parent().parent().remove();
+			awardList.splice(index, 1); 
+			
+		}
 
 		function addAward() {
 
@@ -298,10 +320,11 @@
 				var awardIsVote = document.getElementById('awardIsVote').checked;
 
 				$('#awardTable > tbody:last').append(
-						'<tr><td>' + awardName + '</td><td>'
-								+ awardDescription + '</td><td>'
-								+ awardIsVote + '</td><td>'
-								+ awardType + '</td></tr>');
+						'<tr><td id="awdName">' + awardName + '</td><td id="awdDescription">'
+								+ awardDescription + '</td><td id="awdIsVote">'
+								+ awardIsVote + '</td><td id="awdType">'
+								+ awardType + '</td><td></td>' 
+								+ '<td align="center" id="del-button"><button type="button" onclick="deleteNewAward($(this));" class="btn btn-danger btn-xs">delete</button></td></tr>');
 
 				var award = new Object();
 				award.name = awardName;
@@ -314,6 +337,29 @@
 				showHideCommon("newAwardPanel");
 			}
 		}
+		
+		//Delete a newly added activity
+		function deleteNewActivity(button){
+			
+			
+			var activityName = button.parent().parent().find('#actName').html();
+			var activityDescription = button.parent().parent().find('#actDesc').html();
+			var activityType = button.parent().parent().find('#actType').html();
+			
+			var index=-1
+			for(var i=0;i<activityList.length;i++){
+				if( activityList[i].name==activityName && activityList[i].desc == activityDescription && activityList[i].type==activityType){
+					index = i;
+					break;
+				}
+			}
+			
+			button.parent().parent().remove();
+			activityList.splice(index, 1); 
+			
+		}
+		
+		
 
 		function addActivity() {
 
@@ -325,9 +371,10 @@
 				var activityType = document.getElementById('activityType').value;
 
 				$('#activityTable > tbody:last').append(
-						'<tr><td>' + activityName + '</td><td>'
-								+ activityDescription + '</td><td>'
-								+ activityType + '</td></tr>');
+						'<tr><td id="actName"">' + activityName + '</td><td id="actDesc">'
+								+ activityDescription + '</td><td id="actType" align="center">'
+								+ activityType + '</td><td></td>' 
+								+ '<td align="center" id="del-button"><button type="button" onclick="deleteNewActivity($(this));" class="btn btn-danger btn-xs">delete</button></td></tr>');
 
 				var activity = new Object();
 				activity.name = activityName;
