@@ -1,17 +1,5 @@
 <form id="myform" name="newEventInstance">
 
-<<<<<<< HEAD
-			<tr>
-				<td>Event Name:</td>
-				<td><input type="text" name="eventInstanceName"
-					id="eventInstanceName" required></td>
-			</tr>
-			<tr>
-				<td>Description</td>
-				<td><textarea name="eventInstanceDescription"
-						id="eventInstanceDescription" rows="4" cols="40"></textarea></td>
-			</tr>
-=======
 	<div class="form-group">
 		<h4>
 			<label for="eventTempName">Event Template Name : </label> <label
@@ -51,7 +39,6 @@
 				class="glyphicon glyphicon-calendar"></span> </span>
 		</div>
 	</div>
->>>>>>> a2513185a83c8a14b49115a798ade82b9e406d6c
 
 </form>
 
@@ -125,14 +112,14 @@ If the award is to be decided by a vote set the start and end time for the vote.
 			{{#each awards}}
 			<tr>
 				<td><input type="checkbox" id="{{id}}award" onchange="awardSelectionChanged('{{id}}')"></td>
-				
+
 				<td style="width:30%">
 				<b>{{name}}</b></br>
 				{{description}}</br>
 				Type : {{type}}</br>
 				{{#if_eq isVote "true"}}<b>Vote</b>{{/if_eq}}{{#if_eq isVote "false"}}<b>Not a Vote</b>{{/if_eq}}
 				</td>
-				
+
 				<td>
 					<div class='inputDate input-group date' id="{{id}}_awd_start_set"
 						style="visibility: hidden">
@@ -173,9 +160,9 @@ If the award is to be decided by a vote set the start and end time for the vote.
 </div>
 
 <script type="text/javascript"> 
-	
+
 	var eventInstList = [];
-	
+
 	function showHideCommon() {
         var theDiv = document.getElementById('activitySection');
         theDiv.style.display = "";
@@ -200,7 +187,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 			} else {
 				theDiv.style.visibility = "hidden";
 			}
-		
+
     }
 
 
@@ -283,7 +270,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 	        		fault=true;
 	        		return false;
 	        	}
-	        	
+
 					var awardInstance = new Object();
 	    			awardInstance.awardName = awardName;
 	    			awardInstance.awardID = "{{id}}";
@@ -318,43 +305,38 @@ If the award is to be decided by a vote set the start and end time for the vote.
         $('#addButton').click(function() {
         	instStartVal = document.getElementById('startDate').value;
         	instEndVal = document.getElementById('endDate').value;
-        	if(document.getElementById("eventInstanceName").value==""){
-        		alert("Please enter a name for the event");
+        	if(instStartVal=="" || instEndVal==""){
+        		alert("Please enter dates for the event");
         	}
         	else{
-	        	if(instStartVal=="" || instEndVal==""){
-	        		alert("Please enter dates for the event");
-	        	}
-	        	else{
-		        	instStart = new Date(instStartVal);
-		        	instEnd = new Date(instEndVal);
+	        	instStart = new Date(instStartVal);
+	        	instEnd = new Date(instEndVal);
 
-		        	if (instStart > instEnd){
-		        		alert("Incompatible End Date and Start Date for the event");
-		        	}
-		        	
-		        	else{
-			        	if (addEventInstance()){
-				       		var eventInstName = document.getElementById('eventInstanceName').value;
-							var eventName = "{{evName}}";
-							var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-							var eventInstStartDate = document.getElementById('startDate').value;
-							var eventInstEndDate = document.getElementById('endDate').value;
-				               $.ajax({
-				              type: "POST",
-				              contentType: "application/json",
-				              url: '{{url "/add-event-instance.jag"}}',
-				              
-				              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
-				              success : function(
-										msg) {
-									if(msg.redirect){
-										window.location = msg.url;
-									};
-								}
-				           });
-			           }
-		       		}
+	        	if (instStart > instEnd){
+	        		alert("Incompatible End Date and Start Date for the event");
+	        	}
+
+	        	else{
+		        	if (addEventInstance()){
+			       		var eventInstName = document.getElementById('eventInstanceName').value;
+						var eventName = "{{evName}}";
+						var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+						var eventInstStartDate = document.getElementById('startDate').value;
+						var eventInstEndDate = document.getElementById('endDate').value;
+			               $.ajax({
+			              type: "POST",
+			              contentType: "application/json",
+			              url: '{{url "/add-event-instance.jag"}}',
+
+			              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
+			              success : function(
+									msg) {
+								if(msg.redirect){
+									window.location = msg.url;
+								};
+							}
+			           });
+		           }
 	       		}
        		}
         });
@@ -364,10 +346,3 @@ If the award is to be decided by a vote set the start and end time for the vote.
 
     
     </script>
-
-
-
-
-
-
-

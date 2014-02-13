@@ -16,7 +16,7 @@
 
 
 							<option value="select an event template">Select an Event Template</option>
-								
+
 							{{#each event_name}}
 								<option value="{{name}}">{{name}}</option> 
 							{{/each}}
@@ -39,106 +39,6 @@
 
 </table>
 
-<<<<<<< HEAD
-<form id="myform" name="newEventInstance">
-	<font size="5">Add New Event</font> <br /> <br />
-	<!-- 
-	<table id="eventInstance" class="styledLeft">		
-		<tbody>			
-			<tr>
-				<td style="width: 150px;">Event Template :</td>
-				<td></td>
-				<td><select name="events" id="events"
-					onchange="getActivitiesAndAwards()">
-						<option value="select an event template" style="width: 320px;">Select an
-							Event Template</option>
-
-						<script type="text/javascript">
-
-						 var sel = document.getElementById('events');  
-						 	{{#each event_name}}
-						 		var opt = document.createElement('option');
-						 	    opt.innerHTML = "{{name}}";
-						 	    opt.value = "{{name}}";
-						 	    sel.appendChild(opt);
-						 	{{/each}}
-
-
-							</script>
-
-				</select> <a href="{{url "/addEvent.jag"}} " style="margin-left: 5px;">New
-						Event Template?</a></td>
-			</tr>
-
-
-		</tbody>
-	</table> -->
-	<!-- -->
-	<div class="row" style="height: 40px;">
-		<div class="col-md-10" style="width: 300px;">
-			<strong>Select from existing event template :</strong>
-		</div>
-		<div class="col-md-6">
-			<select name="events" id="events" onchange="getActivitiesAndAwards()">
-				<option value="select an event template" style="width: 320px;">Select
-					an Event Template</option>
-			</select>
-
-			<script type="text/javascript">
-
-						 var sel = document.getElementById('events');  
-						 	{{#each event_name}}
-						 		var opt = document.createElement('option');
-						 	    opt.innerHTML = "{{name}}";
-						 	    opt.value = "{{name}}";
-						 	    sel.appendChild(opt);
-						 	{{/each}}
-						 		var opt = document.createElement('option');
-						 	    opt.innerHTML = "create new event template";
-						 	    opt.value = "create new event template";
-						 	    sel.appendChild(opt);
-						 	   
-							</script>
-
-
-		</div>
-	</div>
-	<div class="row" style="height: 40px;" align="justify">
-		<div class="col-md-10" style="width: 300px;"></div>
-		<div class="col-md-6" align="justify">OR</div>
-	</div>
-	<div class="row" style="height: 40px;">
-		<div>
-			<div class="col-md-10" style="width: 300px;"></div>
-
-			<div class="col-md-6">
-				<a href='{{url "/add-event"}}' style="margin-left: 5px;"> Add
-					New event template? </a>
-			</div>
-
-		</div>
-	</div>
-	<!-- -->
-</form>
-
-<div style="padding-top: 10px; display: none;" id="activitySection">
-	Activities :
-	<table class="table" id="activityTable">
-
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Type</th>
-			</tr>
-		</thead>
-		<tbody>
-
-		</tbody>
-
-	</table>
-=======
->>>>>>> a2513185a83c8a14b49115a798ade82b9e406d6c
 </div>
 </div>
 
@@ -146,7 +46,7 @@
 
 	function getActivitiesAndAwards() {
 		if (document.getElementById('events').value == "create new event template") {
-			document.location.href = "{{url "/add - event"}}";
+			document.location.href = "{{url "/add-event"}}";
 		} else {
 			document.location.href = "{{url "/addEventInstanceSelected/"}}"
 					+ document.getElementById('events').value;
@@ -157,10 +57,4 @@
 		document.location.href = '{{url "/"}}';
 	} 
 </script>
-
-
-
-
-
-
 
