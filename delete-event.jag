@@ -15,12 +15,12 @@ log.info("got here : "+verb);
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/delete-event/{id}')) {
+	if(uriMatcher.match('/HouseManagement/delete-event/{id}')) {
 		if(verb=='GET'){
 			// 			try{
 
@@ -58,7 +58,7 @@ log.info("got here : "+verb);
 				// 			}
 				// 			catch(e){
 				// 				log.error(e);
-				// 				response.sendRedirect("/TestApp2/error.jag");
+				// 				response.sendRedirect("/HouseManagement/error.jag");
 				// 			}
 				}
 				else{
@@ -83,7 +83,7 @@ log.info("got here : "+verb);
 
 		}
 		else{
-			response.sendRedirect("/TestApp2/event-list.jag");
+			response.sendRedirect("/HouseManagement/event-list.jag");
 			return;
 		}
 

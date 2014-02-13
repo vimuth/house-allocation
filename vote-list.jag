@@ -9,7 +9,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin'; 
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
    var dataService = require('modules/dataservice.jag');
@@ -74,13 +74,13 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 			{
 				response.contentType = 'application/json';
 				response.content = {
-					'redirect':true, 'url':'/TestApp2/award-list.jag'} ;
+					'redirect':true, 'url':'/HouseManagement/award-list.jag'} ;
 			}
 
 		}
 		catch (e) {
 			log.error(e.toString());
-			response.sendRedirect("/TestApp2/error.jag");
+			response.sendRedirect("/HouseManagement/error.jag");
 		}
 
 	}
@@ -101,7 +101,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				var award_id ;
 				var uriMatcher = new URIMatcher(request.getRequestURI());
 
-				if(uriMatcher.match('/TestApp2/votes/{id}/{name}/{event}'))
+				if(uriMatcher.match('/HouseManagement/votes/{id}/{name}/{event}'))
 				{
 					award_id = uriMatcher.elements().id;
 					award_name =uriMatcher.elements().name;
@@ -259,7 +259,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 			}
 			catch(e)
 			{
-				// response.sendRedirect("/TestApp2/error.jag");
+				// response.sendRedirect("/HouseManagement/error.jag");
 			}
 
 		}

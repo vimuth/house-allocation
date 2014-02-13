@@ -20,7 +20,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("/HouseManagement/login.jag");
 		return;
 	}
 
@@ -39,13 +39,13 @@ log.info(verb);
 			response.contentType = 'application/json';
 
 			response.content = {
-				'redirect':true, 'url':'/TestApp2/event-instance/'+id} ;
+				'redirect':true, 'url':'/HouseManagement/event-instance/'+id} ;
 				
 			return;
 
 		} catch (e) {
 			log.error(e.toString());
-			response.sendRedirect("/TestApp2/error.jag");
+			response.sendRedirect("/HouseManagement/error.jag");
 		}
 
 	}
@@ -54,7 +54,7 @@ log.info(verb);
 
 			var uriMatcher = new URIMatcher(request.getRequestURI());
 			//log.info(request.getRequestURI);
-			if(uriMatcher.match('/TestApp2/addEventInstanceSelected/{name}')) {
+			if(uriMatcher.match('/HouseManagement/addEventInstanceSelected/{name}')) {
 
 				log.info(uriMatcher.elements().name);
 

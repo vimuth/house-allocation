@@ -13,7 +13,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 
@@ -29,12 +29,12 @@ var verb = request.getMethod();
 				
 			response.contentType = 'application/json';
 			response.content = {
-				'redirect':true, 'url':'/TestApp2/events/'+data.event.id} ;
+				'redirect':true, 'url':'/HouseManagement/events/'+data.event.id} ;
 
-
+			return;
 		} catch (e) {
 			log.error(e.toString());
-			response.sendRedirect("/TestApp2/error.jag");
+			response.sendRedirect("/HouseManagement/error.jag");
 		}
 
 	}
@@ -42,7 +42,7 @@ var verb = request.getMethod();
 		if (verb=='GET'){
 
 			var uriMatcher = new URIMatcher(request.getRequestURI());
-			if(uriMatcher.match('/TestApp2/edit-event/{id}')) {
+			if(uriMatcher.match('/HouseManagement/edit-event/{id}')) {
 				try{
 
 
@@ -77,7 +77,7 @@ var verb = request.getMethod();
 
 			}
 			else{
-				response.sendRedirect("/TestApp2/event-list.jag");
+				response.sendRedirect("/HouseManagement/event-list.jag");
 				return;
 			}
 

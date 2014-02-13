@@ -9,14 +9,14 @@ var log = new Log();
 	log.info(admin);
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 	var dataService = require('modules/dataservice.jag');
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	//if the URL is for current events
-	// 	if(uriMatcher.match('/TestApp2/current-events')){
+	// 	if(uriMatcher.match('/HouseManagement/current-events')){
 	var data = dataService.getFutureEvents();
 
 	log.info(data);

@@ -10,7 +10,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 
@@ -25,11 +25,11 @@ var verb = request.getMethod();
 			response.contentType = 'application/json';
 
 			response.content = {
-				'redirect':true, 'url':'/TestApp2/events/'+id} ;
+				'redirect':true, 'url':'/HouseManagement/events/'+id} ;
 
 		} catch (e) {
 			log.error(e.toString());
-			response.sendRedirect("/TestApp2/error.jag");
+			response.sendRedirect("/HouseManagement/error.jag");
 		}
 
 	}

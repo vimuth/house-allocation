@@ -26,12 +26,12 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		var admin= session.get('role')=='admin';
 
 		if(username==null){
-			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+			response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 			return;
 		}
 
 		var uriMatcher = new URIMatcher(request.getRequestURI());
-		if(uriMatcher.match('/TestApp2/house/{id}')) {
+		if(uriMatcher.match('/HouseManagement/house/{id}')) {
 
 			// 			try{
 
@@ -58,7 +58,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		}
 		// 			catch(e){
 		// 				log.error(e);
-		// 				response.sendRedirect("/TestApp2/error.jag");
+		// 				response.sendRedirect("/HouseManagement/error.jag");
 		// 			}
 
 

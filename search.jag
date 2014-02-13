@@ -11,7 +11,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("/HouseManagement/login.jag");
 		return;
 	}
 
@@ -19,7 +19,7 @@ var verb = request.getMethod();
 
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 		log.info(request.getRequestURI);
-		if(uriMatcher.match('/TestApp2/search/{name}')) {
+		if(uriMatcher.match('/HouseManagement/search/{name}')) {
 			try{
 				var eventName = uriMatcher.elements().name;
 				var data = {
@@ -44,7 +44,7 @@ var verb = request.getMethod();
 				log.error(e);
 			}
 		}
-		else if(uriMatcher.match('/TestApp2/search/')) {
+		else if(uriMatcher.match('/HouseManagement/search/')) {
 			try{
 				var data = {
 					"eventName":""};

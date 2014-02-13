@@ -54,7 +54,7 @@ var verb = request.getMethod();
 				return;
 			}
 			else{
-				response.sendRedirect("/TestApp2/error.jag");
+				response.sendRedirect("/HouseManagement/error.jag");
 				return;
 			}
 		}

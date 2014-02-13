@@ -11,7 +11,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("/HouseManagement/login.jag");
 		return;
 	}
 
@@ -38,7 +38,7 @@ var verb = request.getMethod();
 		var file = request.getFile("userfile");
 		file.move("/images/"+file.getName());
 
-		response.sendRedirect("/TestApp2/");
+		response.sendRedirect("/HouseManagement/");
 
 	}
 

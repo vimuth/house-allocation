@@ -46,7 +46,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 		var username=session.get('username');
 
 		if(username!='admin'){
-			response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+			response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 			return;
 		}
 
@@ -57,7 +57,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 
 		if(verb=='GET'){
-			if(uriMatcher.match('/TestApp2/edit-event-instance/{id}')) {
+			if(uriMatcher.match('/HouseManagement/edit-event-instance/{id}')) {
 				var id = uriMatcher.elements().id;
 				var data = dataService.getEventInstance(id);
 
@@ -83,11 +83,11 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				// 			}
 				// 			catch(e){
 				// 				log.error(e);
-				// 				response.sendRedirect("/TestApp2/error.jag");
+				// 				response.sendRedirect("/HouseManagement/error.jag");
 				// 			}
 			}
 			else{
-				// 		response.sendRedirect("/TestApp2/event-list.jag");
+				// 		response.sendRedirect("/HouseManagement/event-list.jag");
 				return;
 			}
 		}

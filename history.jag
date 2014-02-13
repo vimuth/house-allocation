@@ -9,7 +9,7 @@ var log = new Log();
 	log.info(admin);
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 	var dataService = require('modules/dataservice.jag');
@@ -17,7 +17,7 @@ var log = new Log();
 	// 	var uriMatcher = new URIMatcher(request.getRequestURI());
 
 	//if the URL is for the history
-	// 	if(uriMatcher.match('/TestApp2/history')){
+	// 	if(uriMatcher.match('/HouseManagement/history')){
 	var data = dataService.getPastEvents();
 
 	log.info(data);

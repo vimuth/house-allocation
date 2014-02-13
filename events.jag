@@ -12,12 +12,12 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 
 	var uriMatcher = new URIMatcher(request.getRequestURI());
-	if(uriMatcher.match('/TestApp2/events/{id}')) {
+	if(uriMatcher.match('/HouseManagement/events/{id}')) {
 		if(verb=='GET'){
 			try{
 
@@ -50,12 +50,12 @@ var verb = request.getMethod();
 			}
 			catch(e){
 				log.error(e);
-				response.sendRedirect("/TestApp2/error.jag");
+				response.sendRedirect("/HouseManagement/error.jag");
 			}
 		}
 	}
 	else{
-		response.sendRedirect("/TestApp2/event-list.jag");
+		response.sendRedirect("/HouseManagement/event-list.jag");
 		return;
 	}
 

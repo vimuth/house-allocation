@@ -11,7 +11,7 @@ var log = new Log();
 	var username=session.get('username');
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 

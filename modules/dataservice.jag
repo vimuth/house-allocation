@@ -191,11 +191,11 @@ function getAwardVotes(id){
 }
 
 //
-function updateEvent(event){
+function updateEvent(data){
 	var headers = {
 		"Accept": "application/json"};
 
-		var result = post(url+'edit-event',event,headers,'json', function(data,xhr){
+		var result = post(url+'edit-event',data.event,headers,'json', function(data,xhr){
 			log.info("successfully updated the event");
 		});
 

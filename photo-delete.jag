@@ -13,7 +13,7 @@ var verb = request.getMethod();
 	var username=session.get('username');
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag?"+request.getRequestURI());
+		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
 
@@ -88,7 +88,7 @@ var verb = request.getMethod();
 			file.del();
 		}
 
-		response.sendRedirect('/TestApp2/delete-photo');
+		response.sendRedirect('/HouseManagement/delete-photo');
 
 	}
 }());

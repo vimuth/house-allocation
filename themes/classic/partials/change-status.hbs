@@ -80,7 +80,7 @@ function deactivate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=deactivate&name="+name),
+		url : encodeURI('{{url "/api/HouseManagement.jag"}}'+"?operation=deactivate&name="+name),
 		data : {},
 		success : function(
 				msg) {
@@ -99,7 +99,7 @@ function activate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=activate&name="+name),
+		url : encodeURI('{{url "/api/HouseManagement.jag"}}'+"?operation=activate&name="+name),
 		data : {},
 		success : function(
 				msg) {

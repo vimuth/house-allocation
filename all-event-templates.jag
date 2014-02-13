@@ -10,7 +10,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("/HouseManagement/login.jag");
 		return;
 	}
 
@@ -18,7 +18,7 @@ var verb = request.getMethod();
 
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 		log.info(request.getRequestURI);
-		if(uriMatcher.match('/TestApp2/all-event-templates/')) {
+		if(uriMatcher.match('/HouseManagement/all-event-templates/')) {
 			try{
 					var events= dataService.getEvents();
 					log.info("received all events : "+events);
