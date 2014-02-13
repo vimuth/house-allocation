@@ -1,18 +1,62 @@
-<h4>Select files you want to delete</h4>
-<form action="delete-photo" method="post">
-	<div class="form-group col-sm-offset-2 col-sm-10">
-		{{#each file}}
-		<div class="checkbox">
-			<label> <input type="checkbox" name="name" value="{{name}}">
-				{{name}}
-			</label>
-		</div>
-		{{/each}}
-	</div>
 
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+<div class="well"><h4>Select files you want to delete by clicking on them</h4></div>
+<form action="delete-photo" method="post">
+	<div class="form-group col-sm-offset-0 col-sm-10">
+		<div class="col-sm-offset-0 col-sm-10">
 			<button type="submit" class="btn btn-danger">Delete</button>
 		</div>
+		<table>
+			{{#each file}}
+			<tr>
+				<td>{{#if name1}}
+					<div style="position: relative; padding: 10px">
+						<img src="/TestApp2/images/{{name1}}" width="300" height="200" onclick="selectImage($(this))">
+						<label> <input hidden type="checkbox" name="name" id="checkbox"
+							value="{{name1}}"
+							style="position: absolute; width: 10px; left: 10px; top: 10px;"  >
+						</label>
+					</div> {{/if}}
+				</td>
+				<td>{{#if name2}}
+					<div style="position: relative; padding: 10px">
+						<img src="/TestApp2/images/{{name2}}" width="300" height="200" onclick="selectImage($(this))">
+						<label> <input hidden type="checkbox" name="name" id="checkbox"
+							value="{{name2}}"
+							style="position: absolute; width: 10px; left: 10px; top: 10px;">
+						</label>
+					</div>{{/if}}
+				</td>
+				<td>{{#if name3}}
+					<div style="position: relative; padding: 10px">
+						<img src="/TestApp2/images/{{name3}}" width="300" height="200" onclick="selectImage($(this))">
+						<label> <input hidden type="checkbox" name="name" id="checkbox"
+							value="{{name3}}"
+							style="position: absolute; width: 10px; left: 10px; top: 10px;">
+						</label>
+					</div>{{/if}}
+				</td>
+			</tr>
+			{{/each}}
+		</table>
+
 	</div>
+
+
 </form>
+
+<script>
+
+function selectImage(image){
+	
+	if(!image.parent().find('#checkbox').is(':checked')){
+		image.parent().find('#checkbox').prop('checked', true);
+		image.css('border','5px solid #d9534f')
+	}
+	else{
+		image.parent().find('#checkbox').prop('checked', false);
+		image.css('border','none')
+	}
+	
+}
+
+</script>

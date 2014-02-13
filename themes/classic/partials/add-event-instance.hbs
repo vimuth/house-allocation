@@ -1,17 +1,6 @@
-
 <form id="myform" name="newEventInstance">
-	<table id="eventInstance" class="styledLeft">
-		<thead>
-			<tr>
-				<th colspan="2">New Event</th>
-			</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td>Event Template Name:</td>
-			<td>{{evName}}<a href="{{url "/add-event-instance-front.jag"}} " style="margin-left: 5px;">A Different Event?</a></td>
-		</tr>
 
+<<<<<<< HEAD
 			<tr>
 				<td>Event Name:</td>
 				<td><input type="text" name="eventInstanceName"
@@ -22,32 +11,59 @@
 				<td><textarea name="eventInstanceDescription"
 						id="eventInstanceDescription" rows="4" cols="40"></textarea></td>
 			</tr>
+=======
+	<div class="form-group">
+		<h4>
+			<label for="eventTempName">Event Template Name : </label> <label
+				id="eventTempName">{{evName}}</label>
+		</h4>
+	</div>
 
-			<tr>
-				<td><label for="inputDate">Start Date : </label>
-					<div class='inputDate input-group date' id='startDateSet'>
-						<input type='text' class="form-control" id='startDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
-					</div>
-				</td>
-				<td><label for="inputDate">End Date : </label>
-					<div class='inputDate input-group date' id='endDateSet'>
-						<input type='datetime' class="form-control" id='endDate' data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" onchange="compareDates('startDate','endDate')" />
-						<span class="input-group-addon" onchange="compareDates('startDate','endDate')"><span
-							class="glyphicon glyphicon-calendar"></span> </span>
-					</div>
-				</td>
-			</tr>
+	<div class="form-group">
+		<label for="eventInstanceName">Event Name</label> <input
+			class="form-control" type="text" name="eventInstanceName"
+			id="eventInstanceName" value="{{evName}}" placeholder="{{evName}}">
+	</div>
 
-		</tbody>
-	</table>
+	<div class="form-group">
+		<label for="eventInstanceDescription">Description</label>
+		<textarea class="form-control" id="eventInstanceDescription" rows="4"></textarea>
+	</div>
+
+	<div class="form-group">
+		<label for="inputDate">Start Date : </label>
+		<div class='inputDate input-group date' id='startDateSet'>
+			<input type='text' class="form-control" id='startDate'
+				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}" /> <span
+				class="input-group-addon"><span
+				class="glyphicon glyphicon-calendar"></span> </span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputDate">End Date : </label>
+		<div class='inputDate input-group date' id='endDateSet'>
+			<input type='datetime' class="form-control" id='endDate'
+				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"
+				onchange="compareDates('startDate','endDate')" /> <span
+				class="input-group-addon"
+				onchange="compareDates('startDate','endDate')"><span
+				class="glyphicon glyphicon-calendar"></span> </span>
+		</div>
+	</div>
+>>>>>>> a2513185a83c8a14b49115a798ade82b9e406d6c
+
 </form>
-<div style="padding-top: 10px;" id="activitySection">
-	Activities :
-	<table class="table" id="activityTable">
+
+<div class="well"><b>
+Select the activities you want to add to the event and set the time and venue and edit the description as required.  </b> 
+</div>
+<div id="activitySection">
+	<h4>Activities :</h4>
+	<table style="padding-top: 0;" class="table" id="activityTable">
 		<thead>
 			<tr>
-			<th></th>
+				<th></th>
 				<th>Acitivity</th>
 				<th>Activity Date</th>
 				<th>Venue</th>
@@ -57,38 +73,50 @@
 		<tbody>
 			{{#each activities}}
 			<tr>
-				<td ><input type="checkbox" id="{{id}}act"
+				<td><input type="checkbox" id="{{id}}act"
 					onchange="activitySelectionChanged('{{id}}');"></td>
-					
-				<td style="width:30%">{{name}}<br>{{description}}<br>Activity type : {{type}}</td>
+
+				<td style="width: 30%"><b>{{name}}</b><br>{{description}}<br>
+					{{#if_eq type "I"}}<b>Individual Activity</b>{{/if_eq}}{{#if_eq type "G"}}<b>Group Activity</b>{{/if_eq}}
+					</td>
 
 				<td>
-					<div class='inputDate input-group date' id="{{id}}_act_datetime_set" style="visibility: hidden">
+					<div class='inputDate input-group date'
+						id="{{id}}_act_datetime_set" style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_act_datetime"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-						<span class="input-group-addon" ><span  class="glyphicon glyphicon-calendar"></span> </span>
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
 				</td>
 
-				<td><input type="text" id="{{id}}_act_venue"
+				<td><input class="form-control" type="text" id="{{id}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
-				<td><textarea id="{{id}}_act_description" rows="4"
-						style="display:none">{{description}}. Add more...</textarea></td>
+				<td style="width: 30%">
+					<div class="form-group">
+						<textarea style="display: none" class="form-control" id="{{id}}_act_description"
+							rows="4">{{description}}.</textarea>
+					</div> 
+				</td>
 			</tr>
 			{{/each}}
 		</tbody>
 
 	</table>
 </div>
+
+<div class="well"><b>
+Select the awards you want to add to the event.</br>
+If the award is to be decided by a vote set the start and end time for the vote.  </b> 
+</div>
+
 <div style="padding-top: 10px;" id="awardSection">
-	Awards :
+	<h4>Awards :</h4>
 	<table class="table" id="awardTable">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Group/Individual</th>
-				<th>Is Votable?</th>
+				<th></th>
+				<th>Award</th>
 				<th>Voting Start Date</th>
 				<th>Voting End Date</th>
 			</tr>
@@ -96,22 +124,31 @@
 		<tbody>
 			{{#each awards}}
 			<tr>
-				<td><input type="checkbox" id="{{id}}award"
-					onchange="awardSelectionChanged('{{id}}')">{{name}}</td>
-				<td>{{description}}</td>
-				<td>{{type}}</td>
-				<td>{{isVote}}</td>
-
+				<td><input type="checkbox" id="{{id}}award" onchange="awardSelectionChanged('{{id}}')"></td>
+				
+				<td style="width:30%">
+				<b>{{name}}</b></br>
+				{{description}}</br>
+				Type : {{type}}</br>
+				{{#if_eq isVote "true"}}<b>Vote</b>{{/if_eq}}{{#if_eq isVote "false"}}<b>Not a Vote</b>{{/if_eq}}
+				</td>
+				
 				<td>
-					<div class='inputDate input-group date' id="{{id}}_awd_start_set" style="visibility: hidden">
-						<input type='text' class="form-control" id="{{id}}_awd_start" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					<div class='inputDate input-group date' id="{{id}}_awd_start_set"
+						style="visibility: hidden">
+						<input type='text' class="form-control" id="{{id}}_awd_start"
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
 				</td>
 				<td>
-					<div class='inputDate input-group date' id="{{id}}_awd_end_set" style="visibility: hidden">
-						<input type='text' class="form-control" id="{{id}}_awd_end" data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" />
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span> </span>
+					<div class='inputDate input-group date' id="{{id}}_awd_end_set"
+						style="visibility: hidden">
+						<input type='text' class="form-control" id="{{id}}_awd_end"
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
 				</td>
 				<script type="text/javascript">
@@ -129,11 +166,10 @@
 
 	</table>
 </div>
-<div style="padding-top: 10px;" id="addCancelSection">
-	<input type="button" id="addButton" class="button" value="Add"
-		onclick="addEventInstance();" /> <input style="margin-left: 5px;"
-		type="button" class="button" value="Cancel"
-		onclick="cancel();" />
+
+<div class="btn-group pull-right" style="margin-bottom:40px">
+	<input class="btn btn-success" type="button" id="addButton" value="Add" onclick="addEventInstance();" /> 
+	<input style="margin-left: 5px;" class="btn btn-warning" type="button" value="Cancel" onclick="cancel();" />
 </div>
 
 <script type="text/javascript"> 

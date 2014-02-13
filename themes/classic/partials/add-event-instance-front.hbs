@@ -1,4 +1,45 @@
+<div class="panel">
+<div style="text-align:center" class="panel-heading">
+<h3><b>Add New Event</b></h3>
+</div>
 
+<div class="panel-body">
+
+<table class="table">
+	<tr>
+		<td style="text-align: right;padding-top:12px; border:none">Select from existing event template :</td>
+		<td style="border:none">
+			<form id="myform" name="newEventInstance">
+
+				<div class="form-group pull-left">
+						<select id="events" class="form-control" onchange="getActivitiesAndAwards(); ">
+
+
+							<option value="select an event template">Select an Event Template</option>
+								
+							{{#each event_name}}
+								<option value="{{name}}">{{name}}</option> 
+							{{/each}}
+
+							<option value="create new event template">create new event template</option>
+						</select>
+				</div>
+
+			</form>
+		</td>
+	</tr>
+
+	<tr style="text-align: center;padding-top:0px">
+		<td style="text-align: center;padding-top:0px;border:none"" colspan=2><h2 style="text-align: center;margin-top:0px">Or</h2></td>
+	</tr>
+
+	<tr style="text-align: center">
+		<td style="border:none" colspan=2><a href="{{url "/add-event"}}"><button class="btn btn-success">Add New Event Template</button></a></td>
+	</tr>
+
+</table>
+
+<<<<<<< HEAD
 <form id="myform" name="newEventInstance">
 	<font size="5">Add New Event</font> <br /> <br />
 	<!-- 
@@ -96,48 +137,25 @@
 		</tbody>
 
 	</table>
+=======
+>>>>>>> a2513185a83c8a14b49115a798ade82b9e406d6c
 </div>
-<div style="padding-top: 10px; display: none;" id="awardSection">
-	Awards :
-	<table class="table" id="awardTable">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Vote</th>
-				<th>Type</th>
-			</tr>
-		</thead>
-		<tbody>
-
-		</tbody>
-
-	</table>
 </div>
 
 <script type="text/javascript">
-	var eventInstList = [];
-
-	function showHideCommon() {
-		var theDiv = document.getElementById('activitySection');
-		theDiv.style.display = "";
-		theDiv = document.getElementById('awardSection');
-		theDiv.style.display = "";
-	}
 
 	function getActivitiesAndAwards() {
-		if(document.getElementById('events').value=="create new event template"){
-			document.location.href="{{url "/add-event"}}";
-		}
-		else{
-			document.location.href = '{{url "/addEventInstanceSelected/"}}'
-				+ document.getElementById('events').value;
+		if (document.getElementById('events').value == "create new event template") {
+			document.location.href = "{{url "/add - event"}}";
+		} else {
+			document.location.href = "{{url "/addEventInstanceSelected/"}}"
+					+ document.getElementById('events').value;
 		}
 	}
 
 	function cancel() {
 		document.location.href = '{{url "/"}}';
-	}
+	} 
 </script>
 
 

@@ -1,20 +1,21 @@
 <%
 
 newURl = 'http://localhost:9763/services/house_allocation/';
+var base_url = 'http://localhost:9763/services/house_allocation/';
 var url = 'http://localhost:9763/services/house_allocation/';
 
-var events_url = 'http://localhost:9763/services/house_allocation/events/';
-var activities_url = 'http://localhost:9763/services/house_allocation/activities/';
-var awards_url = 'http://localhost:9763/services/house_allocation/awards/';
-var awards_instance_url = 'http://localhost:9763/services/house_allocation/awards_instance/';
-var event_instance_url='http://localhost:9763/services/house_allocation/event_instance';
-var votes_url = 'http://localhost:9763/services/house_allocation/votes/';
-var votesNominee_url = 'http://localhost:9763/services/house_allocation/votes_nominee/';
-var peopleNames_url = 'http://localhost:9763/services/house_allocation/people_names/';
-var current_elections_url = 'http://localhost:9763/services/house_allocation/current-elections/';
-var award_instance_url="http://localhost:9763/services/house_allocation/eventAwardId/"
-var award_type_url="http://localhost:9763/services/house_allocation/event_award_type/"
-var house_url = 'http://localhost:9763/services/house_allocation/house/';
+var events_url = base_url + 'events/';
+var activities_url = base_url +'activities/';
+var awards_url = base_url +'awards/';
+var awards_instance_url = base_url +'awards_instance/';
+var event_instance_url= base_url +'event_instance';
+var votes_url = base_url +'votes/';
+var votesNominee_url = base_url +'votes_nominee/';
+var peopleNames_url = base_url +'people_names/';
+var current_elections_url = base_url +'current-elections/';
+var award_instance_url= base_url +'eventAwardId/'
+var award_type_url= base_url +'event_award_type/'
+var house_url = base_url +'house/';
 
 
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
@@ -137,6 +138,8 @@ function addEventInstance(data){
 }
 
 function getEventsWithKey(key){
+
+	log.info("$$$$$$$$$$$$$$$$$$$ HERE $$$$$$$$$$$$$$$$$$$");
 	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
 		"Accept":"application/json"},"application/json");
 		log.info("received events:"+parse(result.data));

@@ -11,6 +11,10 @@
 	}
 }
 
+#searchText, select, textarea{
+    color: #fff;
+}
+
 ul.nav a {
 	color: #f47a20 !important;
 }

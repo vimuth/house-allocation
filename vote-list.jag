@@ -91,6 +91,8 @@ else {		for (var i=0 ;i< pp.people.length;i++)
                 
                 var voter_id=voter_idData.Entries.Entry.id;
                // log.info(voter_id);
+               	//var award_name_data = dataService.getAwards();
+               	//log.info(award_name_data);
 
 				var dataService = require('modules/dataservice.jag');
 				var nominees = [nominees];
@@ -99,20 +101,25 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				var award_id ;
 				var uriMatcher = new URIMatcher(request.getRequestURI());
 
-				if(uriMatcher.match('/TestApp2/votes/{id}'))
+				if(uriMatcher.match('/TestApp2/votes/{id}/{name}/{event}'))
 				{
 					award_id = uriMatcher.elements().id;
+					award_name =uriMatcher.elements().name;
+					event_name =uriMatcher.elements().event;
 				}
 
 				var data = dataService.getNominees(award_id);//  event id to be taken from session
 				var voteData = dataService.getAwardVotes(award_id);
 				var EventAwardData=dataService.getEventAwardId(award_id);
                 var eventAwardId=EventAwardData.event_award_instanceCollection.event_award_instance.event_award_id;
+
 			    var EventAwardType=dataService.getEventAwardType(eventAwardId);
                 var type = EventAwardType.event_awardCollection.event_award.type;
                 var voter= new Object();
 				voter.voterId= voter_id;
 				voter.eventId= award_id;
+				voter.awardName= award_name;
+				voter.eventName =event_name;
 				voter.type = type;
 				log.info(voter);
 
