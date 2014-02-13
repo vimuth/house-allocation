@@ -47,14 +47,14 @@ var verb = request.getMethod();
 			return;
 		}
 		else{
-			if (username.equals("user") && password.equals("user")){
-				session.put("username","user");
+			if (username!=null && password.equals("user")){
+				session.put("username",username);
 				session.put("role","user");
 				response.sendRedirect(request.getParameter("location"));
 				return;
 			}
 			else{
-				response.sendRedirect("/HouseManagement/error.jag");
+				response.sendRedirect("/HouseManagement/login.jag");
 				return;
 			}
 		}
