@@ -1,0 +1,90 @@
+<div style="margin: 0px; padding: 0px">
+	<div style="margin: 0px; padding: 0px" class="list-group">
+		{{#if Entry}}
+		<a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item" id="first">
+			<div style="margin: 0px; padding: 0px" class="panel panel-custom">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{event_instance.name}}</h3>
+				</div>
+				<div class="row">
+
+					<div class="col-md-11" style="margin: 10px">
+
+						<p class="list-group-item-text" align="justify">
+
+							{{event_instance.description}} <br /><br />Start Date :
+						<div class="startDate">{{event_instance.startDate}}</div>
+						<br />End Date :
+						<div class="endDate">{{event_instance.endDate}}</div>
+
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{#each Entry}}
+		<script>
+			document.getElementById('first').style.display="none";
+		</script>
+		<a
+			style="margin: 0px; padding: 0px"
+			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			<div style="margin: 0px; padding: 0px" class="panel panel-custom">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{name}}</h3>
+				</div>
+				<div class="row">
+
+					<div class="col-md-11" style="margin: 10px">
+
+						<p class="list-group-item-text" align="justify">
+
+							{{description}} <br /><br />Start Date :
+						<div class="startDate">{{startDate}}</div>
+						<br />End Date :
+						<div class="endDate">{{endDate}}</div>
+
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</a>
+		<div>
+			<br />
+		</div>
+		{{/each}}
+		{{/if}}
+		{{#unless Entry}}
+			<div style="margin: 0px; padding: 0px" class="panel panel-custom">
+				<div class="panel-heading">
+					<h3 class="panel-title">Sorry. The template has no events...!!!</h3>
+				</div>
+			</div>
+		{{/unless}}
+	</div>
+</div>
+
+
+<script>
+	$(".date").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+
+	$(".startDate").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+
+	$(".endDate").each(function() {
+		var datetime = new Date($(this).html());
+		$(this).html(datetime.toDateString());
+	});
+</script>

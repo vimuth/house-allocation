@@ -241,7 +241,7 @@ function updateEvent(event){
 function getEvents(){
 	var data = get(url+'events',null,{
 		"Accept":"application/json"},"application/json");
-		log.info("received events list");
+		log.info("received events list" +data.data);
 		return parse(data.data);
 		//log.info(data.eventCollection);
 }

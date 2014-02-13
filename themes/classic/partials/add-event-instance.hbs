@@ -15,7 +15,7 @@
 			<tr>
 				<td>Event Name:</td>
 				<td><input type="text" name="eventInstanceName"
-					id="eventInstanceName"></td>
+					id="eventInstanceName" required></td>
 			</tr>
 			<tr>
 				<td>Description</td>
@@ -282,38 +282,43 @@
         $('#addButton').click(function() {
         	instStartVal = document.getElementById('startDate').value;
         	instEndVal = document.getElementById('endDate').value;
-        	if(instStartVal=="" || instEndVal==""){
-        		alert("Please enter dates for the event");
+        	if(document.getElementById("eventInstanceName").value==""){
+        		alert("Please enter a name for the event");
         	}
         	else{
-	        	instStart = new Date(instStartVal);
-	        	instEnd = new Date(instEndVal);
-
-	        	if (instStart > instEnd){
-	        		alert("Incompatible End Date and Start Date for the event");
+	        	if(instStartVal=="" || instEndVal==""){
+	        		alert("Please enter dates for the event");
 	        	}
-	        	
 	        	else{
-		        	if (addEventInstance()){
-			       		var eventInstName = document.getElementById('eventInstanceName').value;
-						var eventName = "{{evName}}";
-						var eventInstDescription = document.getElementById('eventInstanceDescription').value;
-						var eventInstStartDate = document.getElementById('startDate').value;
-						var eventInstEndDate = document.getElementById('endDate').value;
-			               $.ajax({
-			              type: "POST",
-			              contentType: "application/json",
-			              url: '{{url "/add-event-instance.jag"}}',
-			              
-			              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
-			              success : function(
-									msg) {
-								if(msg.redirect){
-									window.location = msg.url;
-								};
-							}
-			           });
-		           }
+		        	instStart = new Date(instStartVal);
+		        	instEnd = new Date(instEndVal);
+
+		        	if (instStart > instEnd){
+		        		alert("Incompatible End Date and Start Date for the event");
+		        	}
+		        	
+		        	else{
+			        	if (addEventInstance()){
+				       		var eventInstName = document.getElementById('eventInstanceName').value;
+							var eventName = "{{evName}}";
+							var eventInstDescription = document.getElementById('eventInstanceDescription').value;
+							var eventInstStartDate = document.getElementById('startDate').value;
+							var eventInstEndDate = document.getElementById('endDate').value;
+				               $.ajax({
+				              type: "POST",
+				              contentType: "application/json",
+				              url: '{{url "/add-event-instance.jag"}}',
+				              
+				              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
+				              success : function(
+										msg) {
+									if(msg.redirect){
+										window.location = msg.url;
+									};
+								}
+				           });
+			           }
+		       		}
 	       		}
        		}
         });
