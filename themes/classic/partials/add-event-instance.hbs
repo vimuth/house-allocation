@@ -17,12 +17,13 @@
 		<label for="eventInstanceDescription">Description</label>
 		<textarea class="form-control" id="eventInstanceDescription" rows="4"></textarea>
 	</div>
-
+	<div class="label label-danger" id="datesWarning"
+					style="display: none">Incompatible dates entered..!!</div>
 	<div class="form-group">
 		<label for="inputDate">Start Date : </label>
 		<div class='inputDate input-group date' id='startDateSet'>
 			<input type='text' class="form-control" id='startDate'
-				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}" required/> <span
+				data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
 				class="input-group-addon"><span
 				class="glyphicon glyphicon-calendar"></span> </span>
 		</div>
@@ -32,7 +33,7 @@
 		<label for="inputDate">End Date : </label>
 		<div class='inputDate input-group date' id='endDateSet'>
 			<input type='datetime' class="form-control" id='endDate'
-				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"
+				data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"
 				onchange="compareDates('startDate','endDate')" required/> <span
 				class="input-group-addon"
 				onchange="compareDates('startDate','endDate')"><span
@@ -71,7 +72,7 @@ Select the activities you want to add to the event and set the time and venue an
 					<div class='inputDate input-group date'
 						id="{{id}}_act_datetime_set" style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_act_datetime"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -124,7 +125,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_start_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_start"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -133,7 +134,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_end_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_end"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -261,15 +262,17 @@ If the award is to be decided by a vote set the start and end time for the vote.
     			awdEndVal = document.getElementById(awardid+"_awd_end").value;
     			if (awdStartVal == "" || awdEndVal == ""){
 	        		alert("Enter dates for voting for award "+awardName);
-	        	}
-	        	else{
-    			var awdStart = new Date(awdStartVal);
-    			var awdEnd = new Date(awdEndVal);
-	        	if (awdStart > awdEnd){
-	        		alert("Incompatible End Date and Start Date for award "+ awardName);
 	        		fault=true;
 	        		return false;
 	        	}
+	        	else{
+    				var awdStart = new Date(awdStartVal);
+    				var awdEnd = new Date(awdEndVal);
+		        	if (awdStart > awdEnd){
+		        		alert("Incompatible End Date and Start Date for award "+ awardName);
+		        		fault=true;
+		        		return false;
+		        	}
 
 					var awardInstance = new Object();
 	    			awardInstance.awardName = awardName;
@@ -309,7 +312,8 @@ If the award is to be decided by a vote set the start and end time for the vote.
 	        	instEnd = new Date(instEndVal);
 
 	        	if (instStart > instEnd){
-	        		alert("Incompatible End Date and Start Date for the event");
+	        		//alert("Incompatible End Date and Start Date for the event");
+	        		document.getElementById("datesWarning").style.display="";
 	        	}
 
 	        	else{
