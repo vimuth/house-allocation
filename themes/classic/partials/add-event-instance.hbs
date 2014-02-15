@@ -1,4 +1,4 @@
-<form id="myform" name="newEventInstance">
+<form id="myform" name="newEventInstance" onsubmit="submitEventInstance();return false;">
 
 	<div class="form-group">
 		<h4>
@@ -10,7 +10,7 @@
 	<div class="form-group">
 		<label for="eventInstanceName">Event Name</label> <input
 			class="form-control" type="text" name="eventInstanceName"
-			id="eventInstanceName" value="{{evName}}" placeholder="{{evName}}">
+			id="eventInstanceName" placeholder="{{evName}}" required>
 	</div>
 
 	<div class="form-group">
@@ -22,7 +22,7 @@
 		<label for="inputDate">Start Date : </label>
 		<div class='inputDate input-group date' id='startDateSet'>
 			<input type='text' class="form-control" id='startDate'
-				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}" /> <span
+				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}" required/> <span
 				class="input-group-addon"><span
 				class="glyphicon glyphicon-calendar"></span> </span>
 		</div>
@@ -33,14 +33,14 @@
 		<div class='inputDate input-group date' id='endDateSet'>
 			<input type='datetime' class="form-control" id='endDate'
 				data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"
-				onchange="compareDates('startDate','endDate')" /> <span
+				onchange="compareDates('startDate','endDate')" required/> <span
 				class="input-group-addon"
 				onchange="compareDates('startDate','endDate')"><span
 				class="glyphicon glyphicon-calendar"></span> </span>
 		</div>
 	</div>
 
-</form>
+
 
 <div class="well"><b>
 Select the activities you want to add to the event and set the time and venue and edit the description as required.  </b> 
@@ -71,7 +71,7 @@ Select the activities you want to add to the event and set the time and venue an
 					<div class='inputDate input-group date'
 						id="{{id}}_act_datetime_set" style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_act_datetime"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -124,7 +124,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_start_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_start"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -133,7 +133,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_end_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_end"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" /> <span
+							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -155,10 +155,10 @@ If the award is to be decided by a vote set the start and end time for the vote.
 </div>
 
 <div class="btn-group pull-right" style="margin-bottom:40px">
-	<input class="btn btn-success" type="button" id="addButton" value="Add" onclick="addEventInstance();" /> 
+	<input type="submit" class="btn btn-default" id="addButton" value="Add"/> 
 	<input style="margin-left: 5px;" class="btn btn-warning" type="button" value="Cancel" onclick="cancel();" />
 </div>
-
+</form>
 <script type="text/javascript"> 
 
 	var eventInstList = [];
@@ -297,13 +297,9 @@ If the award is to be decided by a vote set the start and end time for the vote.
 
 	var instStart;
 	var instEnd;
-    $(document).ready(function() {
 
- 
-		$('.inputDate').datetimepicker();
-
-        $('#addButton').click(function() {
-        	instStartVal = document.getElementById('startDate').value;
+	function submitEventInstance(){
+		instStartVal = document.getElementById('startDate').value;
         	instEndVal = document.getElementById('endDate').value;
         	if(instStartVal=="" || instEndVal==""){
         		alert("Please enter dates for the event");
@@ -339,7 +335,13 @@ If the award is to be decided by a vote set the start and end time for the vote.
 		           }
 	       		}
        		}
-        });
+
+	}
+    $(document).ready(function() {
+
+ 
+		$('.inputDate').datetimepicker();
+
      });
 
 
