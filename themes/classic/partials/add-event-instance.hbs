@@ -10,7 +10,7 @@
 	<div class="form-group">
 		<label for="eventInstanceName">Event Name</label> <input
 			class="form-control" type="text" name="eventInstanceName"
-			id="eventInstanceName" placeholder="{{evName}}" required>
+			id="eventInstanceName" placeholder="{{evName}}" value="{{evName}}" required>
 	</div>
 
 	<div class="form-group">
@@ -22,7 +22,7 @@
 		<label for="inputDate">Start Date : </label>
 		<div class='inputDate input-group date' id='startDateSet'>
 			<input type='text' class="form-control" id='startDate'
-				data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}" required/> <span
+				data-format="YYYY-MM-DD" value="{{formatDate}}" required/> <span
 				class="input-group-addon"><span
 				class="glyphicon glyphicon-calendar"></span> </span>
 		</div>
@@ -32,7 +32,7 @@
 		<label for="inputDate">End Date : </label>
 		<div class='inputDate input-group date' id='endDateSet'>
 			<input type='datetime' class="form-control" id='endDate'
-				data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"
+				data-format="YYYY-MM-DD" value="{{formatDate}}"
 				onchange="compareDates('startDate','endDate')" required/> <span
 				class="input-group-addon"
 				onchange="compareDates('startDate','endDate')"><span
@@ -72,13 +72,13 @@ Select the activities you want to add to the event and set the time and venue an
 					<div class='inputDate input-group date'
 						id="{{id}}_act_datetime_set" style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_act_datetime"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
+							data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
 				</td>
 
-				<td><input class="form-control" type="text" id="{{id}}_act_venue"
+				<td style="width: 10%"><input class="form-control" type="text" id="{{id}}_act_venue"
 					style="visibility: hidden" value="venue"></td>
 				<td style="width: 30%">
 					<div class="form-group">
@@ -125,7 +125,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_start_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_start"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
+							data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
@@ -134,19 +134,11 @@ If the award is to be decided by a vote set the start and end time for the vote.
 					<div class='inputDate input-group date' id="{{id}}_awd_end_set"
 						style="visibility: hidden">
 						<input type='text' class="form-control" id="{{id}}_awd_end"
-							data-format="YYYY-MM-DDTHH:mm:00" value="{{formatDate}}"/> <span
+							data-format="YYYY-MM-DD HH:mm" value="{{formatDate}}"/> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span> </span>
 					</div>
 				</td>
-				<script type="text/javascript">
-						if ('{{isVote}}'=='false'){
-							document.getElementById('{{id}}_awd_start_set').style.display = "none";
-							document.getElementById('{{id}}_awd_start').value="2000-01-01T00:00:00"		
-							document.getElementById('{{id}}_awd_end_set').style.display = "none";
-							document.getElementById('{{id}}_awd_end').value="2000-01-01T00:00:00"	
-						}
-				</script>
 			</tr>
 			{{/each}}
 
@@ -178,7 +170,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
     
 
     function cancel(){
-    	document.location.href = '{{url "/addEventInstance2.jag"}}';
+    	document.location.href = '{{url "/add-event-instance"}}';
     }
 
     function changeVisibility(id){

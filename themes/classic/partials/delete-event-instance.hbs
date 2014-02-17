@@ -177,7 +177,7 @@ function deleteEventInstance(id) {
 				success : function(msg) {
 
 					if (msg.success) {
-						document.location.href='{{url "/current-events"}}';
+						document.location.href='{{url "/"}}';
 					} else {
 						alert('Error - unable to delete event.');
 					}
