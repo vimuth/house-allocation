@@ -5,7 +5,7 @@ var verb = request.getMethod();
 (function () {
 
 	var username=session.get('username');
-	
+	//var username = "Vimuth"; // has to be removed and upper line should be uncommented once the LDap connection is set.
 	var admin= session.get('role')=='admin'; 
 
 	if(username==null){
@@ -141,6 +141,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 						"names" : peopleNames };
 						var pp = dataService.getId();
 						var houses=dataService.getHouseList();
+						var msg="";
 						//log.info(pp.people);
 						//log.info(houses);
 						caramel = require('caramel');
@@ -154,7 +155,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 						},
 						
 						'vote': {
-						'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : votes_array, 'houses':houses},
+						'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : votes_array, 'houses':houses,'message':msg},
 						'sidenav' :{
 						'admin': admin},
 						'sidenav' :{
@@ -166,6 +167,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				if(data.votesCollection == "")
 				{   var houses=dataService.getHouseList();
 					var pp = dataService.getId();
+					var msg = "No nominees for this award yet."
 					caramel = require('caramel');
 					caramel.render({
 						'header':{
@@ -176,7 +178,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 					},
 
 					'vote': {
-					'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes,'houses':houses},
+					'people':pp.people, 'voter' : voter, 'votes' : voteData.votesCollection.votes,'houses':houses, 'message':msg},
 					'sidenav' :{
 					'admin': admin},
 					'sidenav' :{
@@ -214,6 +216,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 					var people = {
 						"names" : peopleNames };
 						//log.info(people.names);
+						var msg="";
 						var houses=dataService.getHouseList();
 						var pp = dataService.getId();
 						var people = {
@@ -248,7 +251,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 								},
 									
 								'vote': {
-								'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes , 'houses':houses},
+								'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes , 'houses':houses,'message':msg},
 								'sidenav' :{
 								'admin': admin}
 								});
