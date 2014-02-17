@@ -1,25 +1,24 @@
-<div class="panel panel-custom">
+<div style="background: #d9534f" class="panel panel-default">
+	<div class="panel-body">
+		<span class="glyphicon glyphicon-warning-sign"></span> Are you sure
+		you want to delete this event?
+	</div>
+</div>
+
+<div class="panel panel-danger">
 	<div class="panel-heading">
-		<h3 class="panel-title">{{eventInstance.name}}
-		{{#if isAdmin}}<button id="voteButton" type="button"
-			class="btn btn-warning btn-xs pull-right"
-			onclick='window.location.href="/HouseManagement/edit-event-instance/{{eventInstance.id}}"'>Edit Event</button>
-			
-			<button id="voteButton" type="button"
-			class="btn btn-danger btn-xs pull-right"
-			onclick='window.location.href="/HouseManagement/delete-event-instance/{{eventInstance.id}}"'>Delete Event</button>
-			
-			
-			{{/if}}</h3>
+		<h3 class="panel-title">{{eventInstance.eventInstance.name}}</h3>
 	</div>
 	<div class="panel-body">
 
 		<div class="row">
-			<div class="col-md-8">Description :
-				{{eventInstance.description}}
-				
-				<h4 >From : {{formatDate eventInstance.startDate "YYYY-MM-DD"}} To {{formatDate eventInstance.endDate "YYYY-MM-DD"}}</h4>
-						
+			<div class="col-md-8">
+				Description : {{eventInstance.eventInstance.description}}
+
+				<h4>From : {{formatDate eventInstance.eventInstance.startDate
+					"YYYY-MM-DD"}} To {{formatDate eventInstance.eventInstance.endDate
+					"YYYY-MM-DD"}}</h4>
+
 			</div>
 
 			<div class="col-md-3">
@@ -30,7 +29,7 @@
 					<div class="panel-body">
 						<table class="table">
 
-							{{#each ranks}}
+							{{#each eventInstance.ranks}}
 							<tr>
 
 								<td><h2>{{rank}}</h2></td>
@@ -52,12 +51,12 @@
 		</div>
 
 
-		
+
 
 		<h4 class="panel">Activities :</h4>
 
 		<ul class="list-group">
-			{{#each activities}}
+			{{#each eventInstance.activities}}
 
 			<li class="list-group-item">
 				<div class="row">
@@ -67,7 +66,8 @@
 						<h4 class="list-group-item-heading">{{name}}</h4>
 						<p>{{description}}</p>
 						<p>At : {{venue}}</p>
-						<p>On : {{formatDate datetime "YYYY-MM-DD"}} at {{formatDate datetime "hh:mm a"}}</p>
+						<p>On : {{formatDate datetime "YYYY-MM-DD"}} at {{formatDate
+							datetime "hh:mm a"}}</p>
 					</div>
 					<div class="col-md-5">
 						{{#unless winner}} <span class="label label-default pull-right">
@@ -98,7 +98,7 @@
 		<h4 class="panel">Awards :</h4>
 
 		<ul class="list-group">
-			{{#each awards}}
+			{{#each eventInstance.awards}}
 			<li class="list-group-item">
 				<div class="row">
 
@@ -110,7 +110,8 @@
 							{{#if_eq isVote "true"}}{{#unless winner}}
 							<p id='voteStart'>Voting Starts On :{{formatDate
 								vote_startDate "YYYY-MM-DD \at hh:mm a"}}</p>
-							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate "YYYY-MM-DD \at hh:mm a"}}</p>
+							<p id='voteEnd'>Voting Ends On :{{formatDate vote_endDate
+								"YYYY-MM-DD \at hh:mm a"}}</p>
 							{{/unless}}{{/if_eq}}
 						</div>
 
@@ -118,16 +119,12 @@
 					<div class="col-md-6">
 
 						{{#if_eq isVote "true"}} {{#isVotingPeriod vote_startDate
-						vote_endDate}}
-
-						{{#unless winner}}
+						vote_endDate}} {{#unless winner}}
 						<button id="voteButton" type="button"
 							class="btn btn-success btn-xs pull-right"
 							onclick='window.location.href="/HouseManagement/votes/{{id}}"'>Vote
 							for your pick</button>
-						{{/unless}}
-
-						{{/isVotingPeriod}} {{/if_eq}} {{#if winner}}
+						{{/unless}} {{/isVotingPeriod}} {{/if_eq}} {{#if winner}}
 						<div id="winnerlist">
 							{{#if_eq ../type "G"}} {{#each winner}} <img class="pull-right"
 								src="/HouseManagement/themes/classic/images/Cliub Logos-0{{name}}.jpg"
@@ -153,3 +150,40 @@
 		</ul>
 	</div>
 </div>
+
+
+<div style="margin-bottom: 50px" class="btn-group pull-right">
+	<button type="button"
+		onclick='window.location.href="/HouseManagement/event-instance/{{id}}"'
+		class="btn btn-info">Cancel</button>
+	<button type="button"
+		onclick='window.location.href="{{url "/edit-event-instance/"}}{{id}}"'
+		class="btn btn-warning">Edit Event</button>
+	<button type="button" onclick="deleteEventInstance({{id}});"
+		class="btn btn-danger">Delete Event</button>
+</div>
+
+
+<script>
+function deleteEventInstance(id) {
+		if (confirm("Are you sure you want delete this event?")) {
+
+			$.ajax({
+				type : "DELETE",
+				contentType : "application/json",
+				url : "{{url "/delete-event-instance/"}}" + id,
+
+				data : {},
+				success : function(msg) {
+
+					if (msg.success) {
+						document.location.href='{{url "/current-events"}}';
+					} else {
+						alert('Error - unable to delete event.');
+					}
+				}
+			});
+
+		}
+}
+</script>
