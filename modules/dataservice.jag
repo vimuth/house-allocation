@@ -90,11 +90,14 @@ function getEventIDFromName(data){
 // add data to wso2_hm_event table
 function addEventInstance(data){
 
-	log.info("received data:"+data);
+	log.info("received data:");
+	log.info(data);
+	
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	var optionalHeaders ={
 		"Accept":"application/json"};
+		
 		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 		var eventInstDescription = data.eventInstance.description;
@@ -115,7 +118,7 @@ function addEventInstance(data){
 
 			log.info("received awards:"+awardInstances);
 
-			for(var i=0;i<(activityInstances.length)/2;i++){
+			for(var i=0;i<(activityInstances.length);i++){
 				log.info(i);
 
 				var activityInstance = {
@@ -125,7 +128,7 @@ function addEventInstance(data){
 					log.info("added activity instance :"+activityInstance);
 			}
 
-			for (var i=0;i<(awardInstances.length)/2;i++){
+			for (var i=0;i<(awardInstances.length);i++){
 
 				var awardInstance = {
 					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};

@@ -30,8 +30,10 @@ log.info(verb);
 	if( verb=='POST'){
 		try {
 				
-			var data = request.getContent();		
-			
+			var data = request.getContent();
+
+			log.info('Received event instance to add:');
+			log.info(data);
 			var id = dataService.addEventInstance(data);
 
 			log.info('Received event instance id:'+id);
