@@ -18,6 +18,10 @@ var log = new Log();
 	//if the URL is for current events
 	// 	if(uriMatcher.match('/HouseManagement/current-events')){
 	var data = dataService.getCurrentFutureEvents();
+	var nullMsg="";
+	if(data.length==0){
+		nullMsg="There is no upcoming events to be displayed"
+	}
 
 	log.info(data);
 
@@ -46,10 +50,10 @@ var log = new Log();
 		text :'All Upcoming Events and activities'},
 		'main' : {
 		'title':'All upcoming Events and activities',
-		'role': admin, 'events': data, 'all':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2},
+		'role': admin, 'events': data, 'all':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2, 'nullmsg':nullMsg},
 		'sidenav' :{
-			'admin': admin}
+		'admin': admin}
 		});
 		// 	}
-	}());
-	%>
+}());
+%>

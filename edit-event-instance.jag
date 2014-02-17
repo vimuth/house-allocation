@@ -105,6 +105,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				response.contentType = 'application/json';
 
 				log.info(request.getContent());
+				
 				var result=dataService.updateEventInfo(request.getContent());
 				if(result){
 					response.content = {

@@ -1,13 +1,19 @@
 <div>
 	<h3 style="margin-top: 0px">
 		{{title}} :
-			<button onclick="link('{{link1}}');return false;" type="button"
-				class="btn btn-warning btn-xs pull-right" style="width: 125px; height: 25px">{{btn1}}</button>
-			
-				<button onclick="link('{{link2}}');return false;" type="button"
-					class="btn btn-warning btn-xs pull-right" style="width: 125px; height: 25px">{{btn2}}</button>
-	</h3>
+		<button onclick="link('{{link1}}');return false;" type="button"
+			class="btn btn-warning btn-xs pull-right"
+			style="width: 125px; height: 25px">{{btn1}}</button>
 
+		<button onclick="link('{{link2}}');return false;" type="button"
+			class="btn btn-warning btn-xs pull-right"
+			style="width: 125px; height: 25px">{{btn2}}</button>
+	</h3>
+	{{#if nullmsg}}
+		<div class="well well-sm">
+			<font size="4">{{nullmsg}}</font>
+		</div>
+		{{/if}}}
 	<div class="list-group">
 		{{#each events}} <a
 			style="margin: 0px; padding: 0px; border-width: 0px"
@@ -76,7 +82,7 @@
 </div>
 <script>
 	function link(link) {
-		document.location.href = '{{url "/"}}'+link;
+		document.location.href = '{{url "/"}}' + link;
 
 	}
 </script>

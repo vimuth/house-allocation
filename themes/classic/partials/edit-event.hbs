@@ -13,10 +13,11 @@ Make all the changes required and click submit to save the changes. (No changes 
 		<textarea class="form-control" id="eventDescription" rows="3">{{event.description}}</textarea>
 	</div>
 </form>
-<button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+<button id="submitButton" type="submit" class="btn btn-custom">Submit</button>
+
 
 <div style="padding-top: 10px">
-	Activities :
+<h4 class="panel">Activities :</h4>
 	<table class="table" id="activityTable">
 
 		<thead>
@@ -49,8 +50,39 @@ Make all the changes required and click submit to save the changes. (No changes 
 
 	</table>
 </div>
+
+<button id="submitButton" type="submit" class="btn btn-custom"
+	onclick="showHideCommon('newActivityPanel');$('#activityName').focus()">Add Activity</button>
+
+<div id="newActivityPanel" class="panel panel-default"
+	style="display: none; margin-top: 10px">
+	<div class="panel-heading">Add New Activity</div>
+	<div class="panel-body">
+		<form id="myform" name="newActivity">
+			<div class="form-group">
+				<label for="activityName">Activity Name</label> <input type="text"
+					class="form-control" id="activityName"
+					placeholder="Enter Activity Name" required>
+			</div>
+			<div class="form-group">
+				<label for="activityDescription">Description</label>
+				<textarea class="form-control" id="activityDescription" rows="3"></textarea>
+			</div>
+			<div class="form-group">
+				<select id="activityType" class="form-control">
+					<option value="G">Group Activity</option>
+					<option value="I">Individual Activity</option>
+				</select>
+			</div>
+		</form>
+		<button id="submitActivityButton" class="btn btn-default"
+			onclick="addActivity();">Add</button>
+	</div>
+</div>
+
+
 <div style="padding-top: 10px">
-	Awards :
+<h4 class="panel">Awards :</h4>
 	<table class="table" id="awardTable">
 		<thead>
 			<tr>
@@ -84,36 +116,10 @@ Make all the changes required and click submit to save the changes. (No changes 
 	</table>
 </div>
 
-<button id="submitButton" type="submit" class="btn btn-default"
-	onclick="showHideCommon('newActivityPanel')">Add Activity</button>
-<button id="submitButton" type="submit" class="btn btn-default"
-	onclick="showHideCommon('newAwardPanel')">Add Award</button>
 
-<div id="newActivityPanel" class="panel panel-default"
-	style="display: none; margin-top: 10px">
-	<div class="panel-heading">Add New Activity</div>
-	<div class="panel-body">
-		<form id="myform" name="newActivity">
-			<div class="form-group">
-				<label for="activityName">Activity Name</label> <input type="text"
-					class="form-control" id="activityName"
-					placeholder="Enter Activity Name" required>
-			</div>
-			<div class="form-group">
-				<label for="activityDescription">Description</label>
-				<textarea class="form-control" id="activityDescription" rows="3"></textarea>
-			</div>
-			<div class="form-group">
-				<select id="activityType" class="form-control">
-					<option value="G">Group Activity</option>
-					<option value="I">Individual Activity</option>
-				</select>
-			</div>
-		</form>
-		<button id="submitActivityButton" class="btn btn-default"
-			onclick="addActivity();">Add</button>
-	</div>
-</div>
+<button id="submitButton" type="submit" class="btn btn-custom"
+	onclick="showHideCommon('newAwardPanel');$('#awardName').focus()">Add Award</button>
+
 
 <div id="newAwardPanel" class="panel panel-default"
 	style="display: none; margin-top: 10px">
@@ -121,7 +127,7 @@ Make all the changes required and click submit to save the changes. (No changes 
 	<div class="panel-body">
 		<form id="myform" name="newAward">
 			<div class="form-group">
-				<label for="awardName">Activity Name</label> <input type="text"
+				<label for="awardName">Award Name</label> <input type="text"
 					class="form-control" id="awardName" placeholder="Enter award Name"
 					required>
 			</div>
