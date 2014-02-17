@@ -303,7 +303,7 @@ function getHouseCount(){
 		return parse(data.data);
 }
 
-function getHouse(name){
+function getHouseByName(name){
 	var data = get(url+'people/name/'+name,null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);
@@ -997,6 +997,7 @@ function getEventAwardType(id){
 		return voteData;
 
 }
+
 // getting house name from the id from the table wso2_hm_house
 function getHouse(id){
 
@@ -1011,6 +1012,7 @@ function getHouse(id){
 		return houses;
 
 }
+
 function getHouseList(){
 
 	var data = get(url+ 'houses',null,{

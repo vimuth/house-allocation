@@ -29,7 +29,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 			response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 			return;
 		}
-
+		log.info("redirected to house.jag");
 		var uriMatcher = new URIMatcher(request.getRequestURI());
 		if(uriMatcher.match('/HouseManagement/house/{id}')) {
 
@@ -60,7 +60,36 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		// 				log.error(e);
 		// 				response.sendRedirect("/HouseManagement/error.jag");
 		// 			}
-
+		else if (uriMatcher.match('/HouseManagement/search-house/{name}')){
+			var name= uriMatcher.elements().name;
+			if (name.indexOf('@')==-1){
+				name = name + '@wso2.com';
+			}
+			var house = dataService.getHouseByName(name).Entries;
+			var houseName;
+			//log.info(house.Entry.house_id);
+			if (house.Entry){
+				var houseId = house.Entry.house_id;
+				houseName= dataService.getHouse(houseId).name;
+			}
+			else{
+				houseName = "not found";
+			}
+			log.info("Received house for the member : "+houseName);
+			caramel.render({
+				'header':{
+				'username': username,
+				'role': admin
+			},
+			'title': {
+			text :"Houses"},
+			'body': {
+			'searched':{'member':name,'house_name':houseName}
+			},
+			'sidenav' :{
+			'admin': admin}
+			});
+		}
 
 		else{
 			caramel.render({
