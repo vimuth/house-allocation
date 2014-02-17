@@ -20,7 +20,7 @@ var log = new Log();
 	// 	if(uriMatcher.match('/HouseManagement/history')){
 	var data = dataService.getPastEvents();
 	var nullMsg="";
-	if(data==null){
+		if(data.length==0){
 		nullMsg="There is no past events to be displayed"
 	}
 
