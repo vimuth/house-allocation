@@ -307,7 +307,13 @@ function getHouseCount(){
 		return parse(data.data);
 }
 
-function getHouse(name){
+function getHouseByName(name){
+	var re = /\\*@wso2.com$/
+
+	if (!re.test(name)) {
+		name = name+"@wso2.com";
+	}
+
 	var data = get(url+'people/name/'+name,null,{
 		"Accept":"application/json"},"application/json");
 		return parse(data.data);

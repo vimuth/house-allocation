@@ -75,6 +75,8 @@ var dataService = require('../modules/dataservice.jag');
 					sum = sum+houses[i].probability;
 				}
 		}
+		
+		
 
 		var operation = request.getParameter('operation');
 
@@ -92,7 +94,7 @@ var dataService = require('../modules/dataservice.jag');
 
 
 			//checking if user is already in the database
-			var current_house = dataService.getHouse(name);
+			var current_house = dataService.getHouseByName(name);
 
 			if(current_house.Entries!=""){
 

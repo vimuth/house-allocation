@@ -1,0 +1,38 @@
+<%
+var caramel
+var log = new Log();
+
+(function () {
+	var username=session.get('username');
+	var admin= session.get('role')=='admin';
+
+	if(username==null){
+		response.sendRedirect("/HouseManagement/login.jag")
+		return;
+	}
+
+	try{
+		var house = request.getParameter('house');
+
+		caramel = require('caramel');
+
+		log.info(house);
+		
+		caramel.render({
+			'header':{
+			'username': username,
+			'role': admin,
+		},
+		'title': {
+		text :'Welcome'},
+		'main':{
+		'house': house},
+		'sidenav' :{
+			'admin': admin}
+		});
+	}
+	catch(e){
+		response.sendRedirect("/HouseManagement/error.jag");
+	}
+}());
+%>

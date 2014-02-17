@@ -21,23 +21,23 @@ var verb = request.getMethod();
 		var password=request.getParameter("password");
 		var admin= session.get('role')=='admin';
 
-// 		var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
-// 		var ldapAuthentication = new ldapAuth();
+		// 		var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
+		// 		var ldapAuthentication = new ldapAuth();
 
-// 		var resultArray = ldapAuthentication.ldapAuth(username,password);
-		
-// 		log.info(resultArray);
+		// 		var resultArray = ldapAuthentication.ldapAuth(username,password);
 
-// 		if(resultArray == true){
+		// 		log.info(resultArray);
 
-// 			session.put("username",username);
-// 			session.put("role",'admin');
-// 			response.sendRedirect(request.getParameter("location"));
-// 			return;
-// 		}
-// 		else{
-// 			response.sendRedirect("index.jag");
-// 		}
+		// 		if(resultArray == true){
+
+		// 			session.put("username",username);
+		// 			session.put("role",'admin');
+		// 			response.sendRedirect(request.getParameter("location"));
+		// 			return;
+		// 		}
+		// 		else{
+		// 			response.sendRedirect("index.jag");
+		// 		}
 
 		if((username.equals("admin") && password.equals("admin")))
 		{
@@ -47,11 +47,41 @@ var verb = request.getMethod();
 			return;
 		}
 		else{
-			if (username!=null && password.equals("user")){
-				session.put("username",username);
-				session.put("role","user");
-				response.sendRedirect(request.getParameter("location"));
-				return;
+			if (username!=null){
+				if (password.equals("user")){
+
+					var dataService = require('modules/dataservice.jag');
+					var data = dataService.getHouseByName(username);
+
+					log.info(data);
+
+					if(data.Entries==""){
+
+						var api = require('api/houseAllocation.jag');
+						var house = api.assignHouse_Difference();
+
+						log.info(house);
+
+						var result = dataService.addPerson(username,house.house_id);
+
+						log.info(result);
+
+						session.put("username",username);
+						session.put("role","user");
+							
+						if(result){
+							response.sendRedirect("/HouseManagement/house-allocated.jag?house="+house.house_id);
+						}
+
+					}
+
+					else{
+						session.put("username",username);
+						session.put("role","user");
+						response.sendRedirect(request.getParameter("location"));
+					}
+					return;
+				}
 			}
 			else{
 				response.sendRedirect("/HouseManagement/login.jag");
