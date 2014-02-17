@@ -9,7 +9,11 @@
 			class="btn btn-warning btn-xs pull-right"
 			style="width: 125px; height: 25px">{{btn2}}</button>
 	</h3>
-	<font size="4">{{nullmsg}}</font>
+	{{#if nullmsg}}
+		<div class="well well-sm">
+			<font size="4">{{nullmsg}}</font>
+		</div>
+		{{/if}}}
 	<div class="list-group">
 		{{#each events}} <a
 			style="margin: 0px; padding: 0px; border-width: 0px"
