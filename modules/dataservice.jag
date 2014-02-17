@@ -1045,7 +1045,6 @@ function getEventAwardType(id){
 
 // getting house name from the id from the table wso2_hm_house
 function getHouse(id){
-
 	var data = get(house_url+ id,null,{
 		"Accept":"application/json"},"application/json");
 
@@ -1055,7 +1054,6 @@ function getHouse(id){
 			log.info("received house data :"+data+"for given id :"+id);
 		}
 		return houses;
-
 }
 
 function getHouseList(){
