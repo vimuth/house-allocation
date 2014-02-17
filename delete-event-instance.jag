@@ -1,0 +1,109 @@
+<%
+
+var caramel;
+var Handlebars;
+var log = new Log();
+var dataService = require('modules/dataservice.jag');
+var verb = request.getMethod();
+
+log.info("got here : "+verb);
+
+Handlebars = require('handlebars');
+var moment = require('modules/moment-with-langs.js').moment;
+Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
+	if (a == b)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
+Handlebars.Handlebars.registerHelper("formatDate", function(datetime,format_str, options) {
+	// 	format_str = new String(format_str);
+	if (moment) {
+		return moment(datetime).format(format_str);
+	}
+	else {
+		return datetime;
+	}
+});
+Handlebars.Handlebars.registerHelper("isVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.fn(this);
+	}
+	else {
+		return options.inverse(this);
+	}
+});
+Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, endDate ,options) {
+	if (moment(startDate)-moment()<0 && moment(endDate)-moment()>0) {
+		return options.inverse(this);
+	}
+	else {
+		return options.fn(this);
+	}
+});
+
+	(function () {
+
+		var username=session.get('username');
+		var admin= session.get('role')=='admin';
+
+		if(username!="admin"){
+			response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+			return;
+		}
+
+		var uriMatcher = new URIMatcher(request.getRequestURI());
+		if(uriMatcher.match('/HouseManagement/delete-event-instance/{id}')) {
+			if(verb=='GET'){
+
+				var id = uriMatcher.elements().id;
+				var instance = dataService.getEventInstance(id);
+
+				log.info(instance);
+
+				caramel = require('caramel');
+					
+				caramel.render({
+					'header':{
+					'username': username,
+					'role': admin,
+				},
+				'title': {
+				text :"Confirm Delete"},
+				'body': {
+				'id':id,
+				"eventInstance" : instance
+				},
+				'sidenav' :{
+				'admin': admin}
+				});
+
+			}
+			else{
+				if(verb='DELETE'){
+					try{
+						dataService.deleteEventInstance(uriMatcher.elements().id);
+						response.contentType = 'application/json';
+
+						response.content = {
+							'success':true} ;
+					}
+					catch(e){
+						log.error(e);
+						response.contentType = 'application/json';
+
+						response.content = {
+							'success':false} ;
+					}
+				}
+			}
+
+		}
+		else{
+			response.sendRedirect("/HouseManagement/event-list.jag");
+			return;
+		}
+
+	}());
+	%>
+
