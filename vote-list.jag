@@ -4,8 +4,8 @@ var log = new Log();
 var verb = request.getMethod();
 (function () {
 
-	//var username=session.get('username');
-	var username = "Vimuth"; // has to be removed and upper line should be uncommented once the LDap connection is set.
+	var username=session.get('username');
+	
 	var admin= session.get('role')=='admin'; 
 
 	if(username==null){
