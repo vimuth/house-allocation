@@ -16,11 +16,13 @@
 
 
 							<option value="select an event template">Select an Event Template</option>
-
+							<option disabled value="null">------------------------</option>
+							
 							{{#each event_name}}
 								<option value="{{name}}">{{name}}</option> 
 							{{/each}}
-
+								
+							<option disabled value="null">------------------------</option>
 							<option value="create new event template">create new event template</option>
 						</select>
 				</div>
@@ -45,12 +47,14 @@
 <script type="text/javascript">
 
 	function getActivitiesAndAwards() {
+	if (document.getElementById('events').value != null){
 		if (document.getElementById('events').value == "create new event template") {
 			document.location.href = "{{url "/add-event"}}";
 		} else {
-			document.location.href = "{{url "/addEventInstanceSelected/"}}"
+			document.location.href = "{{url "/add-event-instance/"}}"
 					+ document.getElementById('events').value;
 		}
+	}
 	}
 
 	function cancel() {

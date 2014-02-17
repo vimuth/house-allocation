@@ -30,8 +30,8 @@ log.info(verb);
 	if( verb=='POST'){
 		try {
 				
-			var data = request.getContent();
-			log.info(data);
+			var data = request.getContent();		
+			
 			var id = dataService.addEventInstance(data);
 
 			log.info('Received event instance id:'+id);
@@ -54,7 +54,7 @@ log.info(verb);
 
 			var uriMatcher = new URIMatcher(request.getRequestURI());
 			//log.info(request.getRequestURI);
-			if(uriMatcher.match('/HouseManagement/addEventInstanceSelected/{name}')) {
+			if(uriMatcher.match('/HouseManagement/add-event-instance/{name}')) {
 
 				log.info(uriMatcher.elements().name);
 
