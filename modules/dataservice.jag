@@ -1039,6 +1039,7 @@ function getEventAwardType(id){
 		return voteData;
 
 }
+
 // getting house name from the id from the table wso2_hm_house
 function getHouse(id){
 
@@ -1053,6 +1054,7 @@ function getHouse(id){
 		return houses;
 
 }
+
 function getHouseList(){
 
 	var data = get(url+ 'houses',null,{

@@ -78,4 +78,31 @@
 		href="{{url "/house/3"}}" class="list-group-item">Legion</a> <a
 		href="{{url "/house/4"}}" class="list-group-item">Wild Boars</a>
 </div>
+
+<form class="navbar-form" onsubmit="searchHouseOfMember(); return false;">
+	<br><br>
+	<label for="search">Enter the name of the person you want to find the house of</label>
+	<div id="search">
+		<div class="form-group">
+			<input type="text" id="searchMemberText" class="form-control"
+				placeholder="Search" required/>
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</div>
+</form>
+
+{{#if searched}}
+	<div class="well"><b>
+	The house of the member {{searched.member}} : {{searched.house_name}}</b> 
+	</div>
+{{/if}}
 {{/unless}}
+<script type="text/javascript">
+	function searchHouseOfMember(){
+		var name = document.getElementById("searchMemberText").value;
+		if (name.indexOf('@')!=-1){
+				name = name.substring(0,name.length-9);
+		}
+		document.location.href = '{{url "/search-house/"}}' + name;
+	}
+</script>
