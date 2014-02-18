@@ -1,7 +1,15 @@
 <div>
-	<h3 style="margin:0px">
+	<h3 style="margin: 0px">
 		<b>Current Elections</b>
 	</h3>
+
+	{{#if nullmsg}} <br />
+	<br />
+	<div class="well well-sm">
+
+		<font size="4">{{nullmsg}}</font>
+	</div>
+	{{/if}}} {{#if current_elections}}
 
 	<table class="table">
 		<thead>
@@ -12,35 +20,33 @@
 			</tr>
 		</thead>
 		<tbody>
-
-
-			{{#each Entry}}
+			{{#each current_elections.Entry}}
 			<tr>
-				<td style="width:15%">
-					<b>{{awardName}}</b><br /><p class="list-group-item-text" align="justify">{{awardDescription}}</p>
+				<td style="width: 15%"><b>{{awardName}}</b><br />
+					<p class="list-group-item-text" align="justify">{{awardDescription}}</p>
 				</td>
-				<td >
-					<b>{{eventName}}</b><br /><p class="list-group-item-text" align="justify">{{eventDescription}}</p>
+				<td><b>{{eventName}}</b><br />
+					<p class="list-group-item-text" align="justify">{{eventDescription}}</p>
 				</td>
-				<td ><button
+				<td><button
 						onclick="vote('{{event_award_instance_id}}','{{awardName}}','{{eventName}}');return false;"
-						type="button" class="btn btn-warning btn-xs" style="width: 80px;"><font size="2">Vote</font>
-						</button>
-				</td>
+						type="button" class="btn btn-warning btn-xs" style="width: 80px;">
+						<font size="2">Vote</font>
+					</button></td>
 
 			</tr>
-			
 
-			{{/each}}
+
+			{{/each}}{{/if}}
 
 		</tbody>
 	</table>
 </div>
 
 <script>
-	function vote(event_award_instance_id,a_name,e_name) {
-		document.location.href = '{{url "/votes/"}}'
-				+ event_award_instance_id+"/"+a_name+"/"+e_name;
+	function vote(event_award_instance_id, a_name, e_name) {
+		document.location.href = '{{url "/votes/"}}' + event_award_instance_id
+				+ "/" + a_name + "/" + e_name;
 
 	}
 </script>

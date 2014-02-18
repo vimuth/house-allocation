@@ -20,7 +20,7 @@ var log = new Log();
 	var data = dataService.getCurrentFutureEvents();
 	var nullMsg="";
 	if(data.length==0){
-		nullMsg="There is no upcoming events to be displayed"
+		nullMsg="There are no upcoming events to be displayed"
 	}
 
 	log.info(data);
