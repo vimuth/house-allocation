@@ -45,7 +45,7 @@ var verb = request.getMethod();
 					text :data.event.name},
 					'body': data,
 					'sidenav' :{
-						'admin': admin}
+						'admin': admin, 'house':session.get('house')}
 					});
 			}
 			catch(e){

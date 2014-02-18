@@ -5,6 +5,7 @@ var verb = request.getMethod();
 
 (function () {
 
+	//when the login page is requested
 	if(verb=='GET'){
 
 		caramel = require('caramel');
@@ -16,77 +17,89 @@ var verb = request.getMethod();
 		});
 	}
 
+	//when submiting the username and password
 	if(verb=='POST'){
 		var username=request.getParameter("username");
 		var password=request.getParameter("password");
 		var admin= session.get('role')=='admin';
 
-		// 		var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
-		// 		var ldapAuthentication = new ldapAuth();
+		redirectUrl = request.getParameter("location");
 
-		// 		var resultArray = ldapAuthentication.ldapAuth(username,password);
+		if(redirectUrl==null)
+			redirectUrl	= "/HouseManagement/"
 
-		// 		log.info(resultArray);
 
-		// 		if(resultArray == true){
-
-		// 			session.put("username",username);
-		// 			session.put("role",'admin');
-		// 			response.sendRedirect(request.getParameter("location"));
-		// 			return;
-		// 		}
-		// 		else{
-		// 			response.sendRedirect("index.jag");
-		// 		}
-
-		if((username.equals("admin") && password.equals("admin")))
+					//check if the user is the admin user
+		if(username.equals("admin"))
 		{
-			session.put("username",username);
-			session.put("role",'admin');
-			response.sendRedirect(request.getParameter("location"));
-			return;
+			if(password.equals("admin")){
+				session.put("username",username);
+				session.put("role",'admin');
+				response.sendRedirect(redirectUrl);
+				return;
+			}
+			else
+				response.sendRedirect('/HouseManagement/login.jag');
 		}
+		//if not check user against the ldap
 		else{
-			if (username!=null){
-				if (password.equals("user")){
 
-					var dataService = require('modules/dataservice.jag');
-					var data = dataService.getHouseByName(username);
+			var ldapAuth = Packages.com.wso2.housemanagement.security.ldapAuthenticate;;
+			var ldapAuthentication = new ldapAuth();
 
-					log.info(data);
+			var resultArray = ldapAuthentication.ldapAuth(username,password);
 
-					if(data.Entries==""){
+			//if the user is authenticated through the ldap
+			if(resultArray == true){
 
-						var api = require('api/houseAllocation.jag');
-						var house = api.assignHouse_Difference();
+				//fix username for the database
+				var re = /\\*@wso2.com$/
 
-						log.info(house);
+				if (!re.test(username)) {
+					username = username+"@wso2.com";
+				}
 
-						var result = dataService.addPerson(username,house.house_id);
+				var dataService = require('modules/dataservice.jag');
+				//check users house to see whether he is in the database
+				var data = dataService.getHouseByName(username);
 
-						log.info(result);
+				//if there is no entry add the user to the database
+				if(data.Entries==""){
 
+					var api = require('api/houseAllocation.jag');
+
+					//get a house using the allocating algorithm
+					var house = api.assignHouse_Difference();
+
+					var result = dataService.addPerson(username,house.house_id);
+
+					if(result){
 						session.put("username",username);
 						session.put("role","user");
-							
-						if(result){
-							response.sendRedirect("/HouseManagement/house-allocated.jag?house="+house.house_id);
-						}
-
+						session.put("house",house.house_id);
+						response.sendRedirect("/HouseManagement/house-allocated.jag?house="+house.house_id);
+						return;
 					}
-
 					else{
-						session.put("username",username);
-						session.put("role","user");
-						response.sendRedirect(request.getParameter("location"));
+						response.sendRedirect("/HouseManagement/error.jag");
+						return;
 					}
+
+				}
+				//if the user is in the database
+				else{
+					session.put("username",username);
+					session.put("role","user");
+					session.put("house", data.Entries.Entry.house_id );
+					response.sendRedirect(redirectUrl);
 					return;
 				}
 			}
+			//if the user couldnt be authenticated redirect to the login page
 			else{
-				response.sendRedirect("/HouseManagement/login.jag");
-				return;
+				response.sendRedirect("index.jag");
 			}
+
 		}
 	}
 }());

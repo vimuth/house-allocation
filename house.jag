@@ -87,7 +87,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 			'searched':{'member':name,'house_name':houseName}
 			},
 			'sidenav' :{
-			'admin': admin}
+			'admin': admin, 'house':session.get('house')}
 			});
 		}
 
@@ -102,7 +102,7 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 			'body': {
 			},
 			'sidenav' :{
-			'admin': admin}
+			'admin': admin, 'house':session.get('house')}
 			});
 		}
 

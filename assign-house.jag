@@ -23,7 +23,7 @@ var log = new Log();
 	'body': {
 	},
 	'sidenav' :{
-		'admin': admin}
+		'admin': admin, 'house':session.get('house')}
 	});
 }());
 %>

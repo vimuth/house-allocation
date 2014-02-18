@@ -41,7 +41,7 @@ var log = new Log();
 			'main' : {
 			'role': admin, 'events': data.eventCollection},
 			'sidenav' :{
-				'admin': admin}
+				'admin': admin, 'house':session.get('house')}
 		});
 		// 	}
 		// 	catch(e){

@@ -6,50 +6,50 @@ var verb = request.getMethod();
 
 	var username=session.get('username');
 	//var username = "Vimuth"; // has to be removed and upper line should be uncommented once the LDap connection is set.
-	var admin= session.get('role')=='admin'; 
+	var admin= session.get('role')=='admin';
 
 	if(username==null){
 		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
-   var dataService = require('modules/dataservice.jag');
+	var dataService = require('modules/dataservice.jag');
 
 
 	if( verb=='POST')
 	{
-		
+
 		try {
 			var voter_idData = dataService.getIDFromName(username);
-                
-            var voter_id=voter_idData.Entries.Entry.id;
+
+			var voter_id=voter_idData.Entries.Entry.id;
 			var id=0;
 			var data = request.getContent();
 			//log.info(data);
 			var pp = dataService.getId();
 			//log.info(pp);
 			var houses=dataService.getHouseList();
-if( data.Nominee.type == "G"){
-            for (var i=0 ;i< houses.length;i++)
-			{    
-                
-
-
-
-				//log.info(pp);
-				if(houses[i].name == data.Nominee.name)
+			if( data.Nominee.type == "G"){
+				for (var i=0 ;i< houses.length;i++)
 				{
-					//g.info(pp);
-					id = houses[i].id
-					log.info(id);
+
+
+
+
+					//log.info(pp);
+					if(houses[i].name == data.Nominee.name)
+					{
+						//g.info(pp);
+						id = houses[i].id
+						log.info(id);
+					}
 				}
-			}     
 
 
-}
+			}
 
-else {		for (var i=0 ;i< pp.people.length;i++)
-			{    
-                
+			else {		for (var i=0 ;i< pp.people.length;i++)
+			{
+
 
 
 
@@ -61,7 +61,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 					log.info(id);
 				}
 			}
-}
+			}
 			var vote = new Object();
 			// voter_id to be taken from session
 			vote.voter_id = voter_id;
@@ -88,11 +88,11 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 		if (verb=='GET'){
 			try{
 				var voter_idData = dataService.getIDFromName(username);
-                
-                var voter_id=voter_idData.Entries.Entry.id;
-               // log.info(voter_id);
-               	//var award_name_data = dataService.getAwards();
-               	//log.info(award_name_data);
+
+				var voter_id=voter_idData.Entries.Entry.id;
+				// log.info(voter_id);
+				//var award_name_data = dataService.getAwards();
+				//log.info(award_name_data);
 
 				var dataService = require('modules/dataservice.jag');
 				var nominees = [nominees];
@@ -111,11 +111,11 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				var data = dataService.getNominees(award_id);//  event id to be taken from session
 				var voteData = dataService.getAwardVotes(award_id);
 				var EventAwardData=dataService.getEventAwardId(award_id);
-                var eventAwardId=EventAwardData.event_award_instanceCollection.event_award_instance.event_award_id;
+				var eventAwardId=EventAwardData.event_award_instanceCollection.event_award_instance.event_award_id;
 
-			    var EventAwardType=dataService.getEventAwardType(eventAwardId);
-                var type = EventAwardType.event_awardCollection.event_award.type;
-                var voter= new Object();
+				var EventAwardType=dataService.getEventAwardType(eventAwardId);
+				var type = EventAwardType.event_awardCollection.event_award.type;
+				var voter= new Object();
 				voter.voterId= voter_id;
 				voter.eventId= award_id;
 				voter.awardName= award_name;
@@ -136,17 +136,17 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 
 				if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
 
-				{  
+				{
 					var votes_array=[votes_array];
 					votes_array[0]=voteData.votesCollection.votes;
 					nominee= data.votesCollection.votes.nominee_id;
 
-				 		if(type == "G"){
-				 					peopleNames[0]= dataService.getHouse(nominee);
-									}
-					       else{
-								  peopleNames[0]= dataService.getNames(nominee);
-				     		}
+					if(type == "G"){
+						peopleNames[0]= dataService.getHouse(nominee);
+					}
+					else{
+						peopleNames[0]= dataService.getNames(nominee);
+					}
 
 					var people = {
 						"names" : peopleNames };
@@ -164,22 +164,23 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 						'title': {
 						text :'Votes'
 						},
-						
+
 						'vote': {
 						'nominees':people.names ,'people':pp.people, 'voter' : voter, 'votes' : votes_array, 'houses':houses,'message':msg},
 						'sidenav' :{
 						'admin': admin},
 						'sidenav' :{
-						'admin': admin}
+						'admin': admin, 'house':session.get('house')}
 						});
-				
+
 				}
 
 				if(data.votesCollection == "")
-				{   var houses=dataService.getHouseList();
+				{
+					var houses=dataService.getHouseList();
 					var pp = dataService.getId();
 					var msg = "No nominees for this award yet."
-					caramel = require('caramel');
+							caramel = require('caramel');
 					caramel.render({
 						'header':{
 						'username': username
@@ -193,7 +194,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 					'sidenav' :{
 					'admin': admin},
 					'sidenav' :{
-					'admin': admin}
+					'admin': admin, 'house':session.get('house')}
 					});
 
 
@@ -203,25 +204,25 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				if((data.votesCollection.votes instanceof Array) )
 				{
 
-                  if(type == "G"){
-                 	
-					for (var i=0 ;i< data.votesCollection.votes.length;i++)
-					{
-					
-						nominees[i] = data.votesCollection.votes[i].nominee_id;
-						peopleNames[i] = dataService.getHouse(nominees[i]);
+					if(type == "G"){
 
-					}
+						for (var i=0 ;i< data.votesCollection.votes.length;i++)
+						{
+								
+							nominees[i] = data.votesCollection.votes[i].nominee_id;
+							peopleNames[i] = dataService.getHouse(nominees[i]);
+
+						}
 
 					}
 
 					else{
-				
-					for (var i=0 ;i< data.votesCollection.votes.length;i++)
+
+						for (var i=0 ;i< data.votesCollection.votes.length;i++)
 						{
-						nominees[i] = data.votesCollection.votes[i].nominee_id;
-						//log.info(nominees[i]);
-						peopleNames[i] = dataService.getNames(nominees[i]);
+							nominees[i] = data.votesCollection.votes[i].nominee_id;
+							//log.info(nominees[i]);
+							peopleNames[i] = dataService.getNames(nominees[i]);
 						}
 					}
 					var people = {
@@ -264,7 +265,7 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 								'vote': {
 								'nominees':people.names , 'people':pp.people , 'voter' : voter, 'votes' : voteData.votesCollection.votes , 'houses':houses,'message':msg},
 								'sidenav' :{
-								'admin': admin}
+								'admin': admin, 'house':session.get('house')}
 								});
 
 

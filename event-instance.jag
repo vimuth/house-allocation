@@ -75,7 +75,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				text :data.eventInstance.name},
 				'body': data,
 				'sidenav' :{
-					'admin': admin}
+					'admin': admin, 'house':session.get('house')}
 				});
 				// 			}
 				// 			catch(e){

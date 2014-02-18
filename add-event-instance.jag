@@ -77,7 +77,7 @@ log.info(verb);
 						text :'Add Event Instance'
 						},
 						'sidenav' :{
-							'admin': admin},
+							'admin': admin , 'house':session.get('house')},
 							'eventDetails':{
 								'evName':eventName,'events':eventList.event_nameCollection,'activities':actAndAwards.activities,'awards':actAndAwards.awards}
 						});

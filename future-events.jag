@@ -20,7 +20,7 @@ var log = new Log();
 	var data = dataService.getFutureEvents();
 	var nullMsg="";
 		if(data.length==0){
-			nullMsg="There is no future events to be displayed"
+			nullMsg="There are no future events to be displayed"
 		}
 
 	log.info(data);
@@ -52,7 +52,7 @@ var log = new Log();
 		'title':'Future Events and activities',
 		'role': admin, 'events': data, 'future':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2, 'nullmsg':nullMsg},
 		'sidenav' :{
-			'admin': admin}
+			'admin': admin, 'house':session.get('house')}
 		});
 		// 	}
 	}());
