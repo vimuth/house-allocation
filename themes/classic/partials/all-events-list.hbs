@@ -6,7 +6,7 @@
 			href='{{url "/event-instance/"}}{{id}}' class="list-group-item" id="first">
 			<div style="margin: 0px; padding: 0px" class="panel panel-custom">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{event_instance.name}}</h3>
+					<h3 class="panel-title">{{Entry.name}}</h3>
 				</div>
 				<div class="row">
 
@@ -14,10 +14,10 @@
 
 						<p class="list-group-item-text" align="justify">
 
-							{{event_instance.description}} <br /><br />Start Date :
-						<div class="startDate">{{event_instance.startDate}}</div>
+							{{Entry.description}} <br /><br />Start Date :
+						<div class="startDate">{{Entry.startDate}}</div>
 						<br />End Date :
-						<div class="endDate">{{event_instance.endDate}}</div>
+						<div class="endDate">{{Entry.endDate}}</div>
 
 						</p>
 					</div>
