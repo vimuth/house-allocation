@@ -14,7 +14,7 @@ var render = function(theme, data, meta, require) {
 		} ],
 		main : [ {
 			partial : 'award-list',
-			context : data.current_elections
+			context : data.main
 		} ]
 	});
 };
