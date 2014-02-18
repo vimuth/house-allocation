@@ -121,6 +121,17 @@ else {		for (var i=0 ;i< pp.people.length;i++)
 				voter.awardName= award_name;
 				voter.eventName =event_name;
 				voter.type = type;
+
+				
+				if(type == "I"){
+					voter.typeI = true;
+					voter.typeG =false;
+									}
+				else{
+					voter.typeI = false;
+					voter.typeG =true;
+				}
+
 				log.info(voter);
 
 				if(!(data.votesCollection.votes instanceof Array) && (data.votesCollection !== ""))
