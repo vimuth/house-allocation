@@ -11,9 +11,14 @@ var log = new Log();
 		return;
 	}
 
+
 	try{
 		var dataService = require('modules/dataservice.jag');
 		var data = dataService.getAwards();
+		var nullMsg="";
+		if(data.length==0){
+			nullMsg="There are no current elections going on"
+		}
 
 		caramel = require('caramel');
 
@@ -24,9 +29,10 @@ var log = new Log();
 		},
 		'title': {
 		text :'Awards'},
-		'current_elections': data.Entries,
+		'main':{
+		'current_elections':data.Entries,'nullmsg':nullMsg},
 		'sidenav' :{
-			'admin': admin}
+		'admin': admin}
 		});
 	}
 	catch(e){
