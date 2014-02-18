@@ -25,11 +25,12 @@ var verb = request.getMethod();
 
 		redirectUrl = request.getParameter("location");
 
-		if(redirectUrl==null)
-			redirectUrl	= "/HouseManagement/"
+		if(redirectUrl==null){
+			redirectUrl	= "/HouseManagement/";
+		}
 
 
-					//check if the user is the admin user
+		//check if the user is the admin user
 		if(username.equals("admin"))
 		{
 			if(password.equals("admin")){

@@ -6,14 +6,14 @@ var log = new Log();
 	var body = "Welcome";
 	var admin= session.get('role')=='admin';
 
-	log.info(admin);
-
 	var username=session.get('username');
 
 	if(username==null){
 		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
 		return;
 	}
+	
+	log.debug("logged in as : " + username);
 
 
 	var path = "/images";
