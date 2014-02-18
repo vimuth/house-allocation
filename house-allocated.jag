@@ -28,7 +28,7 @@ var log = new Log();
 		'main':{
 		'house': house},
 		'sidenav' :{
-			'admin': admin}
+			'admin': admin, 'house':session.get('house')}
 		});
 	}
 	catch(e){

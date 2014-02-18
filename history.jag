@@ -47,7 +47,7 @@ var log = new Log();
 			'title':'History Of Events',
 			'role': admin, 'events': data, 'nullmsg':nullMsg},
 			'sidenav' :{
-				'admin': admin}
+				'admin': admin, 'house':session.get('house')}
 		});
 		// 	}
 	}());

@@ -77,12 +77,12 @@
 						<table style="margin: 0px" class="table table-condensed">
 							{{#each winner}}
 							<tr>
-								<td style="border: none"><h5>{{rank}} :
+								<td style="border: none; text-align:right"><h5>{{rank}} :
 										{{description}}</h5></td>
 
-								<td style="border: none">{{#if_eq ../type "I"}}
+								<td style="border: none; width:40px">{{#if_eq ../type "I"}}
 									<h5>{{winner}}</h5> {{/if_eq}} {{#if_eq ../type "G"}} <img
-									class="pull-right"
+									class="pull-left"
 									src="/HouseManagement/themes/classic/images/Cliub Logos-0{{winner}}.jpg"
 									alt="Smiley face" height="40" width="40"> {{/if_eq}}
 								</td>

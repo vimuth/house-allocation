@@ -52,7 +52,7 @@ var log = new Log();
 		'title':'All upcoming Events and activities',
 		'role': admin, 'events': data, 'all':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2, 'nullmsg':nullMsg},
 		'sidenav' :{
-		'admin': admin}
+		'admin': admin, 'house':session.get('house')}
 		});
 		// 	}
 }());

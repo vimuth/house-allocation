@@ -37,7 +37,7 @@ var verb = request.getMethod();
 					},
 					'eventInstances':eventInstances.event_instanceCollection,
 					'sidenav' :{
-					'admin': admin}
+					'admin': admin, 'house':session.get('house')}
 					});
 			}
 			catch(e){
@@ -61,7 +61,7 @@ var verb = request.getMethod();
 					},
 					'eventInstances':eventInstances.event_instanceCollection,
 					'sidenav' :{
-					'admin': admin}
+					'admin': admin, 'house':session.get('house')}
 					});
 			}
 			catch(e){

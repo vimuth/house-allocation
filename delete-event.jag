@@ -53,7 +53,7 @@ log.info("got here : "+verb);
 				"event" : event
 				},
 				'sidenav' :{
-					'admin': admin}
+					'admin': admin, 'house':session.get('house')}
 				});
 				// 			}
 				// 			catch(e){

@@ -34,7 +34,7 @@ var verb = request.getMethod();
 				},
 				'eventInstances':eventInstances.Entries,
 				'sidenav' :{
-				'admin': admin}
+				'admin': admin, 'house':session.get('house')}
 				});
 			}
 			catch(e){

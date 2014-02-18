@@ -92,12 +92,12 @@ function addEventInstance(data){
 
 	log.info("received data:");
 	log.info(data);
-	
+
 	var eventID = this.getEventIDFromName(data);
 	var eventInstName = data.eventInstance.name;
 	var optionalHeaders ={
 		"Accept":"application/json"};
-		
+
 		var eventID = this.getEventIDFromName(data);
 		var eventInstName = data.eventInstance.name;
 		var eventInstDescription = data.eventInstance.description;
@@ -918,29 +918,31 @@ function deleteAwardWinnerGroup(data){
 //This function is used to add an activity ranking if the activity is a group activity
 function addActivityWinnerHouse(data){
 	if(data!=null){
-		log.info("adding activity winner house datails ");
+		log.debug("adding activity winner house datails ");
+
+		try{
+			var headers = {"Accept": "application/json"};
+			var result = post(url+'add-activity-winner-house',
+							{'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},
+							headers,
+							'json');
+			
+			log.info(result);
+			if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+				return {'success':true};
+			}
+			else{
+				return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
+			}
+
+		}
+		catch(e){
+			return {'success':false, 'error' : "Internal Error"};
+		}
+			
 	}else{
-		log.info(" not adding activity winner housee datails");
+		log.debug("Invalid input for the function : addActivityWinnerHouse");
 	}
-	try{
-		var headers = {
-			"Accept": "application/json"};
-			var result = post(url+'add-activity-winner-house',{
-				'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},headers,'json');
-
-
-				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
-					return {'success':true};
-				}
-				else{
-					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
-				}
-
-	}
-	catch(e){
-		return {'success':false, 'error' : "Internal Error"};
-	}
-
 }
 
 //This function is used to add an activity ranking if the activity is a individual activity

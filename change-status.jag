@@ -26,7 +26,7 @@ var verb = request.getMethod();
 		'body': {
 		},
 		'sidenav' :{
-			'admin': admin}
+			'admin': admin, 'house':session.get('house')}
 		});
 
 	}

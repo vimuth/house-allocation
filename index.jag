@@ -31,8 +31,6 @@ var log = new Log();
 
 
 	file.close();
-
-	log.info(name_list);
 	
 	caramel = require('caramel');
 	caramel.render({
@@ -45,7 +43,7 @@ var log = new Log();
 	'body': {
 	text:body,'file':name_list},
 	'sidenav' :{
-	'admin': admin}
+	'admin': admin , 'house':session.get('house')}
 
 	});
 }());
