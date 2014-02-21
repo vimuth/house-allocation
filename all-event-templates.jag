@@ -29,7 +29,7 @@ var verb = request.getMethod();
 						'role': admin,
 					},
 					'title': {
-					text :'Stored Event Templates'
+					text :'Event Types'
 					},
 					'events':events.eventCollection,
 					'sidenav' :{
