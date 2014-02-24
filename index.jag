@@ -1,6 +1,7 @@
 <%
 var caramel;
 var log = new Log();
+var verb = request.getMethod();
 
 (function () {
 	var body = "Welcome";

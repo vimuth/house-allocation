@@ -38,7 +38,11 @@ var verb = request.getMethod();
 		//check if the user is the admin user
 		if(username.equals("admin"))
 		{
-			if(password.equals("admin")){
+			var file = new File("./app.conf");
+			file.open("r");
+			var conf = parse(file.readAll());
+			file.close();
+			if(password.equals(conf.admin.password)){
 				session.put("username",username);
 				session.put("role",'admin');
 				response.sendRedirect(redirectUrl);

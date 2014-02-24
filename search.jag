@@ -10,7 +10,7 @@ var verb = request.getMethod();
 	var username=session.get('username');
 	var admin= session.get('role')=='admin';
 
-	if(username!="admin"){
+	if(username==null){
 		response.sendRedirect("/HouseManagement/login.jag");
 		return;
 	}
