@@ -11,6 +11,14 @@
 	}
 }
 
+.dropdown-menu {
+	background-color: #333333;
+}
+
+.dropdown-menu > li > a:hover {
+	background: #333333 !important
+}
+
 .btn-custom {
 	color: #ffffff;
 	background-color: #333333;
@@ -60,7 +68,7 @@
 }
 
 ul.nav a {
-	color: #f47a20 !important;
+	color: white !important;
 }
 
 ul.nav a:hover {
@@ -68,11 +76,11 @@ ul.nav a:hover {
 }
 
 .nav>li>a:focus {
-	background: none !important
+	background: #333333 !important
 }
 
 .nav>li>a {
-	background: none !important
+	background: #333333 !important
 }
 
 #main {
