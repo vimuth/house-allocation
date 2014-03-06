@@ -20,11 +20,11 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		var header = request.getHeader("X-JWT-Assertion");
 
 		// Create Base64 Object
-		var Base64 = require('../modules/base64.js');
+		//var Base64 = require('../modules/base64.js');
 
 		if(header !=null){
 			var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
-			var jsonString = Base64.decode(jwtAssertions[1]);
+			var jsonString = btoa(jwtAssertions[1]);
 			jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
 			jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
 			var obj = parse(jsonString);
