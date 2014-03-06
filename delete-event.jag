@@ -6,10 +6,32 @@ var log = new Log();
 var dataService = require('modules/dataservice.jag');
 var verb = request.getMethod();
 
-log.info("got here : "+verb);
 
 
 (function () {
+	//New authorization using app manager SSO
+	var header = request.getHeader("X-JWT-Assertion");
+
+	// Create Base64 Object
+	var Base64 = require('../modules/base64.js');
+
+	if(header !=null){
+		var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
+		var jsonString = Base64.decode(jwtAssertions[1]);
+		jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
+		jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
+		var obj = parse(jsonString);
+		var email = obj.email;
+		var roles = obj.roles;
+
+		if (roles.indexOf("admin") != -1) {
+			session.put("username", email);
+			session.put("role", "admin");
+		} else {
+			session.put("username", email);
+			session.put("role", "user");
+		}
+	}
 
 	var username=session.get('username');
 	var admin= session.get('role')=='admin';
@@ -53,40 +75,40 @@ log.info("got here : "+verb);
 				"event" : event
 				},
 				'sidenav' :{
-					'admin': admin, 'house':session.get('house')}
+				'admin': admin, 'house':session.get('house')}
 				});
 				// 			}
 				// 			catch(e){
 				// 				log.error(e);
 				// 				response.sendRedirect("/HouseManagement/error.jag");
 				// 			}
-				}
-				else{
-					if(verb='DELETE'){
-						log.info("got here");
-						try{
-							dataService.deleteEvent(uriMatcher.elements().id);
-							response.contentType = 'application/json';
-
-							response.content = {
-								'success':true} ;
-						}
-						catch(e){
-							log.error(e);
-							response.contentType = 'application/json';
-
-							response.content = {
-								'success':false} ;
-						}
-					}
-				}
-
 		}
 		else{
-			response.sendRedirect("../event-list.jag");
-			return;
+			if(verb='DELETE'){
+				log.info("got here");
+				try{
+					dataService.deleteEvent(uriMatcher.elements().id);
+					response.contentType = 'application/json';
+
+					response.content = {
+						'success':true} ;
+				}
+				catch(e){
+					log.error(e);
+					response.contentType = 'application/json';
+
+					response.content = {
+						'success':false} ;
+				}
+			}
 		}
 
-	}());
-	%>
+	}
+	else{
+		response.sendRedirect("../event-list.jag");
+		return;
+	}
+
+}());
+%>
 

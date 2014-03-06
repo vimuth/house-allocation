@@ -6,6 +6,30 @@ var verb = request.getMethod();
 
 (function () {
 
+	//New authorization using app manager SSO
+	var header = request.getHeader("X-JWT-Assertion");
+
+	// Create Base64 Object
+	var Base64 = require('../modules/base64.js');
+
+	if(header !=null){
+		var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
+		var jsonString = Base64.decode(jwtAssertions[1]);
+		jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
+		jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
+		var obj = parse(jsonString);
+		var email = obj.email;
+		var roles = obj.roles;
+
+		if (roles.indexOf("admin") != -1) {
+			session.put("username", email);
+			session.put("role", "admin");
+		} else {
+			session.put("username", email);
+			session.put("role", "user");
+		}
+	}
+	
 	var username=session.get('username');
 	var admin= session.get('role')=='admin';
 
@@ -20,21 +44,21 @@ var verb = request.getMethod();
 		log.info(request.getRequestURI);
 		if(uriMatcher.match('/HouseManagement/all-event-templates/')) {
 			try{
-					var events= dataService.getEvents();
-					log.info("received all events : "+events);
-					caramel = require('caramel');
-					caramel.render({
-						'header':{
-						'username': username,
-						'role': admin,
-					},
-					'title': {
-					text :'Event Types'
-					},
-					'events':events.eventCollection,
-					'sidenav' :{
-					'admin': admin, 'house':session.get('house')}
-					});
+				var events= dataService.getEvents();
+				log.info("received all events : "+events);
+				caramel = require('caramel');
+				caramel.render({
+					'header':{
+					'username': username,
+					'role': admin,
+				},
+				'title': {
+				text :'Event Types'
+				},
+				'events':events.eventCollection,
+				'sidenav' :{
+				'admin': admin, 'house':session.get('house')}
+				});
 			}
 			catch(e){
 				log.error(e);

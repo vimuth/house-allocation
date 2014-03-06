@@ -14,80 +14,104 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		return options.inverse(this);
 });
 
-(function () {
+	(function () {
 
-	var username=session.get('username');
-	var admin= session.get('role')=='admin';
+		//New authorization using app manager SSO
+		var header = request.getHeader("X-JWT-Assertion");
 
-	if(username!="admin"){
-		response.sendRedirect("../login.jag");
-		return;
-	}
+		// Create Base64 Object
+		var Base64 = require('../modules/base64.js');
 
+		if(header !=null){
+			var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
+			var jsonString = Base64.decode(jwtAssertions[1]);
+			jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
+			jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
+			var obj = parse(jsonString);
+			var email = obj.email;
+			var roles = obj.roles;
 
-log.info(verb);
-
-	if( verb=='POST'){
-		try {
-				
-			var data = request.getContent();
-
-			log.info('Received event instance to add:');
-			log.info(data);
-			var id = dataService.addEventInstance(data);
-
-			log.info('Received event instance id:'+id);
-
-			response.contentType = 'application/json';
-
-			response.content = {
-				'redirect':true, 'url':'../event-instance/'+id} ;
-				
-			return;
-
-		} catch (e) {
-			log.error(e.toString());
-			response.sendRedirect("../error.jag");
+			if (roles.indexOf("admin") != -1) {
+				session.put("username", email);
+				session.put("role", "admin");
+			} else {
+				session.put("username", email);
+				session.put("role", "user");
+			}
 		}
 
-	}
-	else{
-		if (verb=='GET'){
+		var username=session.get('username');
+		var admin= session.get('role')=='admin';
 
-			var uriMatcher = new URIMatcher(request.getRequestURI());
-			//log.info(request.getRequestURI);
-			if(uriMatcher.match('/HouseManagement/add-event-instance/{name}')) {
+		if(username!="admin"){
+			response.sendRedirect("../login.jag");
+			return;
+		}
 
-				log.info(uriMatcher.elements().name);
 
-				try{
-					var eventName = uriMatcher.elements().name;
-					log.info(eventList.event_nameCollection);
-					var data = {
-						"eventName":eventName};
-						var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
-						//log.info(actAndAwards);
-						caramel = require('caramel');
-						caramel.render({
-							'header':{
-							'username': username,
-							'role': admin,
-						},
-						'title': {
-						text :'Add Event Instance'
-						},
-						'sidenav' :{
+		log.info(verb);
+
+		if( verb=='POST'){
+			try {
+
+				var data = request.getContent();
+
+				log.info('Received event instance to add:');
+				log.info(data);
+				var id = dataService.addEventInstance(data);
+
+				log.info('Received event instance id:'+id);
+
+				response.contentType = 'application/json';
+
+				response.content = {
+					'redirect':true, 'url':'../event-instance/'+id} ;
+
+					return;
+
+			} catch (e) {
+				log.error(e.toString());
+				response.sendRedirect("../error.jag");
+			}
+
+		}
+		else{
+			if (verb=='GET'){
+
+				var uriMatcher = new URIMatcher(request.getRequestURI());
+				//log.info(request.getRequestURI);
+				if(uriMatcher.match('/HouseManagement/add-event-instance/{name}')) {
+
+					log.info(uriMatcher.elements().name);
+
+					try{
+						var eventName = uriMatcher.elements().name;
+						log.info(eventList.event_nameCollection);
+						var data = {
+							"eventName":eventName};
+							var actAndAwards = dataService.getActivitiesAndAwardsForEvent(data);
+							//log.info(actAndAwards);
+							caramel = require('caramel');
+							caramel.render({
+								'header':{
+								'username': username,
+								'role': admin,
+							},
+							'title': {
+							text :'Add Event Instance'
+							},
+							'sidenav' :{
 							'admin': admin , 'house':session.get('house')},
 							'eventDetails':{
-								'evName':eventName,'events':eventList.event_nameCollection,'activities':actAndAwards.activities,'awards':actAndAwards.awards}
-						});
-				}
-				catch(e){
-					log.error(e);
+							'evName':eventName,'events':eventList.event_nameCollection,'activities':actAndAwards.activities,'awards':actAndAwards.awards}
+							});
+					}
+					catch(e){
+						log.error(e);
+					}
 				}
 			}
 		}
-	}
-}());
-%>
+	}());
+	%>
 

@@ -3,26 +3,51 @@ var caramel;
 var log = new Log();
 
 (function () {
+
+	//New authorization using app manager SSO
+	var header = request.getHeader("X-JWT-Assertion");
+
+	// Create Base64 Object
+	var Base64 = require('../modules/base64.js');
+
+	if(header !=null){
+		var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
+		var jsonString = Base64.decode(jwtAssertions[1]);
+		jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
+		jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
+		var obj = parse(jsonString);
+		var email = obj.email;
+		var roles = obj.roles;
+
+		if (roles.indexOf("admin") != -1) {
+			session.put("username", email);
+			session.put("role", "admin");
+		} else {
+			session.put("username", email);
+			session.put("role", "user");
+		}
+	}
+
 	var username=session.get('username');
 	var admin= session.get('role')=='admin';
 
-	log.info(admin);
+
 
 	if(username==null){
 		response.sendRedirect("../login.jag?"+request.getRequestURI());
 		return;
 	}
 	var dataService = require('modules/dataservice.jag');
-	
+
 	var uriMatcher = new URIMatcher(request.getRequestURI());
 	//if the URL is for current events
 	// 	if(uriMatcher.match('/HouseManagement/current-events')){
 	var data = dataService.getCurrentEvents();
 	var available=true;
 	var nullMsg="";
-		if(data.length==0){
-			nullMsg="There are no current events to be displayed"
-		}
+	if(data.length==0){
+		nullMsg="There are no current events to be displayed"
+	}
 
 	log.info(data);
 
@@ -40,19 +65,19 @@ var log = new Log();
 	btn2="Show Future Events";
 	var link2="future-events.jag";
 
-		caramel.render({
-			'header':{
-			'username': username,
-			'role': admin
-		},
-		'title': {
-		text :'Current Events'},
-		'main' : {
-		'title':'Current Events and activities',
-		'role': admin, 'events': data, 'current':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2, 'nullmsg':nullMsg},
-		'sidenav' :{
-			'admin': admin, 'house':session.get('house')}
-		});
-		// 	}
-	}());
-	%>
+	caramel.render({
+		'header':{
+		'username': username,
+		'role': admin
+	},
+	'title': {
+	text :'Current Events'},
+	'main' : {
+	'title':'Current Events and activities',
+	'role': admin, 'events': data, 'current':true,'btn1':btn1,'link1':link1,'btn2':btn2,'link2':link2, 'nullmsg':nullMsg},
+	'sidenav' :{
+	'admin': admin, 'house':session.get('house')}
+	});
+	// 	}
+}());
+%>

@@ -43,6 +43,30 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 	(function () {
 
+		//New authorization using app manager SSO
+		var header = request.getHeader("X-JWT-Assertion");
+			
+		// Create Base64 Object
+		var Base64 = require('../modules/base64.js');
+			
+		if(header !=null){
+			var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
+			var jsonString = Base64.decode(jwtAssertions[1]);
+			jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
+			jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
+			var obj = parse(jsonString);
+			var email = obj.email;
+			var roles = obj.roles;
+				
+			if (roles.indexOf("admin") != -1) {
+				session.put("username", email);
+				session.put("role", "admin");
+			} else {
+				session.put("username", email);
+				session.put("role", "user");
+			}
+		}
+
 		var username=session.get('username');
 
 		if(username!='admin'){
@@ -78,7 +102,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				text :data.eventInstance.name},
 				'body': data,
 				'sidenav' :{
-					'admin': admin}
+				'admin': admin}
 				});
 				// 			}
 				// 			catch(e){
@@ -105,7 +129,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 				response.contentType = 'application/json';
 
 				log.info(request.getContent());
-				
+
 				var result=dataService.updateEventInfo(request.getContent());
 				if(result){
 					response.content = {
@@ -238,7 +262,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 
 			}
 
-				
+
 			if(operation=="removeActivityWinners"){
 				response.contentType = 'application/json';
 
