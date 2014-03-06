@@ -1,11 +1,11 @@
-<div class="panel panel-custom">
-	<div class="panel-heading">
+<div class="panel panel-custom" style="border-radius: 0px">
+	<div class="panel-heading" style="border-radius: 0px">
 		<h3 class="panel-title">{{eventInstance.name}}
-		{{#if isAdmin}}<button id="voteButton" type="button"
+		{{#if isAdmin}}<button id="voteButton" type="button" style="min-height: 1px;height: 39px; margin-top:-11px; margin-right:-16px; border-radius:0px"
 			class="btn btn-warning btn-xs pull-right"
 			onclick='window.location.href="/HouseManagement/edit-event-instance/{{eventInstance.id}}"'>Edit Event</button>
 			
-			<button id="voteButton" type="button"
+			<button id="voteButton" type="button" style="min-height: 1px;height: 39px; margin-top:-11px; margin-right:-10px; border-radius:0px"
 			class="btn btn-danger btn-xs pull-right"
 			onclick='window.location.href="/HouseManagement/delete-event-instance/{{eventInstance.id}}"'>Delete Event</button>
 			

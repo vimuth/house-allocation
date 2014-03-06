@@ -1,21 +1,25 @@
 <%
 
-newURl = 'http://localhost:9763/services/house_allocation/';
-var base_url = 'http://localhost:9763/services/house_allocation/';
-var url = 'http://localhost:9763/services/house_allocation/';
+//The location of the data service is read from the application configuration file
+var file = new File("../app.conf");
+file.open("r");
+var conf = parse(file.readAll());
+var url = conf.dataServiceUrl;
+file.close();
+ 
 
-var events_url = base_url + 'events/';
-var activities_url = base_url +'activities/';
-var awards_url = base_url +'awards/';
-var awards_instance_url = base_url +'awards_instance/';
-var event_instance_url= base_url +'event_instance';
-var votes_url = base_url +'votes/';
-var votesNominee_url = base_url +'votes_nominee/';
-var peopleNames_url = base_url +'people_names/';
-var current_elections_url = base_url +'current-elections/';
-var award_instance_url= base_url +'eventAwardId/'
-var award_type_url= base_url +'event_award_type/'
-var house_url = base_url +'house/';
+var events_url = url + 'events/';
+var activities_url = url +'activities/';
+var awards_url = url +'awards/';
+var awards_instance_url = url +'awards_instance/';
+var event_instance_url= url +'event_instance';
+var votes_url = url +'votes/';
+var votesNominee_url = url +'votes_nominee/';
+var peopleNames_url = url +'people_names/';
+var current_elections_url = url +'current-elections/';
+var award_instance_url= url +'eventAwardId/'
+var award_type_url= url +'event_award_type/'
+var house_url = url +'house/';
 
 
 var HOUSES = ['Cloud Bots', 'Legion', 'Titans' , 'WildBoars'];
@@ -77,7 +81,7 @@ function addEvent(data){
 function getEventIDFromName(data){
 	var optionalHeaders = {
 		"Accept":"application/json" };
-		var result = get(newURl+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
+		var result = get(url+'event_id_from_name/'+encodeURI(data.eventInstance.eventName),null,{
 			"Accept":"application/json"},"application/json");
 			log.info(result);
 			var eventIdObj = parse(result.data);
@@ -108,7 +112,7 @@ function addEventInstance(data){
 		var eventInst={
 			"name": eventInstName,"event_id":eventID, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate};
 
-			var result = post(newURl+"add_event_instance", eventInst, optionalHeaders, "json");
+			var result = post(url+"add_event_instance", eventInst, optionalHeaders, "json");
 			log.info("Added event instance:"+eventInst);
 			event_instance_id = result.data.GeneratedKeys.Entry.ID;
 
@@ -124,7 +128,7 @@ function addEventInstance(data){
 				var activityInstance = {
 					"event_instance_id":event_instance_id,"activity_id":activityInstances[i].activityID,"datetime":activityInstances[i].activityInstDate,"venue":activityInstances[i].activityInstVenue,"description":activityInstances[i].activityInstDesc};
 					log.info("adding activity instance :"+activityInstance);
-					post(newURl+"add_activity_instance", activityInstance, optionalHeaders, "json");
+					post(url+"add_activity_instance", activityInstance, optionalHeaders, "json");
 					log.info("added activity instance :"+activityInstance);
 			}
 
@@ -133,7 +137,7 @@ function addEventInstance(data){
 				var awardInstance = {
 					"event_instance_id":event_instance_id,"event_award_id":awardInstances[i].awardID,"vote_startDate":awardInstances[i].awardInstStart,"vote_endDate":awardInstances[i].awardInstEnd};
 					log.info("adding event award instance: "+awardInstance);
-					var result = post(newURl+"add_award_instance", awardInstance, optionalHeaders, "json");
+					var result = post(url+"add_award_instance", awardInstance, optionalHeaders, "json");
 					log.info("added event award instance: "+awardInstance);
 			}
 			log.info("exiting addEventInstace of dataService");
@@ -142,8 +146,7 @@ function addEventInstance(data){
 
 function getEventsWithKey(key){
 
-	log.info("$$$$$$$$$$$$$$$$$$$ HERE $$$$$$$$$$$$$$$$$$$");
-	var result = get(newURl+'events_like/'+encodeURI(key.eventName),null,{
+	var result = get(url+'events_like/'+encodeURI(key.eventName),null,{
 		"Accept":"application/json"},"application/json");
 		log.info("received events:"+parse(result.data));
 		return parse(result.data);
@@ -167,7 +170,7 @@ function getActivitiesAndAwardsForEvent(data){
 
 //get activity for a given event_id
 function getActivitiesForEventID(id){
-	var data = parse(get(newURl+'activities_from_event_id/'+id,null,{
+	var data = parse(get(url+'activities_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json").data);
 
 		if ( data.activityCollection==""){
@@ -183,7 +186,7 @@ function getActivitiesForEventID(id){
 
 //get votes for a given event award based on the event award id
 function getAwardsForEventID(id){
-	var data = parse(get(newURl+'awards_from_event_id/'+id,null,{
+	var data = parse(get(url+'awards_from_event_id/'+id,null,{
 		"Accept":"application/json"},"application/json").data);
 
 		if ( data.event_awardCollection==""){
@@ -280,7 +283,7 @@ function getEvents(){
 }
 
 function getEventNames(){
-	var data =parse(get(newURl+'event_names',null,{
+	var data =parse(get(url+'event_names',null,{
 		"Accept":"application/json"},"application/json").data);
 
 		if ( data.event_nameCollection==""){
