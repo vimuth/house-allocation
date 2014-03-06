@@ -31,7 +31,7 @@ var verb = request.getMethod();
 		redirectUrl = request.getParameter("location");
 
 		if(redirectUrl==null){
-			redirectUrl	= "/HouseManagement/";
+			redirectUrl	= "index.jag";
 		}
 
 
@@ -49,7 +49,7 @@ var verb = request.getMethod();
 				return;
 			}
 			else
-				response.sendRedirect('/HouseManagement/login.jag');
+				response.sendRedirect('login.jag');
 		}
 		//if not check user against the ldap
 		else{
@@ -91,11 +91,11 @@ var verb = request.getMethod();
 						session.put("username",email);
 						session.put("role","user");
 						session.put("house",house.house_id);
-						response.sendRedirect("/HouseManagement/house-allocated.jag?house="+house.house_id);
+						response.sendRedirect("house-allocated.jag?house="+house.house_id);
 						return;
 					}
 					else{
-						response.sendRedirect("/HouseManagement/error.jag");
+						response.sendRedirect("error.jag");
 						return;
 					}
 

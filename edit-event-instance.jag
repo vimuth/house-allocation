@@ -46,7 +46,7 @@ Handlebars.Handlebars.registerHelper("unlessVotingPeriod", function(startDate, e
 		var username=session.get('username');
 
 		if(username!='admin'){
-			response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+			response.sendRedirect("../login.jag?"+request.getRequestURI());
 			return;
 		}
 

@@ -9,7 +9,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username==null){
-		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+		response.sendRedirect("../login.jag?"+request.getRequestURI());
 		return;
 	}
 	var dataService = require('modules/dataservice.jag');
@@ -74,13 +74,13 @@ var verb = request.getMethod();
 			{
 				response.contentType = 'application/json';
 				response.content = {
-					'redirect':true, 'url':'/HouseManagement/award-list.jag'} ;
+					'redirect':true, 'url':'award-list.jag'} ;
 			}
 
 		}
 		catch (e) {
 			log.error(e.toString());
-			response.sendRedirect("/HouseManagement/error.jag");
+			response.sendRedirect("error.jag");
 		}
 
 	}

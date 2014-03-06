@@ -1,17 +1,20 @@
-<div class="well well-sm">To change a member's status please enter their username in WSO2 email account.</br>
-Ex:If the new member is example@wso2.com, Enter 'example@wso2.com' or 'example'.
+<div class="well well-sm">
+	To change a member's status please enter their username in WSO2 email
+	account.</br> Ex:If the new member is example@wso2.com, Enter
+	'example@wso2.com' or 'example'.
 </div>
 
-<form class="form-horizontal" onsubmit='search(); return false;' id="myform" name="newEvent">
+<form class="form-horizontal" onsubmit='search(); return false;'
+	id="myform" name="newEvent">
 	<div class="form-group">
-		<label for="nameInput" class="col-sm-3 control-label">Member Name</label>
+		<label for="nameInput" class="col-sm-3 control-label">Member
+			Name</label>
 		<div class="col-sm-5">
 			<input type="text" style="display: inline" class="form-control"
 				id="nameInput" placeholder="Enter Name" required>
 		</div>
 		<div class="col-sm-2">
-			<button type="assign" 
-				class="btn btn-default">Search</button>
+			<button type="assign" class="btn btn-default">Search</button>
 		</div>
 	</div>
 </form>
@@ -80,7 +83,7 @@ function deactivate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/HouseManagement.jag"}}'+"?operation=deactivate&name="+name),
+		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=deactivate&name="+name),
 		data : {},
 		success : function(
 				msg) {
@@ -99,7 +102,7 @@ function activate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/HouseManagement.jag"}}'+"?operation=activate&name="+name),
+		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=activate&name="+name),
 		data : {},
 		success : function(
 				msg) {

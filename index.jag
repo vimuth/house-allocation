@@ -10,7 +10,7 @@ var verb = request.getMethod();
 	var username=session.get('username');
 
 	if(username==null){
-		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+		response.sendRedirect("login.jag?"+request.getRequestURI());
 		return;
 	}
 	

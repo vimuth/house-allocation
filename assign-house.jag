@@ -8,7 +8,7 @@ var log = new Log();
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+		response.sendRedirect("../login.jag?"+request.getRequestURI());
 		return;
 	}
 

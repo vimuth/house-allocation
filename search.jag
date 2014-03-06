@@ -11,7 +11,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username==null){
-		response.sendRedirect("/HouseManagement/login.jag");
+		response.sendRedirect("../login.jag");
 		return;
 	}
 

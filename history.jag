@@ -9,7 +9,7 @@ var log = new Log();
 	log.info(admin);
 
 	if(username==null){
-		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+		response.sendRedirect("../login.jag?"+request.getRequestURI());
 		return;
 	}
 	var dataService = require('modules/dataservice.jag');
@@ -20,7 +20,7 @@ var log = new Log();
 	// 	if(uriMatcher.match('/HouseManagement/history')){
 	var data = dataService.getPastEvents();
 	var nullMsg="";
-		if(data.length==0){
+	if(data.length==0){
 		nullMsg="There are no past events to be displayed"
 	}
 
@@ -31,6 +31,12 @@ var log = new Log();
 
 	Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 		if (a == b)
+			return options.fn(this);
+		else
+			return options.inverse(this);
+	});
+	Handlebars.Handlebars.registerHelper('if_not_eq', function(a, b,options) {
+		if (a != b)
 			return options.fn(this);
 		else
 			return options.inverse(this);
@@ -47,8 +53,8 @@ var log = new Log();
 			'title':'History Of Events',
 			'role': admin, 'events': data, 'nullmsg':nullMsg},
 			'sidenav' :{
-				'admin': admin, 'house':session.get('house')}
+			'admin': admin, 'house':session.get('house')}
 		});
 		// 	}
-	}());
-	%>
+}());
+%>

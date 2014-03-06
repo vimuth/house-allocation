@@ -520,7 +520,8 @@ function getEventActivities(id){
 function getPastEvents(){
 	var data = parse(get(url+'past-events',null,{
 		"Accept":"application/json"},"application/json").data);
-		log.info("receiving events for the history")
+		
+	log.info(data);
 		if(!(data.Entries.Entry instanceof Array)){
 			data.Entries.Entry = [data.Entries.Entry];
 		}

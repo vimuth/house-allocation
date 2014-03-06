@@ -10,7 +10,7 @@ var verb = request.getMethod();
 	var admin= session.get('role')=='admin';
 
 	if(username==null){
-		response.sendRedirect("/TestApp2/login.jag");
+		response.sendRedirect("login.jag");
 		return;
 	}
 

@@ -7,7 +7,7 @@ var log = new Log();
 	var admin= session.get('role')=='admin';
 
 	if(username==null){
-		response.sendRedirect("/HouseManagement/login.jag")
+		response.sendRedirect("../login.jag")
 		return;
 	}
 
@@ -32,7 +32,7 @@ var log = new Log();
 		});
 	}
 	catch(e){
-		response.sendRedirect("/HouseManagement/error.jag");
+		response.sendRedirect("../error.jag");
 	}
 }());
 %>

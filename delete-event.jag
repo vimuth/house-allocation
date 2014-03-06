@@ -15,7 +15,7 @@ log.info("got here : "+verb);
 	var admin= session.get('role')=='admin';
 
 	if(username!="admin"){
-		response.sendRedirect("/HouseManagement/login.jag?"+request.getRequestURI());
+		response.sendRedirect("../login.jag?"+request.getRequestURI());
 		return;
 	}
 
@@ -83,7 +83,7 @@ log.info("got here : "+verb);
 
 		}
 		else{
-			response.sendRedirect("/HouseManagement/event-list.jag");
+			response.sendRedirect("../event-list.jag");
 			return;
 		}
 

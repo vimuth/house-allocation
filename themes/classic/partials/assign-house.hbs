@@ -48,7 +48,7 @@ function assignHouse(){
 	$.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : "{{url "/api/HouseManagement.jag"}}"+"?operation=assign&&name="+name,
+		url : "{{url "/api/houseAllocation.jag"}}"+"?operation=assign&&name="+name,
 
 		data : {},
 		success : function(msg) {

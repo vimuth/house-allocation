@@ -2,5 +2,5 @@
 session.remove("username");
 session.invalidate();
 
-response.sendRedirect("/HouseManagement/login.jag");
+response.sendRedirect("login.jag");
 %>
