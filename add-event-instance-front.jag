@@ -22,7 +22,7 @@ var verb = request.getMethod();
 		var email = obj.email;
 		var roles = obj.roles;
 
-		if (roles.indexOf("admin") != -1) {
+		if (roles.indexOf("HR") != -1) {
 			session.put("username", email);
 			session.put("role", "admin");
 		} else {

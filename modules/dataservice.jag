@@ -167,20 +167,35 @@ function getActivitiesAndAwardsForEvent(data){
 
 //get activity for a given event_id
 function getActivitiesForEventID(id){
-	var data = get(newURl+'activities_from_event_id/'+id,null,{
-		"Accept":"application/json"},"application/json");
-		log.info("received activities:"+data.data);
+	var data = parse(get(newURl+'activities_from_event_id/'+id,null,{
+		"Accept":"application/json"},"application/json").data);
 
-		log.info(data);
-		return parse(data.data);
+		if ( data.activityCollection==""){
+			data.activityCollection = {
+				'activity':[]};
+		}
+
+		if ( !(data.activityCollection.activity instanceof Array)){
+			data.activityCollection.activity = [data.activityCollection.activity];
+		}
+		return data;
 }
 
 //get votes for a given event award based on the event award id
 function getAwardsForEventID(id){
-	var data = get(newURl+'awards_from_event_id/'+id,null,{
-		"Accept":"application/json"},"application/json");
-		log.info("received awards:"+data.data);
-		return parse(data.data);
+	var data = parse(get(newURl+'awards_from_event_id/'+id,null,{
+		"Accept":"application/json"},"application/json").data);
+
+		if ( data.event_awardCollection==""){
+			data.event_awardCollection = {
+				'event_award':[]};
+		}
+
+		if ( !(data.event_awardCollection.event_award instanceof Array)){
+			data.event_awardCollection.event_award = [data.event_awardCollection.event_award];
+		}
+
+		return data;
 
 }
 
@@ -520,8 +535,8 @@ function getEventActivities(id){
 function getPastEvents(){
 	var data = parse(get(url+'past-events',null,{
 		"Accept":"application/json"},"application/json").data);
-		
-	log.info(data);
+
+		log.info(data);
 		if(!(data.Entries.Entry instanceof Array)){
 			data.Entries.Entry = [data.Entries.Entry];
 		}
@@ -922,19 +937,21 @@ function addActivityWinnerHouse(data){
 		log.debug("adding activity winner house datails ");
 
 		try{
-			var headers = {"Accept": "application/json"};
-			var result = post(url+'add-activity-winner-house',
-							{'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},
-							headers,
-							'json');
-			
-			log.info(result);
-			if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
-				return {'success':true};
-			}
-			else{
-				return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
-			}
+			var headers = {
+				"Accept": "application/json"};
+				var result = post(url+'add-activity-winner-house',
+				{
+					'rank':data.rank , 'description':data.description, 'activity_instance_id':data.id, 'house_id':data.winner},
+					headers,
+					'json');
+					
+				log.info(result);
+				if(result.data["REQUEST_STATUS"] == "SUCCESSFUL"){
+					return {'success':true};
+				}
+				else{
+					return {'success':false, 'error' : "Couldnt add the ranking.Please check whether this house is already added"};
+				}
 
 		}
 		catch(e){

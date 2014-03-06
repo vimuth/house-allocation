@@ -4,10 +4,10 @@
 		<h4 class="list-group-item-heading">
 			{{house}}
 			<button onclick="viewEmailList();return false;" type="button"
-				style="" class="btn btn-warning btn-xs pull-right">View as
+				style="" class="btn btn-success btn-xs pull-right">View as
 				a Email List</button>
 				<button onclick="tableToExcel('exportTable', 'name', 'member.xls');return false;" type="button"
-				style="" class="btn btn-warning btn-xs pull-right">Download to Excel</button>
+				style="" class="btn btn-success btn-xs pull-right">Download as Spreadsheet</button>
 		</h4>
 		{{#each Member}}
 		<li class="list-group-item">{{name}}</li> {{/each}}
@@ -72,6 +72,7 @@
 
 
 {{/if}} {{#unless house}}
+<h5><b>View Members in : </b></h5>
 <div class="list-group">
 	<a href="{{url "/house/1"}}" class="list-group-item">Cloud Bots</a> <a
 		href="{{url "/house/2"}}" class="list-group-item">Titans</a> <a
@@ -79,15 +80,15 @@
 		href="{{url "/house/4"}}" class="list-group-item">Wild Boars</a>
 </div>
 
-<form class="navbar-form" onsubmit="searchHouseOfMember(); return false;">
-	<br><br>
-	<label for="search">Enter the name of the person you want to find the house of</label>
+<form style="padding:0px; margin-top:0px" class="navbar-form inline-form" onsubmit="searchHouseOfMember(); return false;">
+
+	<label for="search">Enter the name of the person you want to find the house of : </label>
 	<div id="search">
 		<div class="form-group">
 			<input type="text" id="searchMemberText" class="form-control"
 				placeholder="Search" required/>
 		</div>
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btn btn-custom">Search</button>
 	</div>
 </form>
 

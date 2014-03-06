@@ -1,23 +1,4 @@
-@media ( max-width : 1200px) {
-	.navbar-header {
-		float: none;
-	}
-	.navbar-toggle {
-		display: block;
-		border-color: #f47a20;
-	}
-	.navbar-collapse.collapse {
-		display: none !important;
-	}
-}
-
-.dropdown-menu {
-	background-color: #333333;
-}
-
-.dropdown-menu > li > a:hover {
-	background: #333333 !important
-}
+/*---------------------------- Custom Button ------------------------------*/
 
 .btn-custom {
 	color: #ffffff;
@@ -48,6 +29,65 @@
 	background-color: #fff;
 }
 
+/*----------------------------------------------------------------------------*/
+
+/*---------------------------- Top Navigation Bar ----------------------------*/
+
+@media ( max-width : 1200px) {
+	.navbar-header {
+		float: none;
+	}
+	.navbar-toggle {
+		display: block;
+		border-color: #f47a20;
+	}
+	.navbar-collapse.collapse {
+		display: none !important;
+	}
+}
+
+.dropdown-menu {
+	background-color: #333333;
+}
+
+.dropdown-menu > li > a:hover {
+	background: #333333 !important
+}
+
+ul.nav a {
+	color: white !important;
+}
+
+ul.nav a:hover {
+	color: #f47a20 !important;
+}
+
+.nav>li>a:focus {
+	background: #333333 !important
+}
+
+.navbar-header > a {
+color: white;
+}
+
+.navbar-header > a:hover {
+color: #f47a20;
+}
+
+.navbar-fixed-top {
+	background-color: #333;
+}
+
+.nav>li>a {
+	background: #333333 !important
+}
+
+#searchText,select,textarea {
+	color: #fff;
+}
+
+/* ----------------------------------------------------------------------- */
+
 .form-control-custom {
 	display: block;
 	width: 100%;
@@ -63,35 +103,13 @@
 	border-radius: 4px;
 }
 
-#searchText,select,textarea {
-	color: #fff;
-}
 
-ul.nav a {
-	color: white !important;
-}
-
-ul.nav a:hover {
-	color: #f47a20 !important;
-}
-
-.nav>li>a:focus {
-	background: #333333 !important
-}
-
-.nav>li>a {
-	background: #333333 !important
-}
-
+/* Main section - leavin 70px padding for the top nav bar */
 #main {
 	padding-top: 70px;
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-}
-
-.icon-bar {
-	background-color: #f47a20;
 }
 
 .panel-custom {
@@ -104,9 +122,6 @@ ul.nav a:hover {
 	border-color: #333;
 }
 
-.navbar-fixed-top {
-	background-color: #333;
-}
 
 .bs-sidebar {
 	padding-top: 70px;
@@ -128,6 +143,8 @@ ul.nav a:hover {
 .carousalImg img {width ="845" height:500px;
 	max-height: 225px;
 }
+
+/*---------------------------- Success Alert ----------------------------*/
 
 .ui-dialog.success-dialog {
 	text-align: center;
@@ -176,6 +193,8 @@ ul.nav a:hover {
 
 /*----------------------------
     The file upload form
+    
+    
 -----------------------------*/
 #upload {
 	background-color: #373a3d;
