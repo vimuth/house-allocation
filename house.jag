@@ -92,7 +92,6 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 			}
 			var house = dataService.getHouseByName(name).Entries;
 			var houseName;
-			log.info(house.Entry.house_id);
 			if (house.Entry){
 				var houseId = house.Entry.house_id;
 				houseName= dataService.getHouse(houseId).name;

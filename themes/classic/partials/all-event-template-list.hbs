@@ -1,7 +1,21 @@
 <div>
 	<div class="list-group">
-		{{#each event}} <a href='{{url "/event-instances/"}}{{id}}'
-			class="list-group-item"><b>{{name}}</b>  : {{description}} 
-		</a> {{/each}}
+		{{#if event}}
+			{{#if event.name}}
+				<a href='{{url "/event-instances/"}}{{event.id}}'
+				class="list-group-item"><b>{{event.name}}</b> : {{event.description}} 
+				</a>
+			{{/if}}
+			{{#each event}} 
+				<a href='{{url "/event-instances/"}}{{id}}'
+				class="list-group-item"><b>{{name}}</b>  : {{description}} 
+				</a> 
+			{{/each}}
+		{{/if}}
+		{{#unless event}}
+			<div class="well well-sm">
+			<font size="4">Sorry, There are no Event Templates!</font>
+			</div>
+		{{/unless}}
 	</div>
 </div>
