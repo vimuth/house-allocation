@@ -7,23 +7,23 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 <title>Error</title>
-<link href="/HouseManagement/themes/classic/css/bootstrap.css"
+<link href="themes/classic/css/bootstrap.css"
 	rel="stylesheet" />
 
-<link href="/HouseManagement/themes/classic/css/jquery-ui.css"
+<link href="themes/classic/css/jquery-ui.css"
 	rel="stylesheet" />
 <link
-	href="/HouseManagement/themes/classic/css/bootstrap-datetimepicker.min.css"
+	href="themes/classic/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet" />
-<link href="/HouseManagement/themes/classic/css/custom-styles.css"
+<link href="themes/classic/css/custom-styles.css"
 	rel="stylesheet" />
 
 <script type="text/javascript"
-	src="/HouseManagement/themes/classic/js/jquery-1.11.0.min.js"></script>
+	src="themes/classic/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript"
-	src="/HouseManagement/themes/classic/js/jquery-ui.js"></script>
+	src="themes/classic/js/jquery-ui.js"></script>
 <script type="text/javascript"
-	src="/HouseManagement/themes/classic/js/bootstrap.js"></script>
+	src="themes/classic/js/bootstrap.js"></script>
 
 </head>
 
