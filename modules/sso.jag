@@ -2,11 +2,11 @@
 
 function authorize(request) {
 
-	redirectUrl = request.getParameter("location");
+// 	redirectUrl = request.getParameter("location");
 
-	if(redirectUrl==null){
-		redirectUrl	= "index.jag";
-	}
+// 	if(redirectUrl==null){
+// 		redirectUrl	= "index.jag";
+// 	}
 
 	// New authorization using app manager SSO
 	var header = request.getHeader("X-JWT-Assertion");
@@ -70,7 +70,7 @@ function authorize(request) {
 		// if the user is in the database
 		else {
 			session.put("house", data.Entries.Entry.house_id);
-			response.sendRedirect(redirectUrl);
+// 			response.sendRedirect(redirectUrl);
 			return;
 		}
 
