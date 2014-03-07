@@ -214,7 +214,7 @@ color: #f47a20;
 	border: 20px solid rgba(0, 0, 0, 0);
 	border-radius: 3px;
 	border-image:
-		url('/HouseManagement/themes/classic/images/border-image.png') 25
+		url('themes/classic/images/border-image.png') 25
 		repeat;
 	text-align: center;
 	text-transform: uppercase;
@@ -293,7 +293,7 @@ color: #f47a20;
 #upload ul li span {
 	width: 15px;
 	height: 12px;
-	background: url('/HouseManagement/themes/classic/images/icons.png')
+	background: url('themes/classic/images/icons.png')
 		no-repeat;
 	position: absolute;
 	top: 20px;

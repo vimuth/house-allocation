@@ -3,11 +3,11 @@
 		<h3 class="panel-title">{{eventInstance.name}}
 		{{#if isAdmin}}<button id="voteButton" type="button" style="min-height: 1px;height: 39px; margin-top:-11px; margin-right:-16px; border-radius:0px"
 			class="btn btn-warning btn-xs pull-right"
-			onclick='window.location.href="/HouseManagement/edit-event-instance/{{eventInstance.id}}"'>Edit Event</button>
+			onclick='window.location.href="edit-event-instance/{{eventInstance.id}}"'>Edit Event</button>
 			
 			<button id="voteButton" type="button" style="min-height: 1px;height: 39px; margin-top:-11px; margin-right:-10px; border-radius:0px"
 			class="btn btn-danger btn-xs pull-right"
-			onclick='window.location.href="/HouseManagement/delete-event-instance/{{eventInstance.id}}"'>Delete Event</button>
+			onclick='window.location.href="delete-event-instance/{{eventInstance.id}}"'>Delete Event</button>
 			
 			
 			{{/if}}</h3>
@@ -35,7 +35,7 @@
 
 								<td><h2>{{rank}}</h2></td>
 								<td><img
-									src="/HouseManagement/themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
+									src="themes/classic/images/Cliub Logos-0{{house_id}}.jpg"
 									alt="Smiley face" height="80" width="80"></td>
 
 							</tr>
@@ -83,7 +83,7 @@
 								<td style="border: none; width:40px">{{#if_eq ../type "I"}}
 									<h5>{{winner}}</h5> {{/if_eq}} {{#if_eq ../type "G"}} <img
 									class="pull-left"
-									src="/HouseManagement/themes/classic/images/Cliub Logos-0{{winner}}.jpg"
+									src="themes/classic/images/Cliub Logos-0{{winner}}.jpg"
 									alt="Smiley face" height="40" width="40"> {{/if_eq}}
 								</td>
 							</tr>
@@ -123,14 +123,14 @@
 						{{#unless winner}}
 						<button id="voteButton" type="button"
 							class="btn btn-success btn-xs pull-right"
-							onclick='window.location.href="/HouseManagement/votes/{{id}}"'>Vote
+							onclick='window.location.href="votes/{{id}}"'>Vote
 							for your pick</button>
 						{{/unless}}
 
 						{{/isVotingPeriod}} {{/if_eq}} {{#if winner}}
 						<div id="winnerlist">
 							{{#if_eq ../type "G"}} {{#each winner}} <img class="pull-right"
-								src="/HouseManagement/themes/classic/images/Cliub Logos-0{{name}}.jpg"
+								src="themes/classic/images/Cliub Logos-0{{name}}.jpg"
 								height="60" width="60" /> {{/each}} {{/if_eq}} {{#if_eq ../type
 							"I"}}
 							<table style="margin: 0px" class="table">
