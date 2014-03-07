@@ -22,29 +22,8 @@ Handlebars.Handlebars.registerHelper('if_eq', function(a, b,options) {
 
 	(function () {
 
-		//New authorization using app manager SSO
-		var header = request.getHeader("X-JWT-Assertion");
-			
-		// Create Base64 Object
-		//var Base64 = require('../modules/base64.js');
-			
-		if(header !=null){
-			var jwtAssertions = header.split("."); //JWT header by default contains three '.' separated sections
-			var jsonString = btoa(jwtAssertions[1]);
-			jsonString = jsonString.replace("http://wso2.org/claims/emailaddress", "email");
-			jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");
-			var obj = parse(jsonString);
-			var email = obj.email;
-			var roles = obj.roles;
-				
-			if (roles.indexOf("admin") != -1) {
-				session.put("username", email);
-				session.put("role", "admin");
-			} else {
-				session.put("username", email);
-				session.put("role", "user");
-			}
-		}
+		var sso = require('modules/sso.jag');
+		sso.authorize(request);
 
 		var username=session.get('username');
 		var admin= session.get('role')=='admin';
