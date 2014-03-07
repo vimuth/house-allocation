@@ -2,6 +2,8 @@
 
 
 function authorize(request) {
+	
+	var Base64 = require('./Base64.js').Base64;
 
 	// New authorization using app manager SSO
 	var header = request.getHeader("X-JWT-Assertion");
@@ -13,7 +15,7 @@ function authorize(request) {
 		var jwtAssertions = header.split("."); // JWT header by default
 		// contains three '.' separated
 		// sections
-		var jsonString = btoa(jwtAssertions[1]);
+		var jsonString = Base64.decode(jwtAssertions[1]);
 		jsonString = jsonString.replace("http://wso2.org/claims/emailaddress",
 		"email");
 		jsonString = jsonString.replace("http://wso2.org/claims/role", "roles");

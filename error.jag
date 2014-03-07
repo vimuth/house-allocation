@@ -41,7 +41,7 @@
 					<a style="padding: 0px; padding-top: 11px; padding-right: 10px;"
 						class="navbar-brand" href="/HouseManagement/index.jag"> <img
 						style="padding: 0px; margin: 0px"
-						src="/HouseManagement/themes/classic/images/header-logo.jpg">
+						src="themes/classic/images/header-logo.jpg">
 							<font style="color: #f47a20" size="3">House Manager</font></a>
 				</div>
 
