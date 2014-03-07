@@ -2,13 +2,19 @@
 
 function authorize(request) {
 
+	redirectUrl = request.getParameter("location");
+
+	if(redirectUrl==null){
+		redirectUrl	= "index.jag";
+	}
+
 	// New authorization using app manager SSO
 	var header = request.getHeader("X-JWT-Assertion");
 
 	// Create Base64 Object
 	var Base64 = require('modules/Base64.js').Base64;
-	
-// 	var dataService = require('modules/dataservice.jag');
+
+	// 	var dataService = require('modules/dataservice.jag');
 
 	if (header != null) {
 		var jwtAssertions = header.split("."); // JWT header by default
