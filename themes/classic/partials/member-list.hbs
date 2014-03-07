@@ -74,10 +74,10 @@
 {{/if}} {{#unless house}}
 <h5><b>View Members in : </b></h5>
 <div class="list-group">
-	<a href="{{url "/house/1"}}" class="list-group-item">Cloud Bots</a> <a
-		href="{{url "/house/2"}}" class="list-group-item">Titans</a> <a
-		href="{{url "/house/3"}}" class="list-group-item">Legion</a> <a
-		href="{{url "/house/4"}}" class="list-group-item">Wild Boars</a>
+	<a href="house/1" class="list-group-item">Cloud Bots</a> <a
+		href="house/2" class="list-group-item">Titans</a> <a
+		href="house/3" class="list-group-item">Legion</a> <a
+		href="house/4" class="list-group-item">Wild Boars</a>
 </div>
 
 <form style="padding:0px; margin-top:0px" class="navbar-form inline-form" onsubmit="searchHouseOfMember(); return false;">
@@ -104,6 +104,6 @@
 		if (name.indexOf('@')!=-1){
 				name = name.substring(0,name.length-9);
 		}
-		document.location.href = '{{url "/search-house/"}}' + name;
+		document.location.href = 'search-house/' + name;
 	}
 </script>

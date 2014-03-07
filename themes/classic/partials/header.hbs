@@ -16,43 +16,43 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				{{#unless role}}
-					<li><a href="{{url "/current-events"}}"><font size="2">Current Events</font></a></li>
-					<li><a href="{{url "/award-list.jag"}}"><font size="2">Current Elections</font></a></li>
-					<li><a href="{{url "/history"}}"><font size="2">History</font></a></li>
-					<li><a href="{{url "/house"}}"><font size="2">Members</font></a></li>
+					<li><a href="current-events"><font size="2">Current Events</font></a></li>
+					<li><a href="award-list.jag"><font size="2">Current Elections</font></a></li>
+					<li><a href="history"><font size="2">History</font></a></li>
+					<li><a href="house"><font size="2">Members</font></a></li>
 				{{/unless}}
 				{{#if role}}
 				
 				<li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Event Templates <b class="caret"></b></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="{{url "/events"}}">View</a></li>
+		            <li><a href="events">View</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/add-event"}}">Add</a></li>
+		            <li><a href="add-event">Add</a></li>
 		          </ul>
 		        </li>
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="{{url "/current-events"}}">Current Events</a></li>
+		            <li><a href="current-events">Current Events</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/award-list.jag"}}">Current Elections</a></li>
+		            <li><a href="award-list.jag">Current Elections</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/history"}}">History</a></li>
+		            <li><a href="history">History</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/all-event-templates"}}">Events by type</a></li>
+		            <li><a href="all-event-templates">Events by type</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/add-event"}}">Add</a></li>
+		            <li><a href="add-event">Add</a></li>
 		          </ul>
 		        </li>
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Members <b class="caret"></b></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="{{url "/assign-house.jag"}}">Assign House</a></li>
+		            <li><a href="assign-house.jag">Assign House</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/change-status"}}">Change Status</a></li>
+		            <li><a href="change-status">Change Status</a></li>
 		            <li class="divider"></li>
-		            <li><a href="{{url "/house/"}}">List</a></li>
+		            <li><a href="house/">List</a></li>
 		          </ul>
 		        </li>
 				{{/if}}	
@@ -71,8 +71,8 @@
 					data-toggle="dropdown"><strong>Signed-in as: </strong>{{username}}<b
 						class="caret"></b> </a>
 					<ul class="dropdown-menu">
-						<li><a href="{{url "/logout.jag"}}">Sign Out</a></li>
-						<li><a href="{{url "/change-password.jag"}}">Change Admin Password</a></li>
+						<li><a href="logout.jag">Sign Out</a></li>
+						<li><a href="change-password.jag">Change Admin Password</a></li>
 					</ul></li>
 			</ul>
 		</div>

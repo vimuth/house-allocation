@@ -36,7 +36,7 @@
 	</tr>
 
 	<tr style="text-align: center">
-		<td style="border:none" colspan=2><a href="{{url "/add-event"}}"><button class="btn btn-custom">Add New Event Template</button></a></td>
+		<td style="border:none" colspan=2><a href="add-event"><button class="btn btn-custom">Add New Event Template</button></a></td>
 	</tr>
 
 </table>
@@ -49,16 +49,16 @@
 	function getActivitiesAndAwards() {
 	if (document.getElementById('events').value != null){
 		if (document.getElementById('events').value == "create new event template") {
-			document.location.href = "{{url "/add-event"}}";
+			document.location.href = "add-event";
 		} else {
-			document.location.href = "{{url "/add-event-instance/"}}"
+			document.location.href = "add-event-instance/"
 					+ document.getElementById('events').value;
 		}
 	}
 	}
 
 	function cancel() {
-		document.location.href = '{{url "/"}}';
+		document.location.href = 'index.jag';
 	} 
 </script>
 

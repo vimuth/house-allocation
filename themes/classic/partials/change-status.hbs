@@ -53,7 +53,7 @@ function search(){
 	.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : "{{url "/change-status.jag?name="}}"+name,
+		url : "change-status.jag?name="+name,
 
 		data : {},
 		success : function(
@@ -83,7 +83,7 @@ function deactivate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=deactivate&name="+name),
+		url : encodeURI('api/houseAllocation.jag'+"?operation=deactivate&name="+name),
 		data : {},
 		success : function(
 				msg) {
@@ -102,7 +102,7 @@ function activate(name,button){
 	.ajax({
 		type : "GET",
 		contentType : "application/json",
-		url : encodeURI('{{url "/api/houseAllocation.jag"}}'+"?operation=activate&name="+name),
+		url : encodeURI('api/houseAllocation.jag'+"?operation=activate&name="+name),
 		data : {},
 		success : function(
 				msg) {

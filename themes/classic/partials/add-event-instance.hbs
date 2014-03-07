@@ -178,7 +178,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
     
 
     function cancel(){
-    	document.location.href = '{{url "/add-event-instance-front.jag"}}';
+    	document.location.href = 'add-event-instance-front.jag';
     }
 
     function changeVisibility(id){
@@ -327,7 +327,7 @@ If the award is to be decided by a vote set the start and end time for the vote.
 			               $.ajax({
 			              type: "POST",
 			              contentType: "application/json",
-			              url: '{{url "/add-event-instance.jag"}}',
+			              url: 'add-event-instance.jag',
 
 			              data: JSON.stringify({"eventInstance":{"name": eventInstName,"eventName":eventName, "description":eventInstDescription, "startDate":eventInstStartDate, "endDate":eventInstEndDate},"activityInstance":actInst,"awardInstance":awardInst}),
 			              success : function(

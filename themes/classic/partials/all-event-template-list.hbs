@@ -2,12 +2,12 @@
 	<div class="list-group">
 		{{#if event}}
 			{{#if event.name}}
-				<a href='{{url "/event-instances/"}}{{event.id}}'
+				<a href='event-instances/{{event.id}}'
 				class="list-group-item"><b>{{event.name}}</b> : {{event.description}} 
 				</a>
 			{{/if}}
 			{{#each event}} 
-				<a href='{{url "/event-instances/"}}{{id}}'
+				<a href='event-instances/{{id}}'
 				class="list-group-item"><b>{{name}}</b>  : {{description}} 
 				</a> 
 			{{/each}}

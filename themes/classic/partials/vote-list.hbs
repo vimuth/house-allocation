@@ -104,7 +104,7 @@ var nominee;
 														.ajax({
 															type : "POST",
 															contentType : "application/json",
-															url : "{{url "/vote-list.jag"}}",
+															url : "vote-list.jag",
 
 															data : JSON
 																	.stringify({
@@ -271,7 +271,7 @@ function validateVoter() {
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : "{{url "/vote-list.jag"}}",
+				url : "vote-list.jag",
 
 				data : JSON
 						.stringify({
@@ -312,7 +312,7 @@ function addHouse() {
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : "{{url "/vote-list.jag"}}",
+				url : "vote-list.jag",
 
 				data : JSON
 						.stringify({

@@ -538,7 +538,7 @@
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}' + '?operation=setRank',
+			url : 'edit-event-instance/' + '?operation=setRank',
 			data : JSON.stringify({
 				'eventId' : '{{eventInstance.id}}',
 				'rankings' : ranks
@@ -584,7 +584,7 @@
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}' + '?operation=updateInfo',
+			url : 'edit-event-instance/' + '?operation=updateInfo',
 			data : JSON.stringify({
 				'id' : '{{eventInstance.id}}',
 				'name' : $('#eventName').val(),
@@ -613,7 +613,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=deleteActivity',
+				url : 'edit-event-instance/' + '?operation=deleteActivity',
 				data : JSON.stringify({ 'id':id
 				}),
 				success : function(msg) {
@@ -635,7 +635,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=deleteAward',
+				url : 'edit-event-instance/' + '?operation=deleteAward',
 				data : JSON.stringify({ 'id':id
 				}),
 				success : function(msg) {
@@ -679,7 +679,7 @@
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}' + '?operation=updateActivity',
+			url : 'edit-event-instance/' + '?operation=updateActivity',
 			data : JSON.stringify({
 				'id' : id,
 				'description' : description,
@@ -754,7 +754,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=updateAward',
+				url : 'edit-event-instance/' + '?operation=updateAward',
 				data : JSON.stringify({
 					'id' : id,
 					'vote_start_date' : startDate.format("YYYY-MM-DD HH:mm"),
@@ -781,7 +781,7 @@
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : '{{url "/edit-event-instance/"}}' + '?operation=addAwardWinnerIndividual',
+			url : 'edit-event-instance/' + '?operation=addAwardWinnerIndividual',
 			data : JSON.stringify({
 				'id' : id,
 				'name':name
@@ -810,7 +810,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=addAwardWinnerHouse',
+				url : 'edit-event-instance/' + '?operation=addAwardWinnerHouse',
 				data : JSON.stringify(winners),
 				success : function(msg) {
 					if (msg.success) {
@@ -841,7 +841,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=removeAwardWinnerIndividual',
+				url : 'edit-event-instance/' + '?operation=removeAwardWinnerIndividual',
 				data : JSON.stringify({'isIndividual':isIndividual,'winners':winners}),
 				success : function(msg) {
 					if (msg.success) {
@@ -866,7 +866,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=addAcivityRanking',
+				url : 'edit-event-instance/' + '?operation=addAcivityRanking',
 				data : JSON.stringify({'isIndividual':isIndividual,'winner':winner,'id':id,'rank':rank, 'description':description}),
 				success : function(msg) {
 					if (msg.success) {
@@ -895,7 +895,7 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : '{{url "/edit-event-instance/"}}' + '?operation=removeActivityWinners',
+				url : 'edit-event-instance/' + '?operation=removeActivityWinners',
 				data : JSON.stringify({'isIndividual':isIndividual,'winners':winners}),
 				success : function(msg) {
 					if (msg.success) {

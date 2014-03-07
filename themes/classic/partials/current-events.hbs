@@ -17,7 +17,7 @@
 	<div class="list-group">
 		{{#each events}} <a
 			style="margin: 0px; padding: 0px; border-width: 0px"
-			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			href='event-instance/{{id}}' class="list-group-item">
 
 			<div class="panel panel-custom">
 				<div class="panel-heading">
@@ -82,7 +82,7 @@
 </div>
 <script>
 	function link(link) {
-		document.location.href = '{{url "/"}}' + link;
+		document.location.href =  link;
 
 	}
 </script>

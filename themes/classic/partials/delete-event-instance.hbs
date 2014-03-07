@@ -157,7 +157,7 @@
 		onclick='window.location.href="/HouseManagement/event-instance/{{id}}"'
 		class="btn btn-info">Cancel</button>
 	<button type="button"
-		onclick='window.location.href="{{url "/edit-event-instance/"}}{{id}}"'
+		onclick='window.location.href="edit-event-instance/{{id}}"'
 		class="btn btn-warning">Edit Event</button>
 	<button type="button" onclick="deleteEventInstance({{id}});"
 		class="btn btn-danger">Delete Event</button>
@@ -171,13 +171,13 @@ function deleteEventInstance(id) {
 			$.ajax({
 				type : "DELETE",
 				contentType : "application/json",
-				url : "{{url "/delete-event-instance/"}}" + id,
+				url : "delete-event-instance/" + id,
 
 				data : {},
 				success : function(msg) {
 
 					if (msg.success) {
-						document.location.href='{{url "/"}}';
+						document.location.href='index.jag';
 					} else {
 						alert('Error - unable to delete event.');
 					}

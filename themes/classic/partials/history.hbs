@@ -9,7 +9,7 @@
 				style="width: 125px; height: 25px">View Other events</button>
 		</div>
 		{{/if}}} {{#each events.Entry}} <a style="margin: 0px; padding: 0px"
-			href='{{url "/event-instance/"}}{{id}}' class="list-group-item">
+			href='event-instance/{{id}}' class="list-group-item">
 			<!-- <h4 class="list-group-item-heading">{{name}}</h4> <br
 			style="clear: both;" />
 			-->
@@ -65,7 +65,7 @@
 
 <script>
 	function link() {
-		document.location.href = '{{url "/"}}' + 'current-events';
+		document.location.href =  'current-events';
 
 	}
 </script>

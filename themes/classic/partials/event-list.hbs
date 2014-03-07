@@ -1,6 +1,6 @@
 <div>
 	<div class="list-group">
-		{{#each events.event}} <a href='{{url "/events/"}}{{id}}'
+		{{#each events.event}} <a href='events/{{id}}'
 			class="list-group-item"><b>{{name}}</b>  : {{description}} {{#if
 			../role}}
 			
@@ -19,11 +19,11 @@
 {{#if role}}
 <script>
 	function editEvent(id) {
-		document.location.href = '{{url "/edit-event/"}}' + id;
+		document.location.href = 'edit-event/' + id;
 	}
 
 	function deleteEvent(id, row) {
-		document.location.href = '{{url "/delete-event/"}}'+id;
+		document.location.href = 'delete-event/'+id;
 	}
 </script>
 {{/if}}
